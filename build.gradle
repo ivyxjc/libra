@@ -1,0 +1,135 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.11' apply false
+    id "org.springframework.boot" version '2.1.6.RELEASE' apply false
+}
+
+ext {
+    base_version = '0.0.1-SNAPSHOT'
+
+    kotlin_version = '1.3.11'
+
+    commons_lang3_version = '3.7'
+    druid_version= '1.1.20'
+    druid_starter_version = '1.1.20'
+    gson_version = '2.8.5'
+    guava_version = '27.0.1-jre'
+    h2_version = '1.4.197'
+    hibernate_version = '5.4.0.Final'
+    jmh_version = '1.21'
+    junit_version = '4.12'
+    kafka_client_version = '2.3.0'
+    log4j_slf4j_version = '2.11.2'
+    lombok_version = '1.18.4'
+    mockito_kotlin_version = '1.6.0'
+    mockito_version = '2.23.4'
+    mybatis_spring_version = "2.0.2"
+    mybatis_starter_version = '2.1.0'
+    mybatis_version = '3.5.2'
+    okhttp_version = '4.0.1'
+    slf4j_version = '1.7.25'
+    spring_version = '5.1.8.RELEASE'
+    spring_boot_version = '2.1.8.RELEASE'
+    spring_kafka_version = '2.2.7.RELEASE'
+}
+
+group 'xyz.ivyxjc'
+version base_version
+
+configure(allprojects) { project ->
+    group = 'xyz.ivyxjc'
+
+    apply plugin: 'java'
+    apply plugin: 'org.jetbrains.kotlin.jvm'
+
+    sourceCompatibility = JavaVersion.VERSION_11
+
+    repositories {
+        mavenLocal()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        mavenCentral()
+    }
+
+    buildDir = "${rootProject.projectDir.path}/build/${rootProject.name}/${project.name}"
+
+    sourceSets.main.resources.srcDirs += "${rootProject.projectDir.path}/src/main/resources"
+    sourceSets.test.resources.srcDirs += "${rootProject.projectDir.path}/src/test/resources"
+
+    task fatJar(type: Jar) {
+        baseName = project.name
+        print(configurations)
+        from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+        with jar
+    }
+
+    compileJava {
+        sourceCompatibility = JavaVersion.VERSION_11 // can be switched to 11 for testing
+        targetCompatibility = JavaVersion.VERSION_11
+        options.encoding = "UTF-8"
+    }
+
+    compileTestJava {
+        sourceCompatibility = JavaVersion.VERSION_11  // can be switched to 11 for testing
+        targetCompatibility = JavaVersion.VERSION_11
+        options.encoding = "UTF-8"
+        options.compilerArgs += "-parameters"
+    }
+
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "1.8"
+            freeCompilerArgs = ["-Xjsr305=strict"]
+        }
+    }
+
+    compileTestKotlin {
+        kotlinOptions {
+            jvmTarget = "1.8"
+            freeCompilerArgs = ["-Xjsr305=strict"]
+        }
+    }
+
+    configurations {
+        all*.exclude group: 'ch.qos.logback', module: 'logback-core'
+        all*.exclude group: 'ch.qos.logback', module: 'logback-classic'
+        all*.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+    }
+
+    dependencies {
+        testImplementation group: 'junit', name: 'junit', version: junit_version
+        testImplementation(group: 'org.mockito', name: 'mockito-core', version: mockito_version) {
+            exclude group: "org.hamcrest", module: "hamcrest-core"
+        }
+        testImplementation(group: 'com.nhaarman', name: 'mockito-kotlin', version: mockito_kotlin_version) {
+            exclude module: "kotlin-stdlib"
+            exclude module: "kotlin-reflect"
+            exclude module: "mockito-core"
+        }
+
+        //kotlin
+        implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: kotlin_version
+        implementation group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: kotlin_version
+        //apache
+        implementation group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang3_version
+        //log
+        implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version
+        runtimeOnly group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: log4j_slf4j_version
+
+        //guava
+        implementation group: 'com.google.guava', name: 'guava', version: guava_version
+
+        compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+        testCompileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+    }
+}
+
+project("libra-core") {
+    dependencies {
+        implementation group: 'org.springframework', name: 'spring-context', version: spring_version
+    }
+}
+
+
+
+
+
