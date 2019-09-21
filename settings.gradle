@@ -1,6 +1,7 @@
 rootProject.name = "libra"
 
 include "libra-core"
-include "libra-common"
+include "libra-core-common"
+include "libra-biz-common"
 include "libra-transmission"
 include "libra-transformation"
