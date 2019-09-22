@@ -13,6 +13,6 @@ class UsecaseTxn : AbstractTransaction() {
 
     fun getRawTransaction(): RawTransaction? {
         val txn = trans
-        return txn as RawTransaction
+        return txn as? RawTransaction
     }
 }

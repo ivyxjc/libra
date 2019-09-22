@@ -3,7 +3,9 @@ package xyz.ivyxjc.libra.core.endpoint
 import org.apache.activemq.artemis.jms.client.ActiveMQConnection
 import org.apache.activemq.artemis.jms.client.ActiveMQMessageConsumer
 import org.apache.activemq.artemis.jms.client.ActiveMQQueue
-import xyz.ivyxjc.libra.common.loggerFor
+import xyz.ivyxjc.libra.core.loggerFor
+
+
 import javax.jms.*
 
 abstract class AbstractEndpointListener {
