@@ -5,4 +5,5 @@ class RawTransaction : AbstractTransaction() {
     var sourceId: Long = -1
     var rawRecord: String? = null
     var sequence: Long = -1
+    var msgId: String? = null
 }
