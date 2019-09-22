@@ -32,3 +32,9 @@ out/
 .vscode/
 
 logs
+
+private.properties
+private-jdbc.properties
+
+private*.yaml
+private*.properties

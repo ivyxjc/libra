@@ -18,12 +18,13 @@ abstract class AbstractEndpointListener {
 
     lateinit var address: String
 
+    var listenerCount: Int = 1
+
     protected var jmsConnection: Connection? = null
 
     protected var session: Session? = null
 
     protected var messageConsumer: MessageConsumer? = null
-
 
     fun start() {
         setupConnection()

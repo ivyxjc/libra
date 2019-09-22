@@ -1,0 +1,8 @@
+spring:
+    datasource:
+        url: ${jdbc.url}
+        username: ${jdbc.username}
+        password: ${jdbc.password}
+mybatis:
+    type-aliases-package: xyz.ivyxjc.libra.core.dao
+    mapper-locations: classpath:mybatis/*.xml

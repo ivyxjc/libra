@@ -1,0 +1,16 @@
+connectionFactories:
+    q1ConnectionFactory:
+        class: org.apache.activemq.artemis.jms.client.ActiveMQQueueConnectionFactory
+        funcname: aqConnectionFactory
+        url: ${aq.url}
+
+
+endpointListeners:
+    listener1:
+        class: xyz.ivyxjc.libra.core.endpoint.AqEndpointListener
+        jmsConnectionFactory: q1ConnectionFactory
+        messageListener: rawTransactionMessageListener
+        address: IVY.TRANSMISSION1
+        sourceId: 3001
+
+
