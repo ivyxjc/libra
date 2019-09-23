@@ -1,5 +1,6 @@
 rootProject.name = "libra"
 
+include "libra-benchmark"
 include "libra-core"
 include "libra-core-common"
 include "libra-biz-common"
