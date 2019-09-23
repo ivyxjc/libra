@@ -151,7 +151,9 @@ project("libra-core") {
         implementation group: 'org.springframework', name: 'spring-context', version: spring_version
         implementation group: 'javax.jms', name: 'javax.jms-api', version: '2.0.1'
         implementation group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.10.0'
-        implementation group: 'org.apache.activemq', name: 'activemq-client', version: '5.15.10'
+        implementation(group: 'org.apache.activemq', name: 'activemq-client', version: '5.15.10') {
+            exclude group: "org.apache.geronimo.specs", module: "geronimo-jms_1.1_spec"
+        }
 
         implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.9.1'
 
@@ -187,7 +189,9 @@ project("libra-benchmark") {
         implementation group: 'org.openjdk.jmh', name: 'jmh-core', version: '1.21'
         implementation group: 'javax.jms', name: 'javax.jms-api', version: '2.0.1'
         implementation group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.10.0'
-        implementation group: 'org.apache.activemq', name: 'activemq-client', version: '5.15.10'
+        implementation(group: 'org.apache.activemq', name: 'activemq-client', version: '5.15.10') {
+            exclude group: "org.apache.geronimo.specs", module: "geronimo-jms_1.1_spec"
+        }
 
         //log
         implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version
