@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component
 import org.yaml.snakeyaml.Yaml
 import xyz.ivyxjc.libra.common.utils.ClassUtils
 import xyz.ivyxjc.libra.core.connection.JmsConnectionUtils
-import xyz.ivyxjc.libra.core.endpoint.AqEndpointListener
+import xyz.ivyxjc.libra.core.endpoint.ArtemisEndpointListener
 import java.util.regex.Pattern
 
 @SpringBootApplication(exclude = [JmsAutoConfiguration::class])
@@ -29,7 +29,7 @@ open class ApplicationRunner
 
 fun main() {
     val context = SpringApplication.run(ApplicationRunner::class.java)
-    val bean = context.getBean("listener1") as AqEndpointListener
+    val bean = context.getBean("listener1") as ArtemisEndpointListener
     bean.start()
     Thread.sleep(1000000)
 }

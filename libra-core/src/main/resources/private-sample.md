@@ -7,5 +7,6 @@ jdbc.password=
 
 ## private-endpoint.properties
 ```
+artemis.url=
 aq.url=
 ```
