@@ -7,6 +7,8 @@
         <result column="SOURCE_ID" jdbcType="INTEGER" property="sourceId"/>
         <result column="SEQUENCE" jdbcType="INTEGER" property="sequence"/>
         <result column="MSG_ID" jdbcType="VARCHAR" property="msgId"/>
+        <result column="VERSION" jdbcType="INTEGER" property="version"/>
+        <result column="DUPLICATE_FLG" jdbcType="INTEGER" property="duplicateFlg"/>
         <result column="CREATED_AT" jdbcType="TIMESTAMP" property="createdAt"
                 typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
         <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy"/>
@@ -19,10 +21,17 @@
     </resultMap>
     <insert id="insertRaw" parameterType="xyz.ivyxjc.libra.core.models.RawTransaction">
         insert into LIBRA.RAW_TRANSACTION (GC_GUID, SOURCE_ID, SEQUENCE,
-        MSG_ID, UPDATED_AT, UPDATED_BY,
-        UPDATED_FROM, RAW_RECORD)
-        values (#{gcGuid,jdbcType=INTEGER}, #{sourceId,jdbcType=INTEGER}, #{sequence,jdbcType=INTEGER},
-        #{msgId,jdbcType=VARCHAR},  #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR},
-        #{updatedFrom,jdbcType=VARCHAR}, #{rawRecord,jdbcType=LONGVARCHAR})
+        MSG_ID, CREATED_AT, CREATED_BY,VERSION,
+        CREATED_FROM, VERSION,DUPLICATE_FLG,RAW_RECORD)
+        values (#{gcGuid,jdbcType=INTEGER},
+        #{sourceId,jdbcType=INTEGER},
+        #{sequence,jdbcType=INTEGER},
+        #{msgId,jdbcType=VARCHAR},
+        #{createdAt,jdbcType=TIMESTAMP},
+        #{createdBy,jdbcType=VARCHAR},
+        #{createdFrom,jdbcType=VARCHAR},
+        #{version,jdbcType=INTEGER},
+        #{duplicateFlg,jdbcType=INTEGER},
+        #{rawRecord,jdbcType=LONGVARCHAR})
     </insert>
 </mapper>

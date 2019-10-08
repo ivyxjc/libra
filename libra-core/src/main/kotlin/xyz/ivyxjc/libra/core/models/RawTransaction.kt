@@ -8,6 +8,8 @@ class RawTransaction : AbstractTransaction() {
     var rawRecord: String? = null
     var sequence: Long = -1
     var msgId: String? = null
+    var version: Int = 0
+    var duplicateFlg: Int = 0
 
     override fun toString(): String {
         return ToStringBuilder.reflectionToString(this)
