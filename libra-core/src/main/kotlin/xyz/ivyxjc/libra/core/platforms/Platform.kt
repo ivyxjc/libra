@@ -5,8 +5,8 @@ import xyz.ivyxjc.libra.core.models.AbstractTransaction
 import xyz.ivyxjc.libra.core.models.RawTransaction
 import xyz.ivyxjc.libra.core.models.UsecaseTxn
 
-interface Dispatcher<T : AbstractTransaction> {
-    fun dispatch(trans: T)
+interface Dispatcher<out T : AbstractTransaction> {
+    fun dispatch(trans: @UnsafeVariance T)
 }
 
 class BlankRawTransDispatcher : Dispatcher<RawTransaction> {
@@ -18,7 +18,6 @@ class BlankRawTransDispatcher : Dispatcher<RawTransaction> {
     override fun dispatch(trans: RawTransaction) {
         log.debug("get rawTrans: {}", trans)
     }
-
 }
 
 class BlankUcTxnDispatcher : Dispatcher<UsecaseTxn> {

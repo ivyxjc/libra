@@ -1,5 +1,6 @@
 package xyz.ivyxjc.libra.core.platforms
 
+import org.springframework.stereotype.Service
 import xyz.ivyxjc.libra.core.loggerFor
 import xyz.ivyxjc.libra.core.models.RawTransaction
 import xyz.ivyxjc.libra.core.process.LibraProcessor
@@ -8,7 +9,9 @@ import xyz.ivyxjc.libra.core.process.WorkflowSession
 import xyz.ivyxjc.libra.core.process.WorkflowStatus
 import xyz.ivyxjc.libra.core.rawTransToUcTxn
 
+@Service("transformationPlatform")
 class TransformationPlatform : Dispatcher<RawTransaction> {
+
     companion object {
         @JvmStatic
         private val log = loggerFor(TransformationPlatform::class.java)
