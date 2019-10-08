@@ -13,12 +13,14 @@ endpointListeners:
         class: xyz.ivyxjc.libra.core.endpoint.ArtemisEndpointListener
         jmsConnectionFactory: artemisConnectionFactory
         messageListener: rawTransactionMessageListener
+        dispatcher: transmissionPlatform
         address: IVY.TRANSMISSION1
-        sourceId: 3001
+        sourceIds: '3001,3002'
     listener2:
         class: xyz.ivyxjc.libra.core.endpoint.AqEndpointListener
         jmsConnectionFactory: aqConnectionFactory
         messageListener: rawTransactionMessageListener
-        address: IVY.TRANSMISSION1
-        sourceId: 3001
+        dispatcher: transmissionPlatform
+        address: IVY.TRANSMISSION2
+        sourceIds: '3003'
 

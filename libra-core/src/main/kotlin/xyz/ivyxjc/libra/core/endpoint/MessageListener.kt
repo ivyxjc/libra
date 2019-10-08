@@ -1,19 +1,64 @@
 package xyz.ivyxjc.libra.core.endpoint
 
 import org.apache.activemq.artemis.jms.client.ActiveMQBytesMessage
-import org.springframework.stereotype.Component
+import org.springframework.beans.factory.InitializingBean
 import xyz.ivyxjc.libra.core.loggerFor
+import xyz.ivyxjc.libra.core.models.AbstractTransaction
 import xyz.ivyxjc.libra.core.models.RawTransaction
 import xyz.ivyxjc.libra.core.models.UsecaseTxn
 import xyz.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction
 import xyz.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn
 import xyz.ivyxjc.libra.core.platforms.Dispatcher
-import javax.annotation.Resource
+import javax.jms.BytesMessage
 import javax.jms.Message
 import javax.jms.MessageListener
 
-class UsecaseTxnMessageListener : MessageListener {
-    lateinit var dispatcher: Dispatcher<UsecaseTxn>
+
+abstract class AbstractMessageListener() : MessageListener, InitializingBean {
+
+    lateinit var sourceIds: Array<Long>
+
+    lateinit var dispatcher: Dispatcher<AbstractTransaction>
+
+    companion object {
+        @JvmStatic
+        private val log = loggerFor(AbstractMessageListener::class.java)
+    }
+
+    private lateinit var sourceIdsSet: Set<Long>
+    protected var sourceId: Long? = null
+
+    override fun afterPropertiesSet() {
+        sourceIdsSet = sourceIds.toSet()
+        sourceId = if (sourceIds.size == 1) {
+            sourceIds[0]
+        } else {
+            null
+        }
+    }
+
+    protected fun handleSourceId(msgSourceId: Long?): Long? {
+        if (msgSourceId == null) {
+            return if (sourceId != null) {
+                sourceId
+            } else {
+                log.error("receive msg with no sourceId and the endpoint does not have exact one sourceId")
+                null
+            }
+        } else {
+            return if (!sourceIdsSet.contains(msgSourceId)) {
+                log.error("receive msg with unaccepted source")
+                return null
+            } else {
+                msgSourceId
+            }
+        }
+    }
+
+}
+
+
+class UsecaseTxnMessageListener() : AbstractMessageListener() {
 
     companion object {
         @JvmStatic
@@ -31,7 +76,13 @@ class UsecaseTxnMessageListener : MessageListener {
             message.readBytes(bytes)
             val pUcTxn = ProtoUsecaseTxn.PUsecaseTxn.parseFrom(bytes)
             val ucTxn = UsecaseTxn()
-            ucTxn.sourceId = pUcTxn.sourceId
+            val tmpSourceId = handleSourceId(pUcTxn.sourceId)
+            if (tmpSourceId != null) {
+                ucTxn.sourceId = tmpSourceId
+            } else {
+                log.error("cannot handle the source id for message: ${pUcTxn.gcGuid}")
+                return
+            }
             ucTxn.attributes.putAll(pUcTxn.attributesMap)
             ucTxn.gcGuid = pUcTxn.gcGuid
             dispatcher.dispatch(ucTxn)
@@ -39,15 +90,11 @@ class UsecaseTxnMessageListener : MessageListener {
     }
 }
 
-@Component("rawTransactionMessageListener")
-class RawTransactionMessageListener : MessageListener {
-
-    @Resource(name = "transmissionPlatform")
-    lateinit var dispatcher: Dispatcher<RawTransaction>
+class RawTransactionMessageListener : AbstractMessageListener() {
 
     companion object {
         @JvmStatic
-        private val log = loggerFor(UsecaseTxnMessageListener::class.java)
+        private val log = loggerFor(RawTransactionMessageListener::class.java)
     }
 
     override fun onMessage(message: Message?) {
@@ -55,16 +102,38 @@ class RawTransactionMessageListener : MessageListener {
         if (message == null) {
             return
         }
-        if (message is ActiveMQBytesMessage) {
-            val size = message.bodyLength
-            val bytes = ByteArray(size.toInt())
-            message.readBytes(bytes)
-            val pRawTrans = ProtoRawTransaction.PRawTransaction.parseFrom(bytes)
-            val rawTrans = RawTransaction()
-            rawTrans.sourceId = pRawTrans.sourceId
-            rawTrans.rawRecord = pRawTrans.rawRecord
-            rawTrans.gcGuid = pRawTrans.gcGuid
-            dispatcher.dispatch(rawTrans)
+        when (message) {
+            is BytesMessage -> {
+                val size = message.bodyLength
+                val bytes = ByteArray(size.toInt())
+                message.readBytes(bytes)
+                val pRawTrans = ProtoRawTransaction.PRawTransaction.parseFrom(bytes)
+                val rawTrans = RawTransaction()
+                val tmpSourceId = handleSourceId(pRawTrans.sourceId)
+                if (tmpSourceId != null) {
+                    rawTrans.sourceId = tmpSourceId
+                } else {
+                    return
+                }
+                rawTrans.rawRecord = pRawTrans.rawRecord
+                rawTrans.gcGuid = pRawTrans.gcGuid
+                dispatcher.dispatch(rawTrans)
+            }
+            else -> {
+                log.info("receive not byte message :{}", message)
+            }
         }
+    }
+
+}
+
+class BlankMessageListener : AbstractMessageListener() {
+    companion object {
+        @JvmStatic
+        private val log = loggerFor(BlankMessageListener::class.java)
+    }
+
+    override fun onMessage(message: Message?) {
+        log.debug("[BlankMessageListener]receive msg: {}", message)
     }
 }

@@ -12,13 +12,13 @@ import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.EnvironmentAware
+import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.PropertySource
 import org.springframework.core.env.Environment
-import org.springframework.stereotype.Component
 import org.yaml.snakeyaml.Yaml
 import xyz.ivyxjc.libra.common.utils.ClassUtils
 import xyz.ivyxjc.libra.core.connection.JmsConnectionUtils
-import xyz.ivyxjc.libra.core.endpoint.ArtemisEndpointListener
+import xyz.ivyxjc.libra.core.endpoint.*
 import java.util.regex.Pattern
 
 @SpringBootApplication(exclude = [JmsAutoConfiguration::class])
@@ -29,13 +29,17 @@ open class ApplicationRunner
 
 fun main() {
     val context = SpringApplication.run(ApplicationRunner::class.java)
-    val bean = context.getBean("listener1") as ArtemisEndpointListener
-    bean.start()
+    println(context)
+    val listener1 = context.getBean("listener1") as ArtemisEndpointListener
+    val listener2 = context.getBean("listener2") as AqEndpointListener
+    listener1.start()
+    listener2.start()
     Thread.sleep(1000000)
 }
 
-@Component
-class StartupInit : BeanDefinitionRegistryPostProcessor, ApplicationContextAware, EnvironmentAware {
+
+@Configuration
+open class StartupInit : BeanDefinitionRegistryPostProcessor, ApplicationContextAware, EnvironmentAware {
 
     companion object {
         @JvmStatic
@@ -104,25 +108,46 @@ class StartupInit : BeanDefinitionRegistryPostProcessor, ApplicationContextAware
 
     private fun handleEndpointListener(registry: BeanDefinitionRegistry, name: String, map: Map<String, Any>) {
         val className = map["class"] as String
-        val cfName = map["jmsConnectionFactory"] as String
+        val msgListenerKey = map["messageListener"] as String
         val address = map["address"] as String
-        val sourceIdInt = map["sourceId"]
-        val sourceId = sourceIdInt.toString().toLong()
+        val sourceIdsStr = (map["sourceIds"] as String).split(",")
+        val sourceIds = Array(sourceIdsStr.size) {
+            sourceIdsStr[it].toLong()
+        }
+
+
         val clz = Class.forName(className)
+        val dispatcherStr = map["dispatcher"] as String
 
-        val beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clz)
+        val msgListenerClz = when (msgListenerKey) {
+            "rawTransactionMessageListener" -> RawTransactionMessageListener::class.java
+            "UsecaseTxnMessageListener" -> UsecaseTxnMessageListener::class.java
+            else -> BlankMessageListener::class.java
+        }
 
-        val fields = ClassUtils.getAllFields(clz)
-
-        fields.forEach {
-            val tmp: Any? = when (it.name) {
-                "jmsConnectionFactory", "platform", "messageListener" -> beanDefinitionBuilder.addPropertyReference(it.name, map[it.name] as String)
-                "address" -> beanDefinitionBuilder.addPropertyValue(it.name, address)
-                "sourceId" -> beanDefinitionBuilder.addPropertyValue(it.name, sourceId)
+        val msgListenerBuilder = BeanDefinitionBuilder.rootBeanDefinition(msgListenerClz)
+        val msgListenerFields = ClassUtils.getAllFields(msgListenerClz)
+        msgListenerFields.forEach {
+            when (it.name) {
+                "sourceIds" -> msgListenerBuilder.addPropertyValue(it.name, sourceIds)
+                "dispatcher" -> msgListenerBuilder.addPropertyReference(it.name, dispatcherStr)
                 else -> null
             }
         }
-        registry.registerBeanDefinition(name, beanDefinitionBuilder.rawBeanDefinition)
+        registry.registerBeanDefinition("${msgListenerClz.simpleName}-$sourceIdsStr-$dispatcherStr", msgListenerBuilder.rawBeanDefinition)
+
+
+        val endpointListenerBuilder = BeanDefinitionBuilder.rootBeanDefinition(clz)
+        val endpointListenerFields = ClassUtils.getAllFields(clz)
+        endpointListenerFields.forEach {
+            when (it.name) {
+                "jmsConnectionFactory" -> endpointListenerBuilder.addPropertyReference(it.name, map[it.name] as String)
+                "messageListener" -> endpointListenerBuilder.addPropertyReference(it.name, "${msgListenerClz.simpleName}-$sourceIdsStr-$dispatcherStr")
+                "address" -> endpointListenerBuilder.addPropertyValue(it.name, address)
+                else -> null
+            }
+        }
+        registry.registerBeanDefinition(name, endpointListenerBuilder.rawBeanDefinition)
     }
 }
 

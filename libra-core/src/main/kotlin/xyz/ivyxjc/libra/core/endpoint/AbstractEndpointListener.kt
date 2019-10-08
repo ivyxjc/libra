@@ -35,6 +35,5 @@ abstract class AbstractEndpointListener {
     internal abstract fun setupSession()
     internal abstract fun setupConnection()
     internal abstract fun setupMessageConsumer()
-
 }
 
