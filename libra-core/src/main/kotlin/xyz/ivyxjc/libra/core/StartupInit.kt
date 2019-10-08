@@ -1,42 +1,22 @@
 package xyz.ivyxjc.libra.core
 
-import org.mybatis.spring.annotation.MapperScan
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory
 import org.springframework.beans.factory.support.BeanDefinitionBuilder
 import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor
-import org.springframework.boot.SpringApplication
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.jms.JmsAutoConfiguration
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.EnvironmentAware
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.PropertySource
 import org.springframework.core.env.Environment
 import org.yaml.snakeyaml.Yaml
 import xyz.ivyxjc.libra.common.utils.ClassUtils
 import xyz.ivyxjc.libra.core.connection.JmsConnectionUtils
-import xyz.ivyxjc.libra.core.endpoint.*
+import xyz.ivyxjc.libra.core.endpoint.BlankMessageListener
+import xyz.ivyxjc.libra.core.endpoint.RawTransactionMessageListener
+import xyz.ivyxjc.libra.core.endpoint.UsecaseTxnMessageListener
 import java.util.regex.Pattern
-
-@SpringBootApplication(exclude = [JmsAutoConfiguration::class])
-@PropertySource(value = ["private-endpoint.properties", "private-jdbc.properties"])
-@MapperScan("xyz.ivyxjc.libra.core.dao")
-open class ApplicationRunner
-
-
-fun main() {
-    val context = SpringApplication.run(ApplicationRunner::class.java)
-    println(context)
-    val listener1 = context.getBean("listener1") as ArtemisEndpointListener
-    val listener2 = context.getBean("listener2") as AqEndpointListener
-    listener1.start()
-    listener2.start()
-    Thread.sleep(1000000)
-}
-
 
 @Configuration
 open class StartupInit : BeanDefinitionRegistryPostProcessor, ApplicationContextAware, EnvironmentAware {
