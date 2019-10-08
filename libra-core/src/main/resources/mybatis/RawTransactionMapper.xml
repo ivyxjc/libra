@@ -21,15 +21,15 @@
     </resultMap>
     <insert id="insertRaw" parameterType="xyz.ivyxjc.libra.core.models.RawTransaction">
         insert into LIBRA.RAW_TRANSACTION (GC_GUID, SOURCE_ID, SEQUENCE,
-        MSG_ID, CREATED_AT, CREATED_BY,VERSION,
+        MSG_ID, CREATED_AT, CREATED_BY,
         CREATED_FROM, VERSION,DUPLICATE_FLG,RAW_RECORD)
         values (#{gcGuid,jdbcType=INTEGER},
         #{sourceId,jdbcType=INTEGER},
         #{sequence,jdbcType=INTEGER},
         #{msgId,jdbcType=VARCHAR},
-        #{createdAt,jdbcType=TIMESTAMP},
-        #{createdBy,jdbcType=VARCHAR},
-        #{createdFrom,jdbcType=VARCHAR},
+        current_timestamp,
+        current_user,
+        current_user,
         #{version,jdbcType=INTEGER},
         #{duplicateFlg,jdbcType=INTEGER},
         #{rawRecord,jdbcType=LONGVARCHAR})

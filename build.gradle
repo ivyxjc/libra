@@ -150,6 +150,7 @@ project("libra-core") {
         }
 
         testImplementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.1.0'
+        testImplementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-test-autoconfigure', version: '2.1.0'
         testImplementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.17'
         testImplementation group: 'com.zaxxer', name: 'HikariCP', version: '3.4.0'
 
@@ -159,8 +160,8 @@ project("libra-core") {
         testImplementation(group: 'org.apache.activemq', name: 'activemq-client', version: '5.15.10') {
             exclude group: "org.apache.geronimo.specs", module: "geronimo-jms_1.1_spec"
         }
-
         testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: spring_boot_version
+
     }
 }
 
