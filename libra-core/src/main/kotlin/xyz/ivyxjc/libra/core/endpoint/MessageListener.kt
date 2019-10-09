@@ -117,6 +117,9 @@ class RawTransactionMessageListener : AbstractMessageListener() {
                 }
                 rawTrans.rawRecord = pRawTrans.rawRecord
                 rawTrans.gcGuid = pRawTrans.gcGuid
+                //todo check dupliate and version
+                rawTrans.duplicateFlg = 0
+                rawTrans.version = 0
                 dispatcher.dispatch(rawTrans)
             }
             else -> {

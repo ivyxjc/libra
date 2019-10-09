@@ -1,10 +1,16 @@
 package xyz.ivyxjc.libra.core.endpoint
 
 
+import org.springframework.beans.factory.InitializingBean
 import xyz.ivyxjc.libra.core.loggerFor
 import javax.jms.*
 
-abstract class AbstractEndpointListener {
+
+interface EndpointListener {
+    fun start()
+}
+
+abstract class AbstractEndpointListener : EndpointListener, InitializingBean {
     companion object {
         @JvmStatic
         private val log = loggerFor(AbstractEndpointListener::class.java)
@@ -24,7 +30,11 @@ abstract class AbstractEndpointListener {
 
     protected var messageConsumer: MessageConsumer? = null
 
-    fun start() {
+    override fun afterPropertiesSet() {
+        start()
+    }
+
+    override fun start() {
         setupConnection()
         setupSession()
         setupMessageConsumer()

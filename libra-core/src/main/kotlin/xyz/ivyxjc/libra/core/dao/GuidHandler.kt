@@ -6,7 +6,7 @@ import java.sql.CallableStatement
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
-class GuidHandler : BaseTypeHandler<String>() {
+class GuidLongHandler : BaseTypeHandler<String>() {
     override fun getNullableResult(rs: ResultSet?, columnName: String?): String? {
         if (rs == null) {
             return null

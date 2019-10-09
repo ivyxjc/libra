@@ -3,7 +3,7 @@
 <mapper namespace="xyz.ivyxjc.libra.core.dao.RawTransMapper">
     <resultMap id="BaseResultMap" type="xyz.ivyxjc.libra.core.models.RawTransaction">
         <id column="GC_GUID" jdbcType="INTEGER" property="gcGuid"
-            typeHandler="xyz.ivyxjc.libra.core.dao.GuidHandler"/>
+            typeHandler="xyz.ivyxjc.libra.core.dao.GuidLongHandler"/>
         <result column="SOURCE_ID" jdbcType="INTEGER" property="sourceId"/>
         <result column="SEQUENCE" jdbcType="INTEGER" property="sequence"/>
         <result column="MSG_ID" jdbcType="VARCHAR" property="msgId"/>
