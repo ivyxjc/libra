@@ -114,8 +114,11 @@ open class StartupInit : BeanDefinitionRegistryPostProcessor, ApplicationContext
                 else -> null
             }
         }
-        registry.registerBeanDefinition("${msgListenerClz.simpleName}-$sourceIdsStr-$dispatcherStr", msgListenerBuilder.rawBeanDefinition)
 
+        val msgListenerBeanName = "${msgListenerClz.simpleName}-$sourceIdsStr-$dispatcherStr"
+        if (!registry.containsBeanDefinition(msgListenerBeanName)) {
+            registry.registerBeanDefinition(msgListenerBeanName, msgListenerBuilder.rawBeanDefinition)
+        }
 
         val endpointListenerBuilder = BeanDefinitionBuilder.rootBeanDefinition(clz)
         val endpointListenerFields = ClassUtils.getAllFields(clz)
