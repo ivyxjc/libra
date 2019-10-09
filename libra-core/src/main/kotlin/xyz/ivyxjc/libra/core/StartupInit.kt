@@ -95,6 +95,7 @@ open class StartupInit : BeanDefinitionRegistryPostProcessor, ApplicationContext
             sourceIdsStr[it].toLong()
         }
 
+        val listenerCount = map["listenerCount"] as Int
 
         val clz = Class.forName(className)
         val dispatcherStr = map["dispatcher"] as String
@@ -130,7 +131,9 @@ open class StartupInit : BeanDefinitionRegistryPostProcessor, ApplicationContext
                 else -> null
             }
         }
-        registry.registerBeanDefinition(name, endpointListenerBuilder.rawBeanDefinition)
+        for (i in 0 until listenerCount) {
+            registry.registerBeanDefinition("$name-$i", endpointListenerBuilder.rawBeanDefinition)
+        }
     }
 }
 

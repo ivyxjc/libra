@@ -9,6 +9,10 @@ import xyz.ivyxjc.libra.core.process.WorkflowSession
 import xyz.ivyxjc.libra.core.process.WorkflowStatus
 import xyz.ivyxjc.libra.core.rawTransToUcTxn
 
+
+/**
+ * Should be Thread-safe
+ */
 @Service("transformationPlatform")
 class TransformationPlatform : Dispatcher<RawTransaction> {
 

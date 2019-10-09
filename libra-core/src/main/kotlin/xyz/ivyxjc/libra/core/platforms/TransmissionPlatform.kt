@@ -6,6 +6,10 @@ import xyz.ivyxjc.libra.core.dao.RawTransMapper
 import xyz.ivyxjc.libra.core.loggerFor
 import xyz.ivyxjc.libra.core.models.RawTransaction
 
+
+/**
+ * Should be Thread-safe
+ */
 @Service("transmissionPlatform")
 class TransmissionPlatform : Dispatcher<RawTransaction> {
 
