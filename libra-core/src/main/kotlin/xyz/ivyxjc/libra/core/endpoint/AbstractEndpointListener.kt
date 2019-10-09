@@ -10,6 +10,10 @@ interface EndpointListener {
     fun start()
 }
 
+/**
+ * for the reason that you cannot access the same jms session in multiple threads
+ * So the AbstractEndpointListener should be one listener one thread
+ */
 abstract class AbstractEndpointListener : EndpointListener, InitializingBean {
     companion object {
         @JvmStatic

@@ -5,6 +5,9 @@ import xyz.ivyxjc.libra.core.models.AbstractTransaction
 import xyz.ivyxjc.libra.core.models.RawTransaction
 import xyz.ivyxjc.libra.core.models.UsecaseTxn
 
+/**
+ * All impl should be Thread-safe
+ */
 interface Dispatcher<out T : AbstractTransaction> {
     fun dispatch(trans: @UnsafeVariance T)
 }

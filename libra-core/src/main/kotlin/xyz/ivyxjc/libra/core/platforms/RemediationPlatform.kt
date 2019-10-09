@@ -8,6 +8,9 @@ import xyz.ivyxjc.libra.core.process.Workflow
 import xyz.ivyxjc.libra.core.process.WorkflowSession
 import xyz.ivyxjc.libra.core.service.UsecaseService
 
+/**
+ * Should be Thread-safe
+ */
 @Service("remediationPlatform")
 class RemediationPlatform : Dispatcher<UsecaseTxn> {
 

@@ -55,7 +55,10 @@ configure(allprojects) { project ->
 
     buildDir = "${rootProject.projectDir.path}/build/${rootProject.name}/${project.name}"
 
-    sourceSets.main.resources.srcDirs += "${rootProject.projectDir.path}/src/main/resources"
+    if (name == 'libra-core-mock-biz') {
+        sourceSets.main.resources.srcDirs += "${rootProject.projectDir.path}/src/main/resources"
+    }
+
     sourceSets.test.resources.srcDirs += "${rootProject.projectDir.path}/src/test/resources"
 
     task fatJar(type: Jar) {
