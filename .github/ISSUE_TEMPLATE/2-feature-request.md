@@ -1,7 +1,6 @@
 ---
 name: "\U0001F680Feature request"
-about: 
-
+about: Suggest a feature for Libra
 ---
 
 # 🚀 feature request
