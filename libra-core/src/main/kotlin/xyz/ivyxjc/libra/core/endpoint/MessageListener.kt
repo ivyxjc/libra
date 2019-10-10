@@ -46,7 +46,7 @@ abstract class AbstractMessageListener() : MessageListener, InitializingBean {
                 null
             }
         } else {
-            return if (!sourceIdsSet.contains(msgSourceId)) {
+            return if (sourceIdsSet.isNotEmpty() && !sourceIdsSet.contains(msgSourceId)) {
                 log.error("receive msg with unaccepted source")
                 return null
             } else {
