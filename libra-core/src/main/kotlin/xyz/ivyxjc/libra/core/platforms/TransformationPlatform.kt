@@ -1,7 +1,7 @@
 package xyz.ivyxjc.libra.core.platforms
 
 import org.springframework.stereotype.Service
-import xyz.ivyxjc.libra.core.loggerFor
+import xyz.ivyxjc.libra.common.utils.loggerFor
 import xyz.ivyxjc.libra.core.models.RawTransaction
 import xyz.ivyxjc.libra.core.process.LibraProcessor
 import xyz.ivyxjc.libra.core.process.Workflow

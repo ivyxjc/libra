@@ -138,6 +138,7 @@ project("libra-core") {
 
     dependencies {
         implementation project(":libra-core-common")
+        implementation project(":libra-jms")
 
         implementation group: 'org.yaml', name: 'snakeyaml', version: '1.25'
 
@@ -152,6 +153,8 @@ project("libra-core") {
         compileOnly(group: 'org.apache.activemq', name: 'activemq-client', version: '5.15.10') {
             exclude group: "org.apache.geronimo.specs", module: "geronimo-jms_1.1_spec"
         }
+        compileOnly group: 'org.springframework', name: 'spring-jms', version: spring_version
+
 
         testImplementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.1.0'
         testImplementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-test-autoconfigure', version: '2.1.0'
@@ -172,10 +175,13 @@ project("libra-core") {
 project("libra-core-mock-biz") {
     dependencies {
         implementation project(":libra-core")
+        implementation project(":libra-jms")
+
         implementation group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: spring_boot_version
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter', version: spring_boot_version
 
         implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.1.0'
+        implementation group: 'org.springframework', name: 'spring-jms', version: spring_version
 
         implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.17'
 

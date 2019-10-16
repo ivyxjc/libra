@@ -2,7 +2,7 @@ package xyz.ivyxjc.libra.core.endpoint
 
 
 import org.springframework.beans.factory.InitializingBean
-import xyz.ivyxjc.libra.core.loggerFor
+import xyz.ivyxjc.libra.common.utils.loggerFor
 import javax.jms.*
 
 
