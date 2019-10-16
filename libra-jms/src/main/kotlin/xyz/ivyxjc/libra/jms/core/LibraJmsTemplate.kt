@@ -226,7 +226,7 @@ class LibraJmsTemplate : JmsOperations {
 
 
     @Throws(JMSException::class)
-    protected fun doSend(producer: MessageProducer, message: Message) {
+    private fun doSend(producer: MessageProducer, message: Message) {
         producer.send(message)
     }
 
@@ -264,7 +264,7 @@ class LibraJmsTemplate : JmsOperations {
         }
     }
 
-    protected fun obtainConnectionFactory(): ConnectionFactory {
+    private fun obtainConnectionFactory(): ConnectionFactory {
         val cf = connectionFactory
         Assert.notNull(cf, "No ConnectionFactory set")
         return cf!!
@@ -275,17 +275,17 @@ class LibraJmsTemplate : JmsOperations {
     private fun createProducer(session: Session, @Nullable destination: Destination?): MessageProducer {
         val producer = doCreateProducer(session, destination)
         if (!messageIdEnabled) {
-            producer.setDisableMessageID(true)
+            producer.disableMessageID = true
         }
         if (!messageTimestampEnabled) {
-            producer.setDisableMessageTimestamp(true)
+            producer.disableMessageTimestamp = true
         }
         producer.deliveryMode = this.deliveryMode
         return producer
     }
 
     @Throws(JMSException::class)
-    protected fun doCreateProducer(session: Session, @Nullable destination: Destination?): MessageProducer {
+    private fun doCreateProducer(session: Session, @Nullable destination: Destination?): MessageProducer {
         return session.createProducer(destination)
     }
 }

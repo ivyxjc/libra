@@ -14,19 +14,20 @@ import javax.jms.Message
 import javax.jms.MessageListener
 
 
-abstract class AbstractMessageListener() : MessageListener, InitializingBean {
-
-    lateinit var sourceIds: Array<Long>
-
-    lateinit var dispatcher: Dispatcher<AbstractTransaction>
-
+abstract class AbstractMessageListener : MessageListener, InitializingBean {
     companion object {
         @JvmStatic
         private val log = loggerFor(AbstractMessageListener::class.java)
     }
 
+    lateinit var dispatcher: Dispatcher<AbstractTransaction>
+
+    lateinit var sourceIds: Array<Long>
+
     private lateinit var sourceIdsSet: Set<Long>
+
     protected var sourceId: Long? = null
+
 
     override fun afterPropertiesSet() {
         sourceIdsSet = sourceIds.toSet()
@@ -58,7 +59,7 @@ abstract class AbstractMessageListener() : MessageListener, InitializingBean {
 }
 
 
-class UsecaseTxnMessageListener() : AbstractMessageListener() {
+class UsecaseTxnMessageListener : AbstractMessageListener() {
 
     companion object {
         @JvmStatic
@@ -117,7 +118,7 @@ class RawTransactionMessageListener : AbstractMessageListener() {
                 }
                 rawTrans.rawRecord = pRawTrans.rawRecord
                 rawTrans.gcGuid = pRawTrans.gcGuid
-                //todo check dupliate and version
+                //todo check duplicate and version
                 rawTrans.duplicateFlg = 0
                 rawTrans.version = 0
                 dispatcher.dispatch(rawTrans)

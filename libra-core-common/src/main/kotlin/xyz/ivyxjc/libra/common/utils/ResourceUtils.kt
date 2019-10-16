@@ -4,7 +4,7 @@ package xyz.ivyxjc.libra.common.utils
 
 import java.util.*
 
-val topLevelClass = object : Any() {}.javaClass.enclosingClass
+private val topLevelClass = object : Any() {}.javaClass.enclosingClass
 
 fun getProperty(key: String, filename: String): String {
     val input = topLevelClass.classLoader.getResourceAsStream(filename)

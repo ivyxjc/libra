@@ -30,6 +30,9 @@ class LibraCachingConnectionFactory : ConnectionFactory {
 
     var targetConnectionFactory: ConnectionFactory? = null
 
+    var cacheProducers = true
+    var cacheConsumers = true
+
     private var sessionCacheSize: Int = 1
     private var connection: Connection? = null
     /**
@@ -40,9 +43,7 @@ class LibraCachingConnectionFactory : ConnectionFactory {
     private var pubSubMode: Boolean = false
     private var startedCount: Int = 0
 
-    private var cacheProducers = true
 
-    private var cacheConsumers = true
 
     private val connectionRLock: ReentrantReadWriteLock.ReadLock
     private val connectionWLock: ReentrantReadWriteLock.WriteLock
@@ -88,7 +89,7 @@ class LibraCachingConnectionFactory : ConnectionFactory {
         TODO("not implemented")
     }
 
-    protected fun getConnection(): Connection {
+    private fun getConnection(): Connection {
         if (this.connection == null) {
             try {
                 connectionWLock.lock()
@@ -117,7 +118,7 @@ class LibraCachingConnectionFactory : ConnectionFactory {
     }
 
     @Throws(JmsException::class)
-    protected fun initConnection() {
+    private fun initConnection() {
         if (targetConnectionFactory == null) {
             throw IllegalStateException("targetConnectionFactory is null")
         }
@@ -137,7 +138,7 @@ class LibraCachingConnectionFactory : ConnectionFactory {
         }
     }
 
-    protected fun closeConnection(conn: Connection) {
+    private fun closeConnection(conn: Connection) {
         log.debug("try to close the connection: {}", conn)
         try {
             conn.use {
@@ -153,7 +154,7 @@ class LibraCachingConnectionFactory : ConnectionFactory {
     }
 
     @Throws(JmsException::class)
-    protected fun doCreateConnection(): Connection {
+    private fun doCreateConnection(): Connection {
         val cf = targetConnectionFactory
         return if (java.lang.Boolean.FALSE == this.pubSubMode && cf is QueueConnectionFactory) {
             cf.createQueueConnection()
@@ -210,13 +211,13 @@ class LibraCachingConnectionFactory : ConnectionFactory {
         val ackMode = if (transacted) Session.AUTO_ACKNOWLEDGE else mode
         // Now actually call the appropriate JMS factory method...
         return if (java.lang.Boolean.FALSE == this.pubSubMode && conn is QueueConnection) {
-            (conn as QueueConnection).createQueueSession(transacted, ackMode)
+            conn.createQueueSession(transacted, ackMode)
         } else if (java.lang.Boolean.TRUE == this.pubSubMode && conn is TopicConnection) {
-            (conn as TopicConnection).createTopicSession(transacted, ackMode)
+            conn.createTopicSession(transacted, ackMode)
         } else {
             conn.createSession(transacted, ackMode)
         }
-        return conn.createSession(false, mode);
+        return conn.createSession(false, mode)
     }
 
     private fun getCachedSessionProxy(targetSession: Session, sessionList: LinkedList<Session>): Session {
@@ -240,7 +241,7 @@ class LibraCachingConnectionFactory : ConnectionFactory {
         private var transactionOpen = false
 
         override fun invoke(proxy: Any?, method: Method?, args: Array<out Any>?): Any? {
-            val methodName = method!!.getName()
+            val methodName = method!!.name
             if (methodName == "equals") {
                 // Only consider equal when proxies are identical.
                 return proxy === args!![0]
@@ -326,11 +327,11 @@ class LibraCachingConnectionFactory : ConnectionFactory {
 //                    }
 //                }
             }
-            try {
+            return try {
                 if (args != null) {
-                    return method.invoke(this.target, *args)
+                    method.invoke(this.target, *args)
                 } else {
-                    return method.invoke(this.target)
+                    method.invoke(this.target)
                 }
             } catch (ex: InvocationTargetException) {
                 throw ex.targetException
@@ -430,15 +431,15 @@ class LibraCachingConnectionFactory : ConnectionFactory {
         @Throws(Throwable::class)
         override fun invoke(proxy: Any, method: Method, @Nullable args: Array<Any>?): Any? {
             if (method.name == "equals" && args != null) {
-                val other = args!![0]
+                val other = args[0]
                 if (proxy === other) {
                     return true
                 }
-                if (other == null || !Proxy.isProxyClass(other!!.javaClass)) {
+                if (other == null || !Proxy.isProxyClass(other.javaClass)) {
                     return false
                 }
-                val otherHandler = Proxy.getInvocationHandler(other!!)
-                return otherHandler is SharedConnectionInvocationHandler && factory() === (otherHandler as SharedConnectionInvocationHandler).factory()
+                val otherHandler = Proxy.getInvocationHandler(other)
+                return otherHandler is SharedConnectionInvocationHandler && factory() === otherHandler.factory()
             } else if (method.name == "hashCode") {
                 // Use hashCode of containing SingleConnectionFactory.
                 return System.identityHashCode(factory())
@@ -446,8 +447,8 @@ class LibraCachingConnectionFactory : ConnectionFactory {
                 return "Shared JMS Connection: " + getConnection()
             } else if (method.name == "setClientID" && args != null) {
                 // Handle setClientID method: throw exception if not compatible.
-                val currentClientId = getConnection().getClientID()
-                return if (currentClientId != null && currentClientId == args!![0]) {
+                val currentClientId = getConnection().clientID
+                return if (currentClientId != null && currentClientId == args[0]) {
                     null
                 } else {
                     throw javax.jms.IllegalStateException(
@@ -520,7 +521,7 @@ class LibraCachingConnectionFactory : ConnectionFactory {
                 val session = getSession(getConnection(), mode!!)
                 if (session != null) {
                     if (!method.returnType.isInstance(session)) {
-                        val msg = "JMS Session does not implement specific domain: " + session
+                        val msg = "JMS Session does not implement specific domain: $session"
                         try {
                             session.close()
                         } catch (ex: Throwable) {
@@ -581,7 +582,7 @@ class LibraCachingConnectionFactory : ConnectionFactory {
      * Simple wrapper class around a Destination reference.
      * Used as the cache key when caching MessageProducer objects.
      */
-    private inner open class DestinationCacheKey(private val destination: Destination) : Comparable<DestinationCacheKey> {
+    private open inner class DestinationCacheKey(private val destination: Destination) : Comparable<DestinationCacheKey> {
 
         @Nullable
         private var destinationString: String? = null
@@ -640,7 +641,7 @@ class LibraCachingConnectionFactory : ConnectionFactory {
             }
             val otherKey = other as ConsumerCacheKey?
             return destinationEquals(otherKey!!) &&
-                    ObjectUtils.nullSafeEquals(this.selector, otherKey!!.selector) &&
+                    ObjectUtils.nullSafeEquals(this.selector, otherKey.selector) &&
                     ObjectUtils.nullSafeEquals(this.noLocal, otherKey.noLocal) &&
                     ObjectUtils.nullSafeEquals(this.subscription, otherKey.subscription) &&
                     this.durable == otherKey.durable

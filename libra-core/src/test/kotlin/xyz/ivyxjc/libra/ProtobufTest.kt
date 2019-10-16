@@ -10,7 +10,7 @@ import kotlin.random.Random
 
 fun buildUcBytes(): ByteArray {
     val ucTxn = UsecaseTxn()
-    ucTxn.gcGuid = "asdfasdf"
+    ucTxn.gcGuid = "abcdefgh"
     ucTxn.sourceId = Random.nextLong()
     ucTxn.ucTxnId = Random.nextLong()
     ucTxn.attributes.putIfAbsent(Random.nextLong().toString(), Random.nextLong().toString())
@@ -24,8 +24,7 @@ fun buildUcBytes(): ByteArray {
     builder.ucTxnId = ucTxn.ucTxnId
     builder.putAllAttributes(ucTxn.attributes)
     val data = builder.build()
-    val bytes = data.toByteArray()
-    return bytes
+    return data.toByteArray()
 }
 
 fun buildRawTransBytes(): ByteArray {
@@ -39,6 +38,5 @@ fun buildRawTransBytes(): ByteArray {
     builder.sourceId = rawTrans.sourceId
     builder.rawRecord = rawTrans.rawRecord
     val data = builder.build()
-    val bytes = data.toByteArray()
-    return bytes
+    return data.toByteArray()
 }

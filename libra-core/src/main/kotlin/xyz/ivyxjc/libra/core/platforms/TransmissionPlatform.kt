@@ -41,9 +41,9 @@ class TransmissionPlatform : Dispatcher<RawTransaction>, InitializingBean {
 //        rawTransMapper.insertRaw(trans)
         val sourceConfig = sourceConfigService.getSourceConfig(trans.sourceId)
         val transformationQueue = sourceConfig.transformationQueue!!
-        val t1 = System.currentTimeMillis();
+        val t1 = System.currentTimeMillis()
         jmsTemplate.convertAndSend(transformationQueue, trans)
-        val t2 = System.currentTimeMillis();
+        val t2 = System.currentTimeMillis()
         println("================${t2 - t1}======================")
     }
 }
