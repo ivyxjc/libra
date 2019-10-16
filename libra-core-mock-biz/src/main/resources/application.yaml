@@ -8,3 +8,9 @@ mybatis:
     type-aliases-package: xyz.ivyxjc.libra.core.dao
     mapper-locations: classpath:mybatis/*.xml
 
+
+libra:
+    internal:
+        mq:
+            url: ${artemis.url}
+
