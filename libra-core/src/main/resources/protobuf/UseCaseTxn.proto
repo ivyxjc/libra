@@ -1,7 +1,7 @@
 syntax = "proto3";
 option java_outer_classname = "ProtoUsecaseTxn";
 
-message PUsecaseTxn{
+message PUseCaseTxn {
     int64 sourceId = 1;
     string gcGuid = 2;
     int64 ucTxnId = 3;

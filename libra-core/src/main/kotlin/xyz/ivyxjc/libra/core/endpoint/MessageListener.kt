@@ -5,7 +5,7 @@ import org.springframework.beans.factory.InitializingBean
 import xyz.ivyxjc.libra.common.utils.loggerFor
 import xyz.ivyxjc.libra.core.models.AbstractTransaction
 import xyz.ivyxjc.libra.core.models.RawTransaction
-import xyz.ivyxjc.libra.core.models.UsecaseTxn
+import xyz.ivyxjc.libra.core.models.UseCaseTxn
 import xyz.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction
 import xyz.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn
 import xyz.ivyxjc.libra.core.platforms.Dispatcher
@@ -75,8 +75,8 @@ class UsecaseTxnMessageListener : AbstractMessageListener() {
             val size = message.bodyLength
             val bytes = ByteArray(size.toInt())
             message.readBytes(bytes)
-            val pUcTxn = ProtoUsecaseTxn.PUsecaseTxn.parseFrom(bytes)
-            val ucTxn = UsecaseTxn()
+            val pUcTxn = ProtoUsecaseTxn.PUseCaseTxn.parseFrom(bytes)
+            val ucTxn = UseCaseTxn()
             val tmpSourceId = handleSourceId(pUcTxn.sourceId)
             if (tmpSourceId != null) {
                 ucTxn.sourceId = tmpSourceId
