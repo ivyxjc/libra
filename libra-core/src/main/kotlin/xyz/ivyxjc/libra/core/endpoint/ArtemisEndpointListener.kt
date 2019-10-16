@@ -55,7 +55,7 @@ class ArtemisEndpointListener : AbstractEndpointListener() {
         while (true) {
             try {
                 if (retryCount > 5) {
-                    log.error("fail to create jms connection, retry count $retryCount")
+                    log.error("fail to create jms connection, retry count {}", retryCount)
                 }
                 retryCount++
                 res = jmsConnectionFactory.createConnection()
@@ -64,7 +64,7 @@ class ArtemisEndpointListener : AbstractEndpointListener() {
                 startFlag = true
                 break
             } catch (e: Exception) {
-                log.warn("fail to create jms connection, retry count $retryCount")
+                log.warn("fail to create jms connection, retry count {}", retryCount)
                 if (!startFlag) {
                     if (res != null) {
                         try {
@@ -85,7 +85,7 @@ class ArtemisEndpointListener : AbstractEndpointListener() {
         while (true) {
             try {
                 if (retryCount > 5) {
-                    log.error("fail to create jms session, retry count $retryCount")
+                    log.error("fail to create jms session, retry count {}", retryCount)
                     jmsConnection = createConnection()
                 }
                 retryCount++
@@ -93,7 +93,7 @@ class ArtemisEndpointListener : AbstractEndpointListener() {
                 Thread.sleep(1000)
                 break
             } catch (e: Exception) {
-                log.warn("fail to create jms session, retry count $retryCount")
+                log.warn("fail to create jms session, retry count {}", retryCount)
             }
         }
         return res
@@ -105,7 +105,7 @@ class ArtemisEndpointListener : AbstractEndpointListener() {
         while (true) {
             try {
                 if (retryCount > 5) {
-                    log.error("fail to create jms message consumer, retry count $retryCount")
+                    log.error("fail to create jms message consumer, retry count {}", retryCount)
                     session = createSession()
                 }
                 retryCount++
@@ -113,7 +113,7 @@ class ArtemisEndpointListener : AbstractEndpointListener() {
                 Thread.sleep(1000)
                 break
             } catch (e: Exception) {
-                log.warn("fail to create jms message consumer, retry count $retryCount")
+                log.warn("fail to create jms message consumer, retry count {}", retryCount)
             }
         }
         return res

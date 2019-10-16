@@ -37,7 +37,7 @@ class TransmissionPlatform : Dispatcher<RawTransaction>, InitializingBean {
     }
 
     override fun dispatch(trans: RawTransaction) {
-        log.debug("receive trans: $trans")
+        log.debug("receive trans: {}", trans)
 //        rawTransMapper.insertRaw(trans)
         val sourceConfig = sourceConfigService.getSourceConfig(trans.sourceId)
         val transformationQueue = sourceConfig.transformationQueue!!

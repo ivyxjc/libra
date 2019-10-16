@@ -80,7 +80,7 @@ class UsecaseTxnMessageListener() : AbstractMessageListener() {
             if (tmpSourceId != null) {
                 ucTxn.sourceId = tmpSourceId
             } else {
-                log.error("cannot handle the source id for message: ${pUcTxn.gcGuid}")
+                log.error("cannot handle the source id for message: {}", pUcTxn.gcGuid)
                 return
             }
             ucTxn.attributes.putAll(pUcTxn.attributesMap)

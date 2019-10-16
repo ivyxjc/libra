@@ -385,13 +385,13 @@ class LibraCachingConnectionFactory : ConnectionFactory {
                 }
             }
             if (returned) {
-                log.trace("Returned cached Session: " + this.target)
+                log.trace("Returned cached Session: {}", this.target)
             }
         }
 
         @Throws(JMSException::class)
         private fun physicalClose() {
-            log.debug("Closing cached Session: " + this.target)
+            log.debug("Closing cached Session: {}", this.target)
 //            // Explicitly close all MessageProducers and MessageConsumers that
 //            // this Session happens to cache...
             try {
