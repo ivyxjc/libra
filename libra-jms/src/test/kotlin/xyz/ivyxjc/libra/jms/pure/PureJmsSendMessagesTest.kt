@@ -3,6 +3,7 @@ package xyz.ivyxjc.libra.jms.pure
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
 import org.apache.activemq.artemis.jms.client.ActiveMQQueue
 import xyz.ivyxjc.libra.common.utils.getProperty
+import javax.jms.DeliveryMode
 import javax.jms.Session
 
 private val artemisUrl = getProperty("artemis.url")
@@ -12,11 +13,11 @@ fun main() {
     connect.start()
     val queue = ActiveMQQueue("IVY.TRANSMISSION11")
 
-    val session = connect.createSession(true, Session.SESSION_TRANSACTED)
+    val session = connect.createSession(false, Session.DUPS_OK_ACKNOWLEDGE)
 //    val session = connect.createSession()
 
     val mp = session.createProducer(queue)
-//    mp.deliveryMode = DeliveryMode.NON_PERSISTENT
+    mp.deliveryMode = DeliveryMode.NON_PERSISTENT
 
     for (i in 0..5000) {
         println(i)

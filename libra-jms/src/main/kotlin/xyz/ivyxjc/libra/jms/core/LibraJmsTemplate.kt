@@ -38,6 +38,8 @@ class LibraJmsTemplate : JmsOperations {
 
     var sessionAcknowledgeMode = Session.AUTO_ACKNOWLEDGE
 
+    var deliveryMode = DeliveryMode.NON_PERSISTENT
+
     private var messageIdEnabled = true
 
     private var messageTimestampEnabled = true
@@ -200,7 +202,9 @@ class LibraJmsTemplate : JmsOperations {
     @Throws(JMSException::class)
     private fun doSend(session: Session, destination: Destination, messageCreator: MessageCreator) {
         Assert.notNull(messageCreator, "MessageCreator must not be null")
+        log.trace("start to create producer")
         val producer = createProducer(session, destination)
+        log.trace("success to create producer: {}", producer)
         try {
             val message = messageCreator.createMessage(session)
             log.debug("Sending created message: {}", message)
@@ -208,10 +212,14 @@ class LibraJmsTemplate : JmsOperations {
             // Check commit - avoid commit call within a JTA transaction.
             if (session.transacted) {
                 // Transacted session created by this template -> commit.
+                log.trace("start to commit session")
                 JmsUtils.commitIfNecessary(session)
+                log.trace("success to commit session")
             }
         } finally {
+            log.trace("start to close message producer")
             JmsUtils.closeMessageProducer(producer)
+            log.trace("success to close message producer")
         }
 
     }
@@ -227,16 +235,23 @@ class LibraJmsTemplate : JmsOperations {
         var connToClose: Connection? = null
         var sessionToClose: Session? = null
         try {
+            log.trace("start to get connection")
             connToClose = obtainConnectionFactory().createConnection()
+            log.trace("success to get connection, start to create session")
             sessionToClose = connToClose.createSession(sessionTransacted, sessionAcknowledgeMode)
+            log.trace("success to create session")
             if (startConnection) {
                 connToClose.start()
             }
             val sessionToUse = sessionToClose
+            log.trace("start to doInJms")
             return action.doInJms(sessionToUse)
         } finally {
+            log.trace("start to close session")
             JmsUtils.closeSession(sessionToClose)
+            log.trace("success to close session and start to release connection")
             ConnectionFactoryUtils.releaseConnection(connToClose, connectionFactory, startConnection)
+            log.trace("success to release connection")
         }
 
     }
@@ -265,6 +280,7 @@ class LibraJmsTemplate : JmsOperations {
         if (!messageTimestampEnabled) {
             producer.setDisableMessageTimestamp(true)
         }
+        producer.deliveryMode = this.deliveryMode
         return producer
     }
 

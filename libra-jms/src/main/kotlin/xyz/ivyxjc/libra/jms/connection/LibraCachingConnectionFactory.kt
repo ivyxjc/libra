@@ -491,7 +491,8 @@ class LibraCachingConnectionFactory : ConnectionFactory {
                 localStop()
                 return null
             } else if (method.name == "close") {
-//                localStop()
+                localStop()
+//                connectionWLock.lock()
 //                synchronized(connectionMonitor) {
 //                    if (this.localExceptionListener != null) {
 //                        if (aggregatedExceptionListener != null) {
@@ -558,17 +559,17 @@ class LibraCachingConnectionFactory : ConnectionFactory {
 
         @Throws(JMSException::class)
         private fun localStop() {
-//            synchronized(connectionMonitor) {
-//                if (this.locallyStarted) {
-//                    this.locallyStarted = false
-//                    if (startedCount == 1 && connection != null) {
-//                        connection!!.stop()
-//                    }
-//                    if (startedCount > 0) {
-//                        startedCount--
-//                    }
-//                }
-//            }
+            connectionWLock.lock()
+            if (this.locallyStarted) {
+                this.locallyStarted = false
+                if (startedCount == 1 && connection != null) {
+                    connection!!.stop()
+                }
+                if (startedCount > 0) {
+                    startedCount--
+                }
+            }
+            connectionWLock.unlock()
         }
 
         private fun factory(): LibraCachingConnectionFactory {
