@@ -1,5 +1,6 @@
 package xyz.ivyxjc.libra.core
 
+import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory
 import org.springframework.beans.factory.support.BeanDefinitionBuilder
 import org.springframework.beans.factory.support.BeanDefinitionRegistry
@@ -90,9 +91,13 @@ open class StartupInit : BeanDefinitionRegistryPostProcessor, ApplicationContext
         val className = map["class"] as String
         val msgListenerKey = map["messageListener"] as String
         val address = map["address"] as String
-        val sourceIdsStr = (map["sourceIds"] as String).split(",")
-        val sourceIds = Array(sourceIdsStr.size) {
-            sourceIdsStr[it].toLong()
+        val sourceIdsStr = map["sourceIds"] as String
+        var sourceIds = emptyArray<Long>()
+        if (!StringUtils.equalsIgnoreCase(sourceIdsStr, "ALL")) {
+            val sourceIdStrList = (map["sourceIds"] as String).split(",")
+            sourceIds = Array(sourceIdStrList.size) {
+                sourceIdsStr[it].toLong()
+            }
         }
 
         val listenerCount = map["listenerCount"] as Int
