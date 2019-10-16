@@ -3,7 +3,7 @@ package xyz.ivyxjc.libra.core.endpoint
 import org.apache.activemq.artemis.jms.client.ActiveMQConnection
 import org.apache.activemq.artemis.jms.client.ActiveMQMessageConsumer
 import org.apache.activemq.artemis.jms.client.ActiveMQQueue
-import xyz.ivyxjc.libra.core.loggerFor
+import xyz.ivyxjc.libra.common.utils.loggerFor
 import javax.jms.Connection
 import javax.jms.MessageConsumer
 import javax.jms.Queue

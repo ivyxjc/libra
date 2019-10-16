@@ -2,7 +2,7 @@ package xyz.ivyxjc.libra.core.endpoint
 
 import org.apache.activemq.artemis.jms.client.ActiveMQBytesMessage
 import org.springframework.beans.factory.InitializingBean
-import xyz.ivyxjc.libra.core.loggerFor
+import xyz.ivyxjc.libra.common.utils.loggerFor
 import xyz.ivyxjc.libra.core.models.AbstractTransaction
 import xyz.ivyxjc.libra.core.models.RawTransaction
 import xyz.ivyxjc.libra.core.models.UsecaseTxn

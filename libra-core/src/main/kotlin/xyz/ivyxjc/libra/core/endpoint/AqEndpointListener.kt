@@ -2,7 +2,7 @@ package xyz.ivyxjc.libra.core.endpoint
 
 import org.apache.activemq.ActiveMQConnection
 import org.apache.activemq.command.ActiveMQQueue
-import xyz.ivyxjc.libra.core.loggerFor
+import xyz.ivyxjc.libra.common.utils.loggerFor
 import javax.jms.Connection
 import javax.jms.MessageConsumer
 import javax.jms.Queue

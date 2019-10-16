@@ -2,7 +2,7 @@ package xyz.ivyxjc.libra.core.platforms
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import xyz.ivyxjc.libra.core.loggerFor
+import xyz.ivyxjc.libra.common.utils.loggerFor
 import xyz.ivyxjc.libra.core.models.UsecaseTxn
 import xyz.ivyxjc.libra.core.process.Workflow
 import xyz.ivyxjc.libra.core.process.WorkflowSession
