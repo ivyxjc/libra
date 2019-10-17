@@ -37,7 +37,7 @@ open class JmsConfig {
 
     @Bean
     open fun internalConnectionFactory(): ConnectionFactory {
-        val url = env.get("libra.internal.mq.url")
+        val url = env["libra.internal.mq.url"]
         val connectionFactory = ActiveMQConnectionFactory(url)
         connectionFactory.isCacheDestinations = true
         return LibraCachingConnectionFactory(connectionFactory)

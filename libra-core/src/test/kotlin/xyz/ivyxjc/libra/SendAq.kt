@@ -9,8 +9,8 @@ import xyz.ivyxjc.libra.common.utils.getProperty
 import javax.jms.DeliveryMode
 import javax.jms.Session
 
-private val threadNum = 12
-private val count = 200
+private const val threadNum = 12
+private const val count = 200
 
 private val artemisUrl = getProperty("artemis.url")
 private val aqUrl = getProperty("aq.url")
@@ -48,8 +48,7 @@ fun sendAq() {
     val queue = org.apache.activemq.command.ActiveMQQueue("IVY.TRANSMISSION1")
     val arr = Array(threadNum) {
         Thread(Runnable {
-            var connect = connectionFactory.createConnection()
-            connect = connect
+            val connect = connectionFactory.createConnection()
             connect.start()
             val session = connect.createSession(false, Session.AUTO_ACKNOWLEDGE)
             val mp = session.createProducer(queue)

@@ -1,6 +1,6 @@
 package xyz.ivyxjc.libra.core.models
 
-class UsecaseTxn : AbstractTransaction() {
+class UseCaseTxn : AbstractTransaction() {
     var sourceId: Long = -1
     var usecaseId: Long = -1
     var usecaseName: String = ""

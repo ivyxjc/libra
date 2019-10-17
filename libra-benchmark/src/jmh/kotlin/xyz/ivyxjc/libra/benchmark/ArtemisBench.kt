@@ -6,6 +6,8 @@ import org.apache.activemq.artemis.jms.client.ActiveMQSession
 import org.openjdk.jmh.annotations.*
 import xyz.ivyxjc.libra.common.utils.getProperty
 import java.util.concurrent.TimeUnit
+import javax.jms.Connection
+import javax.jms.MessageProducer
 import javax.jms.Session
 
 
@@ -13,12 +15,12 @@ import javax.jms.Session
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @State(Scope.Thread)
 open class ArtemisBench {
-    val url = getProperty("artemis.url")
-    val conFactory = ActiveMQConnectionFactory(url)
-    val connection = conFactory.createConnection()
-    val session = connection.createSession(true, Session.SESSION_TRANSACTED) as ActiveMQSession
-    val queue = ActiveMQQueue("IVY.TRANSMISSION12")
-    val mp = session.createProducer(queue)
+    private val url = getProperty("artemis.url")
+    private val conFactory = ActiveMQConnectionFactory(url)
+    private val connection: Connection = conFactory.createConnection()
+    private val session = connection.createSession(true, Session.SESSION_TRANSACTED) as ActiveMQSession
+    private val queue = ActiveMQQueue("IVY.TRANSMISSION12")
+    private val mp: MessageProducer = session.createProducer(queue)
 
     init {
         connection.start()

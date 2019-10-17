@@ -5,7 +5,7 @@ import org.springframework.beans.factory.InitializingBean
 import xyz.ivyxjc.libra.common.utils.loggerFor
 import xyz.ivyxjc.libra.core.models.AbstractTransaction
 import xyz.ivyxjc.libra.core.models.RawTransaction
-import xyz.ivyxjc.libra.core.models.UsecaseTxn
+import xyz.ivyxjc.libra.core.models.UseCaseTxn
 import xyz.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction
 import xyz.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn
 import xyz.ivyxjc.libra.core.platforms.Dispatcher
@@ -14,19 +14,20 @@ import javax.jms.Message
 import javax.jms.MessageListener
 
 
-abstract class AbstractMessageListener() : MessageListener, InitializingBean {
-
-    lateinit var sourceIds: Array<Long>
-
-    lateinit var dispatcher: Dispatcher<AbstractTransaction>
-
+abstract class AbstractMessageListener : MessageListener, InitializingBean {
     companion object {
         @JvmStatic
         private val log = loggerFor(AbstractMessageListener::class.java)
     }
 
+    lateinit var dispatcher: Dispatcher<AbstractTransaction>
+
+    lateinit var sourceIds: Array<Long>
+
     private lateinit var sourceIdsSet: Set<Long>
+
     protected var sourceId: Long? = null
+
 
     override fun afterPropertiesSet() {
         sourceIdsSet = sourceIds.toSet()
@@ -58,7 +59,7 @@ abstract class AbstractMessageListener() : MessageListener, InitializingBean {
 }
 
 
-class UsecaseTxnMessageListener() : AbstractMessageListener() {
+class UsecaseTxnMessageListener : AbstractMessageListener() {
 
     companion object {
         @JvmStatic
@@ -74,13 +75,13 @@ class UsecaseTxnMessageListener() : AbstractMessageListener() {
             val size = message.bodyLength
             val bytes = ByteArray(size.toInt())
             message.readBytes(bytes)
-            val pUcTxn = ProtoUsecaseTxn.PUsecaseTxn.parseFrom(bytes)
-            val ucTxn = UsecaseTxn()
+            val pUcTxn = ProtoUsecaseTxn.PUseCaseTxn.parseFrom(bytes)
+            val ucTxn = UseCaseTxn()
             val tmpSourceId = handleSourceId(pUcTxn.sourceId)
             if (tmpSourceId != null) {
                 ucTxn.sourceId = tmpSourceId
             } else {
-                log.error("cannot handle the source id for message: ${pUcTxn.gcGuid}")
+                log.error("cannot handle the source id for message: {}", pUcTxn.gcGuid)
                 return
             }
             ucTxn.attributes.putAll(pUcTxn.attributesMap)
@@ -117,7 +118,7 @@ class RawTransactionMessageListener : AbstractMessageListener() {
                 }
                 rawTrans.rawRecord = pRawTrans.rawRecord
                 rawTrans.gcGuid = pRawTrans.gcGuid
-                //todo check dupliate and version
+                //todo check duplicate and version
                 rawTrans.duplicateFlg = 0
                 rawTrans.version = 0
                 dispatcher.dispatch(rawTrans)

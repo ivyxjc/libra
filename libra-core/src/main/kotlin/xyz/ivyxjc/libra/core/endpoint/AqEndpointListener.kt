@@ -48,7 +48,7 @@ class AqEndpointListener : AbstractEndpointListener() {
         while (true) {
             try {
                 if (retryCount > 5) {
-                    log.error("fail to create jms connection, retry count $retryCount")
+                    log.error("fail to create jms connection, retry count {}", retryCount)
                 }
                 retryCount++
                 res = jmsConnectionFactory.createConnection()
@@ -57,7 +57,7 @@ class AqEndpointListener : AbstractEndpointListener() {
                 startFlag = true
                 break
             } catch (e: Exception) {
-                log.warn("fail to create jms connection, retry count $retryCount")
+                log.warn("fail to create jms connection, retry count {}", retryCount)
                 if (!startFlag) {
                     if (res != null) {
                         try {
@@ -78,7 +78,7 @@ class AqEndpointListener : AbstractEndpointListener() {
         while (true) {
             try {
                 if (retryCount > 5) {
-                    log.error("fail to create jms session, retry count $retryCount")
+                    log.error("fail to create jms session, retry count {}", retryCount)
                     jmsConnection = createConnection()
                 }
                 retryCount++
@@ -86,7 +86,7 @@ class AqEndpointListener : AbstractEndpointListener() {
                 Thread.sleep(1000)
                 break
             } catch (e: Exception) {
-                log.warn("fail to create jms session, retry count $retryCount")
+                log.warn("fail to create jms session, retry count {}", retryCount)
             }
         }
         return res
@@ -98,7 +98,7 @@ class AqEndpointListener : AbstractEndpointListener() {
         while (true) {
             try {
                 if (retryCount > 5) {
-                    log.error("fail to create jms message consumer, retry count $retryCount")
+                    log.error("fail to create jms message consumer, retry count {}", retryCount)
                     session = createSession()
                 }
                 retryCount++
@@ -106,7 +106,7 @@ class AqEndpointListener : AbstractEndpointListener() {
                 Thread.sleep(1000)
                 break
             } catch (e: Exception) {
-                log.warn("fail to create jms message consumer, retry count $retryCount")
+                log.warn("fail to create jms message consumer, retry count {}", retryCount)
             }
         }
         return res

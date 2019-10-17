@@ -36,7 +36,7 @@ class TransformationPlatform : Dispatcher<RawTransaction> {
                 }
                 index++
                 if (flow.status != WorkflowStatus.TERMINATED) {
-                    log.debug("status is ${flow.status}, do the following processors.")
+                    log.debug("status is {}, do the following processors.", flow.status)
                 } else {
                     log.debug("status is terminated, skip the following processors")
                     break

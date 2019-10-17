@@ -17,7 +17,7 @@
                 typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
         <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy"/>
         <result column="UPDATED_FROM" jdbcType="VARCHAR" property="updatedFrom"/>
-        <result column="RAW_RECORD" jdbcType="LONGVARCHAR" property="rawRecord"/>
+        <result column="RAW_RECORD" jdbcType="LONGNVARCHAR" property="rawRecord"/>
     </resultMap>
     <insert id="insertRaw" parameterType="xyz.ivyxjc.libra.core.models.RawTransaction">
         insert into LIBRA.RAW_TRANSACTION (GC_GUID, SOURCE_ID, SEQUENCE,
