@@ -68,9 +68,9 @@ fun sendAq() {
 
 
 suspend fun main() = coroutineScope {
-    launch {
-        sendAq()
-    }
+    //    launch {
+//        sendAq()
+//    }
     launch {
         sendArtemis()
     }

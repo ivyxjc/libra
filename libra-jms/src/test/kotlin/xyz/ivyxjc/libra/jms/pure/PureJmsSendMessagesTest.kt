@@ -21,11 +21,12 @@ fun main() {
 
     for (i in 0..5000) {
         println(i)
+        Thread.sleep(500)
         val textMessage = session.createTextMessage()
         textMessage.text = "hello"
         mp.send(textMessage)
 //        session.commit()
     }
-    session.commit()
+//    session.commit()
 
 }

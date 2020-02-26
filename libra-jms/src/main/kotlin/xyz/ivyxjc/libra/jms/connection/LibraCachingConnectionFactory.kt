@@ -44,7 +44,6 @@ class LibraCachingConnectionFactory : ConnectionFactory {
     private var startedCount: Int = 0
 
 
-
     private val connectionRLock: ReentrantReadWriteLock.ReadLock
     private val connectionWLock: ReentrantReadWriteLock.WriteLock
 
@@ -184,7 +183,11 @@ class LibraCachingConnectionFactory : ConnectionFactory {
         if (conn is TopicConnection) {
             classes.add(TopicConnection::class.java)
         }
-        return Proxy.newProxyInstance(Connection::class.java.classLoader, classes.toTypedArray(), SharedConnectionInvocationHandler()) as Connection
+        return Proxy.newProxyInstance(
+            Connection::class.java.classLoader,
+            classes.toTypedArray(),
+            SharedConnectionInvocationHandler()
+        ) as Connection
     }
 
     private fun getSession(conn: Connection, mode: Int): Session? {
@@ -228,11 +231,18 @@ class LibraCachingConnectionFactory : ConnectionFactory {
         if (targetSession is TopicSession) {
             classes.add(TopicSession::class.java)
         }
-        return Proxy.newProxyInstance(Session::class.java.classLoader, classes.toTypedArray(), CachedSessionInvocationHandler(targetSession, sessionList)) as Session
+        return Proxy.newProxyInstance(
+            Session::class.java.classLoader,
+            classes.toTypedArray(),
+            CachedSessionInvocationHandler(targetSession, sessionList)
+        ) as Session
 
     }
 
-    private inner class CachedSessionInvocationHandler(private val target: Session, private val sessionList: LinkedList<Session>) : InvocationHandler {
+    private inner class CachedSessionInvocationHandler(
+        private val target: Session,
+        private val sessionList: LinkedList<Session>
+    ) : InvocationHandler {
 
 
         private val cachedProducers = mutableMapOf<DestinationCacheKey, MessageProducer>()
@@ -278,7 +288,8 @@ class LibraCachingConnectionFactory : ConnectionFactory {
             } else if (methodName.startsWith("create")) {
                 this.transactionOpen = true
                 if (cacheProducers && (methodName == "createProducer" ||
-                                methodName == "createSender" || methodName == "createPublisher")) {
+                            methodName == "createSender" || methodName == "createPublisher")
+                ) {
                     // Destination argument being null is ok for a producer
                     val dest = args!![0] as Destination
                     if (!(dest is TemporaryQueue || dest is TemporaryTopic)) {
@@ -346,6 +357,20 @@ class LibraCachingConnectionFactory : ConnectionFactory {
                 log.trace("Found cached JMS MessageProducer for destination [{}]: {}", dest, producer)
             } else {
                 producer = this.target.createProducer(dest)
+                log.debug("Registering cached JMS MessageProducer for destination [{}]: {}", dest, producer)
+                this.cachedProducers[cacheKey!!] = producer
+            }
+            return LibraCachedMessageProducer(producer!!)
+        }
+
+        @Throws(JMSException::class)
+        private fun getCachedQueue(dest: String): Queue {
+            val cacheKey = if (dest != null) DestinationCacheKey(dest) else null
+            var producer: MessageProducer? = this.cachedProducers[cacheKey]
+            if (producer != null) {
+                log.trace("Found cached JMS MessageProducer for destination [{}]: {}", dest, producer)
+            } else {
+                producer = this.target.createQueue(dest)
                 log.debug("Registering cached JMS MessageProducer for destination [{}]: {}", dest, producer)
                 this.cachedProducers[cacheKey!!] = producer
             }
@@ -452,7 +477,8 @@ class LibraCachingConnectionFactory : ConnectionFactory {
                     null
                 } else {
                     throw javax.jms.IllegalStateException(
-                            ("setClientID call not supported on proxy for shared Connection. " + "Set the 'clientId' property on the SingleConnectionFactory instead."))
+                        ("setClientID call not supported on proxy for shared Connection. " + "Set the 'clientId' property on the SingleConnectionFactory instead.")
+                    )
                 }
             } else if (method.name == "setExceptionListener" && args != null) {
                 // Handle setExceptionListener method: add to the chain.
@@ -504,7 +530,8 @@ class LibraCachingConnectionFactory : ConnectionFactory {
 //                }
                 return null
             } else if ((method.name == "createSession" || method.name == "createQueueSession" ||
-                            method.name == "createTopicSession")) {
+                        method.name == "createTopicSession")
+            ) {
                 // Default: JMS 2.0 createSession() method
                 var mode: Int? = Session.AUTO_ACKNOWLEDGE
                 if (args != null) {
@@ -582,7 +609,8 @@ class LibraCachingConnectionFactory : ConnectionFactory {
      * Simple wrapper class around a Destination reference.
      * Used as the cache key when caching MessageProducer objects.
      */
-    private open inner class DestinationCacheKey(private val destination: Destination) : Comparable<DestinationCacheKey> {
+    private open inner class DestinationCacheKey(private val destination: Destination) :
+        Comparable<DestinationCacheKey> {
 
         @Nullable
         private var destinationString: String? = null
@@ -629,11 +657,13 @@ class LibraCachingConnectionFactory : ConnectionFactory {
      * Simple wrapper class around a Destination and other consumer attributes.
      * Used as the cache key when caching MessageConsumer objects.
      */
-    private inner class ConsumerCacheKey(destination: Destination, @param:Nullable @field:Nullable
-    private val selector: String?, @param:Nullable @field:Nullable
-                                         private val noLocal: Boolean?,
-                                         @param:Nullable @field:Nullable
-                                         val subscription: String?, private val durable: Boolean) : DestinationCacheKey(destination) {
+    private inner class ConsumerCacheKey(
+        destination: Destination, @param:Nullable @field:Nullable
+        private val selector: String?, @param:Nullable @field:Nullable
+        private val noLocal: Boolean?,
+        @param:Nullable @field:Nullable
+        val subscription: String?, private val durable: Boolean
+    ) : DestinationCacheKey(destination) {
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -656,4 +686,8 @@ class LibraCachingConnectionFactory : ConnectionFactory {
                     ", subscription=" + this.subscription + ", durable=" + this.durable + "]"
         }
     }
+
+    private inner class QueueCacheKey(
+        destination: Destination
+    )
 }

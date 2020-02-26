@@ -44,73 +44,7 @@
         <result column="UPDATED_FROM" jdbcType="VARCHAR" property="updatedFrom"/>
     </resultMap>
 
-    <insert id="insert" parameterType="xyz.ivyxjc.libra.core.models.GoldCopyTransaction">
-        insert into LIBRA.GOLD_COPY_TRANSACTION (GC_GUID, SOURCE_ID, SEQUENCE,
-        COMPOSITE_UNIQUE_ID, SSB_ASSET_ID, SSB_TRADE_ID,
-        FUND_ID, TRANS_TYPE, SOURCE_SYSTEM_ID,
-        CR_CCY_BASE, CR_ACCT_ID, CR_ACCT_OFFICE,
-        CR_TRANS_AMOUNT, CR_CHECK, CR_TRANS_TYPE,
-        CR_TRANS_RSN_CD, CR_VALUE_DATE, CR_RSN_CD,
-        DR_CCY_BASE, DR_ACCT_ID, DR_ACCT_OFFICE,
-        DR_TRANS_AMOUNT, DR_CHECK, DR_TRANS_TYPE,
-        DR_TRANS_RSN_CD, DR_VALUE_DATE, DR_RSN_CD,
-        REFERENCE_ID, RELATED_REFERENCE, TRANS_DESC,
-        CREATED_AT, CREATED_BY, CREATED_FROM,
-        UPDATED_AT, UPDATED_BY, UPDATED_FROM
-        )
-        values (#{gcGuid,jdbcType=BIGINT}, #{sourceId,jdbcType=BIGINT}, #{sequence,jdbcType=INTEGER},
-        #{compositeUniqueId,jdbcType=VARCHAR}, #{ssbAssetId,jdbcType=VARCHAR}, #{ssbTradeId,jdbcType=VARCHAR},
-        #{fundId,jdbcType=VARCHAR}, #{transType,jdbcType=VARCHAR}, #{sourceSystemId,jdbcType=VARCHAR},
-        #{crCcyBase,jdbcType=VARCHAR}, #{crAcctId,jdbcType=VARCHAR}, #{crAcctOffice,jdbcType=VARCHAR},
-        #{crTransAmount,jdbcType=DECIMAL}, #{crCheck,jdbcType=VARCHAR}, #{crTransType,jdbcType=VARCHAR},
-        #{crTransRsnCd,jdbcType=VARCHAR}, #{crValueDate,jdbcType=TIMESTAMP}, #{crRsnCd,jdbcType=VARCHAR},
-        #{drCcyBase,jdbcType=VARCHAR}, #{drAcctId,jdbcType=VARCHAR}, #{drAcctOffice,jdbcType=VARCHAR},
-        #{drTransAmount,jdbcType=DECIMAL}, #{drCheck,jdbcType=VARCHAR}, #{drTransType,jdbcType=VARCHAR},
-        #{drTransRsnCd,jdbcType=VARCHAR}, #{drValueDate,jdbcType=TIMESTAMP}, #{drRsnCd,jdbcType=VARCHAR},
-        #{referenceId,jdbcType=VARCHAR}, #{relatedReference,jdbcType=VARCHAR}, #{transDesc,jdbcType=VARCHAR},
-        #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{createdFrom,jdbcType=VARCHAR},
-        #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, #{updatedFrom,jdbcType=VARCHAR}
-        )
-    </insert>
-    <update id="updateByGuid" parameterType="xyz.ivyxjc.libra.core.models.GoldCopyTransaction">
-        update GOLD_COPY_TRANSACTION
-        set SOURCE_ID = #{sourceId,jdbcType=BIGINT},
-        SEQUENCE = #{sequence,jdbcType=INTEGER},
-        COMPOSITE_UNIQUE_ID = #{compositeUniqueId,jdbcType=VARCHAR},
-        SSB_ASSET_ID = #{ssbAssetId,jdbcType=VARCHAR},
-        SSB_TRADE_ID = #{ssbTradeId,jdbcType=VARCHAR},
-        FUND_ID = #{fundId,jdbcType=VARCHAR},
-        TRANS_TYPE = #{transType,jdbcType=VARCHAR},
-        SOURCE_SYSTEM_ID = #{sourceSystemId,jdbcType=VARCHAR},
-        CR_CCY_BASE = #{crCcyBase,jdbcType=VARCHAR},
-        CR_ACCT_ID = #{crAcctId,jdbcType=VARCHAR},
-        CR_ACCT_OFFICE = #{crAcctOffice,jdbcType=VARCHAR},
-        CR_TRANS_AMOUNT = #{crTransAmount,jdbcType=DECIMAL},
-        CR_CHECK = #{crCheck,jdbcType=VARCHAR},
-        CR_TRANS_TYPE = #{crTransType,jdbcType=VARCHAR},
-        CR_TRANS_RSN_CD = #{crTransRsnCd,jdbcType=VARCHAR},
-        CR_VALUE_DATE = #{crValueDate,jdbcType=TIMESTAMP},
-        CR_RSN_CD = #{crRsnCd,jdbcType=VARCHAR},
-        DR_CCY_BASE = #{drCcyBase,jdbcType=VARCHAR},
-        DR_ACCT_ID = #{drAcctId,jdbcType=VARCHAR},
-        DR_ACCT_OFFICE = #{drAcctOffice,jdbcType=VARCHAR},
-        DR_TRANS_AMOUNT = #{drTransAmount,jdbcType=DECIMAL},
-        DR_CHECK = #{drCheck,jdbcType=VARCHAR},
-        DR_TRANS_TYPE = #{drTransType,jdbcType=VARCHAR},
-        DR_TRANS_RSN_CD = #{drTransRsnCd,jdbcType=VARCHAR},
-        DR_VALUE_DATE = #{drValueDate,jdbcType=TIMESTAMP},
-        DR_RSN_CD = #{drRsnCd,jdbcType=VARCHAR},
-        REFERENCE_ID = #{referenceId,jdbcType=VARCHAR},
-        RELATED_REFERENCE = #{relatedReference,jdbcType=VARCHAR},
-        TRANS_DESC = #{transDesc,jdbcType=VARCHAR},
-        CREATED_AT = #{createdAt,jdbcType=TIMESTAMP},
-        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
-        CREATED_FROM = #{createdFrom,jdbcType=VARCHAR},
-        UPDATED_AT = #{updatedAt,jdbcType=TIMESTAMP},
-        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
-        UPDATED_FROM = #{updatedFrom,jdbcType=VARCHAR}
-        where GC_GUID = #{gcGuid,jdbcType=BIGINT}
-    </update>
+
     <select id="queryByGuid" parameterType="java.lang.Long" resultMap="GcTransBaseMapper">
         select GC_GUID, SOURCE_ID, SEQUENCE, COMPOSITE_UNIQUE_ID, SSB_ASSET_ID, SSB_TRADE_ID,
         FUND_ID, TRANS_TYPE, SOURCE_SYSTEM_ID, CR_CCY_BASE, CR_ACCT_ID, CR_ACCT_OFFICE, CR_TRANS_AMOUNT,

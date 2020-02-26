@@ -19,6 +19,7 @@ fun main() {
     libraJmsTemplate.deliveryMode = DeliveryMode.NON_PERSISTENT
 
     for (i in 0 until 1000) {
+        Thread.sleep(400)
         println(i)
         libraJmsTemplate.convertAndSend("IVY.TRANS111", "hello")
     }
