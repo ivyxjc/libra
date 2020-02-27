@@ -1,4 +1,4 @@
-package xyz.ivyxjc.libra.jms.connection
+package xyz.ivyxjc.libra.jms.deprecated.connection
 
 import org.springframework.lang.Nullable
 import javax.jms.*

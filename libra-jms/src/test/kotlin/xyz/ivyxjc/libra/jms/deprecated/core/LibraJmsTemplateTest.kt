@@ -3,6 +3,7 @@ package xyz.ivyxjc.libra.jms.core
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
 import xyz.ivyxjc.libra.common.utils.getProperty
 import xyz.ivyxjc.libra.jms.connection.LibraCachingConnectionFactory
+import xyz.ivyxjc.libra.jms.deprecated.core.LibraJmsTemplate
 import javax.jms.DeliveryMode
 import javax.jms.Session
 

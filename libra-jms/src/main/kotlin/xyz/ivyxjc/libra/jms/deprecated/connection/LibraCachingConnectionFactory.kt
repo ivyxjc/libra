@@ -5,6 +5,7 @@ import org.springframework.lang.Nullable
 import org.springframework.util.Assert
 import org.springframework.util.ObjectUtils
 import xyz.ivyxjc.libra.common.utils.loggerFor
+import xyz.ivyxjc.libra.jms.deprecated.connection.LibraCachedMessageProducer
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
@@ -357,20 +358,6 @@ class LibraCachingConnectionFactory : ConnectionFactory {
                 log.trace("Found cached JMS MessageProducer for destination [{}]: {}", dest, producer)
             } else {
                 producer = this.target.createProducer(dest)
-                log.debug("Registering cached JMS MessageProducer for destination [{}]: {}", dest, producer)
-                this.cachedProducers[cacheKey!!] = producer
-            }
-            return LibraCachedMessageProducer(producer!!)
-        }
-
-        @Throws(JMSException::class)
-        private fun getCachedQueue(dest: String): Queue {
-            val cacheKey = if (dest != null) DestinationCacheKey(dest) else null
-            var producer: MessageProducer? = this.cachedProducers[cacheKey]
-            if (producer != null) {
-                log.trace("Found cached JMS MessageProducer for destination [{}]: {}", dest, producer)
-            } else {
-                producer = this.target.createQueue(dest)
                 log.debug("Registering cached JMS MessageProducer for destination [{}]: {}", dest, producer)
                 this.cachedProducers[cacheKey!!] = producer
             }

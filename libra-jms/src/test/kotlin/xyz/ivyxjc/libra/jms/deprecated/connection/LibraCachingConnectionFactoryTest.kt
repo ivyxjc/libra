@@ -1,9 +1,10 @@
-package xyz.ivyxjc.libra.jms.connection
+package xyz.ivyxjc.libra.jms.deprecated.connection
 
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
 import org.apache.activemq.artemis.jms.client.ActiveMQQueue
 import org.junit.Test
 import xyz.ivyxjc.libra.common.utils.getProperty
+import xyz.ivyxjc.libra.jms.connection.LibraCachingConnectionFactory
 import javax.jms.Connection
 import javax.jms.Session
 

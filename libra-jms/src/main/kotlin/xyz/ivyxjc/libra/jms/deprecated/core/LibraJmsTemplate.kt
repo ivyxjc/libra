@@ -1,4 +1,4 @@
-package xyz.ivyxjc.libra.jms.core
+package xyz.ivyxjc.libra.jms.deprecated.core
 
 import org.springframework.jms.JmsException
 import org.springframework.jms.connection.ConnectionFactoryUtils
