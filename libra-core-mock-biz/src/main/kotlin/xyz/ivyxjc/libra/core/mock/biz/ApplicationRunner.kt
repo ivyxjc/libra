@@ -11,22 +11,24 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.PropertySource
 import org.springframework.core.env.Environment
 import org.springframework.core.env.get
-import xyz.ivyxjc.libra.core.StartupInit
-import xyz.ivyxjc.libra.jms.connection.LibraCachingConnectionFactory
-import xyz.ivyxjc.libra.jms.core.LibraJmsTemplate
+import org.springframework.jms.config.DefaultJmsListenerContainerFactory
+import org.springframework.jms.connection.CachingConnectionFactory
+import org.springframework.jms.core.JmsTemplate
+import xyz.ivyxjc.libra.core.CorePosition
+import xyz.ivyxjc.libra.jms.annotation.EnableLibraJms
 import javax.jms.ConnectionFactory
 import javax.jms.DeliveryMode
 import javax.jms.Session
 
-@SpringBootApplication(exclude = [JmsAutoConfiguration::class], scanBasePackageClasses = [StartupInit::class])
+@SpringBootApplication(exclude = [JmsAutoConfiguration::class], scanBasePackageClasses = [CorePosition::class])
 @PropertySource(value = ["private-endpoint.properties", "private-jdbc.properties"])
 @MapperScan("xyz.ivyxjc.libra.core.dao")
+@EnableLibraJms
 open class ApplicationRunner
 
 
 fun main() {
     SpringApplication.run(ApplicationRunner::class.java)
-    Thread.sleep(1000000)
 }
 
 @Configuration
@@ -40,13 +42,23 @@ open class JmsConfig {
         val url = env["libra.internal.mq.url"]
         val connectionFactory = ActiveMQConnectionFactory(url)
         connectionFactory.isCacheDestinations = true
-        return LibraCachingConnectionFactory(connectionFactory)
+        val cachingConnectionFactory = CachingConnectionFactory(connectionFactory)
+        cachingConnectionFactory.isCacheProducers = true
+        cachingConnectionFactory.isCacheConsumers = true
+        cachingConnectionFactory.sessionCacheSize = 20
+        return cachingConnectionFactory
     }
 
     @Bean
-    open fun jmsTemplate(internalConnectionFactory: ConnectionFactory): LibraJmsTemplate {
-        val jmsTemplate = LibraJmsTemplate(internalConnectionFactory)
-        jmsTemplate.sessionTransacted = false
+    open fun internalContainerFactory(internalConnectionFactory: ConnectionFactory): DefaultJmsListenerContainerFactory {
+        val containerFactory = DefaultJmsListenerContainerFactory()
+        containerFactory.setConnectionFactory(internalConnectionFactory)
+        return containerFactory
+    }
+
+    @Bean
+    open fun jmsTemplate(internalConnectionFactory: ConnectionFactory): JmsTemplate {
+        val jmsTemplate = JmsTemplate(internalConnectionFactory)
         jmsTemplate.sessionAcknowledgeMode = Session.DUPS_OK_ACKNOWLEDGE
         jmsTemplate.deliveryMode = DeliveryMode.NON_PERSISTENT
         return jmsTemplate
