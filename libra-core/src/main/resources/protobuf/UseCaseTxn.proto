@@ -2,9 +2,9 @@ syntax = "proto3";
 option java_outer_classname = "ProtoUsecaseTxn";
 
 message PUseCaseTxn {
-    int64 sourceId = 1;
+    int32 sourceId = 1;
     string gcGuid = 2;
-    int64 ucTxnId = 3;
+    int32 ucTxnId = 3;
     map<string, string> attributes = 4;
 }
 

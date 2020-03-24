@@ -2,8 +2,8 @@ syntax = "proto3";
 option java_outer_classname = "ProtoRawTransaction";
 
 message PRawTransaction {
-    int64 sourceId = 1;
-    int64 sequence = 2;
+    int32 sourceId = 1;
+    int32 sequence = 2;
     string gcGuid = 3;
     string rawRecord = 4;
 }
