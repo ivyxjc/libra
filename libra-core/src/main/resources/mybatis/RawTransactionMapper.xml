@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="xyz.ivyxjc.libra.core.dao.RawTransMapper">
-    <resultMap id="BaseResultMap" type="xyz.ivyxjc.libra.core.models.RawTransaction">
+<mapper namespace="com.ivyxjc.libra.core.dao.RawTransMapper">
+    <resultMap id="BaseResultMap" type="com.ivyxjc.libra.core.models.RawTransaction">
         <id column="GC_GUID" jdbcType="INTEGER" property="gcGuid"
-            typeHandler="xyz.ivyxjc.libra.core.dao.GuidLongHandler"/>
+            typeHandler="com.ivyxjc.libra.core.dao.GuidLongHandler"/>
         <result column="SOURCE_ID" jdbcType="INTEGER" property="sourceId"/>
         <result column="SEQUENCE" jdbcType="INTEGER" property="sequence"/>
         <result column="MSG_ID" jdbcType="VARCHAR" property="msgId"/>
@@ -19,7 +19,7 @@
         <result column="UPDATED_FROM" jdbcType="VARCHAR" property="updatedFrom"/>
         <result column="RAW_RECORD" jdbcType="LONGNVARCHAR" property="rawRecord"/>
     </resultMap>
-    <insert id="insertRaw" parameterType="xyz.ivyxjc.libra.core.models.RawTransaction">
+    <insert id="insertRaw" parameterType="com.ivyxjc.libra.core.models.RawTransaction">
         insert into LIBRA.RAW_TRANSACTION (GC_GUID, SOURCE_ID, SEQUENCE,
         MSG_ID, CREATED_AT, CREATED_BY,
         CREATED_FROM, VERSION,DUPLICATE_FLG,RAW_RECORD)

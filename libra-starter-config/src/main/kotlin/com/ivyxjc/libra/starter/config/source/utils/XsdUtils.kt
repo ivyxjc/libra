@@ -1,9 +1,9 @@
 package com.ivyxjc.libra.starter.config.source.model.inner.xsds
 
+import com.ivyxjc.libra.core.exception.LibraMissingConfigException
 import com.ivyxjc.libra.starter.config.source.model.inner.SourceConfigStr
 import com.ivyxjc.libra.starter.config.source.model.inner.UsecaseConfigStr
 import com.ivyxjc.libra.starter.config.source.utils.ConfigConstants
-import xyz.ivyxjc.libra.core.exception.LibraMissingConfigException
 import javax.xml.bind.JAXBContext
 import javax.xml.transform.Source
 import javax.xml.transform.stream.StreamSource

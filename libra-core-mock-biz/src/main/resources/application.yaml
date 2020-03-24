@@ -5,7 +5,7 @@ spring:
         password: ${jdbc.password}
         maximum-pool-size: 10
 mybatis:
-    type-aliases-package: xyz.ivyxjc.libra.core.dao
+    type-aliases-package: com.ivyxjc.libra.core.dao
     mapper-locations: classpath:mybatis/*.xml
 
 

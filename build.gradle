@@ -39,11 +39,11 @@ ext {
     spring_kafka_version = '2.2.7.RELEASE'
 }
 
-group 'xyz.ivyxjc'
+group 'com.ivyxjc'
 version base_version
 
 configure(allprojects) { project ->
-    group = 'xyz.ivyxjc'
+    group = 'com.ivyxjc'
 
     apply plugin: 'java'
     apply plugin: 'org.jetbrains.kotlin.jvm'

@@ -4,5 +4,5 @@ spring:
         username: ${jdbc.username}
         password: ${jdbc.password}
 mybatis:
-    type-aliases-package: xyz.ivyxjc.libra.core.dao
+    type-aliases-package: com.ivyxjc.libra.core.dao
     mapper-locations: classpath:mybatis/*.xml

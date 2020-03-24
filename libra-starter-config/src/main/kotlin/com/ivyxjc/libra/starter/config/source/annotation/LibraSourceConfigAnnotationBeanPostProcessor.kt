@@ -1,23 +1,24 @@
 package com.ivyxjc.libra.starter.config.source.annotation
 
+import com.ivyxjc.libra.common.ErrorConstants
+import com.ivyxjc.libra.common.utils.loggerFor
+import com.ivyxjc.libra.core.exception.LibraConfigConflictException
+import com.ivyxjc.libra.core.models.SourceConfig
+import com.ivyxjc.libra.core.models.Transformation
+import com.ivyxjc.libra.core.models.UsecaseConfig
+import com.ivyxjc.libra.core.process.LibraProcessor
+import com.ivyxjc.libra.core.service.SourceConfigService
 import com.ivyxjc.libra.starter.config.source.model.inner.SourceConfigStr
 import com.ivyxjc.libra.starter.config.source.model.inner.xsds.XsdUtils
 import com.ivyxjc.libra.starter.config.source.utils.ConfigConstants
 import org.springframework.beans.factory.BeanFactory
 import org.springframework.beans.factory.BeanFactoryAware
 import org.springframework.beans.factory.SmartInitializingSingleton
-import xyz.ivyxjc.libra.common.ErrorConstants
-import xyz.ivyxjc.libra.common.utils.loggerFor
-import xyz.ivyxjc.libra.core.exception.LibraConfigConflictException
-import xyz.ivyxjc.libra.core.models.SourceConfig
-import xyz.ivyxjc.libra.core.models.Transformation
-import xyz.ivyxjc.libra.core.models.UsecaseConfig
-import xyz.ivyxjc.libra.core.process.LibraProcessor
-import xyz.ivyxjc.libra.core.service.SourceConfigService
 
 class LibraSourceConfigAnnotationBeanPostProcessor : BeanFactoryAware, SmartInitializingSingleton {
     companion object {
-        private val log = loggerFor(LibraSourceConfigAnnotationBeanPostProcessor::class.java)
+        private val log =
+            loggerFor(LibraSourceConfigAnnotationBeanPostProcessor::class.java)
     }
 
     private var beanFactory: BeanFactory? = null

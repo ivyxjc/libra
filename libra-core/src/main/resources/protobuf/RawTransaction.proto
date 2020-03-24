@@ -1,5 +1,5 @@
 syntax = "proto3";
-package xyz.ivyxjc.libra.core.models.protoModels;
+package com.ivyxjc.libra.core.models.protoModels;
 
 option java_outer_classname = "ProtoRawTransaction";
 
