@@ -1,0 +1,27 @@
+<libra-flow-config
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="source-config.xsd"
+        xsi:schemaLocation="source-config.xsd">
+
+    <source-config id="12">
+        <processor ref="p1"/>
+        <processor ref="p2"/>
+        <processor ref="p3"/>
+        <processor ref="p4"/>
+        <processor ref="p5"/>
+        <usecase>
+            <id>ias</id>
+            <id>aaaa</id>
+        </usecase>
+    </source-config>
+
+    <usecase-config id="GBM01" type="simple">
+        <processor ref="p1"/>
+    </usecase-config>
+
+    <usecase-config id="GBM02" type="status">
+        <processor ref="p1" status="S1"/>
+        <processor ref="p2" status="S2"/>
+    </usecase-config>
+
+</libra-flow-config>
