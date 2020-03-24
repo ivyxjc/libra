@@ -1,4 +1,5 @@
 syntax = "proto3";
+package xyz.ivyxjc.libra.core.models.protoModels;
 option java_outer_classname = "ProtoUsecaseTxn";
 
 message PUseCaseTxn {
