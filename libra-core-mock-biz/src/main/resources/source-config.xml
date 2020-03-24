@@ -1,0 +1,26 @@
+<libra-flow-config
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="source-config.xsd"
+        xsi:schemaLocation="source-config.xsd">
+
+    <source-config id="12">
+        <processor ref="trans1Processor"/>
+        <processor ref="trans2Processor"/>
+        <processor ref="trans3Processor"/>
+        <usecase>
+            <id>GBM01</id>
+            <id>GBM02</id>
+        </usecase>
+    </source-config>
+
+    <usecase-config id="GBM01" type="simple">
+        <processor ref="uc1Processor"/>
+    </usecase-config>
+
+    <usecase-config id="GBM02" type="status">
+        <processor ref="uc1Processor" status="S1"/>
+        <processor ref="uc2Processor" status="S2"/>
+        <processor ref="uc3Processor" status="S2"/>
+    </usecase-config>
+
+</libra-flow-config>

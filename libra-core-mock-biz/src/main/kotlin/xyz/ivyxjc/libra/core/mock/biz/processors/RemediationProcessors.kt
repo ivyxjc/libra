@@ -6,21 +6,22 @@ import xyz.ivyxjc.libra.core.process.LibraProcessor
 import xyz.ivyxjc.libra.core.process.Workflow
 import xyz.ivyxjc.libra.core.process.WorkflowSession
 
-@Service("reme1Processor")
-class Reme1Processor : LibraProcessor {
+
+@Service
+class Uc1Processor : LibraProcessor {
     override fun process(ucTxn: UseCaseTxn, flowStatus: Workflow, session: WorkflowSession) {
         TODO("not implemented")
     }
 }
 
-@Service("reme2Processor")
-class Reme2Processor : LibraProcessor {
+@Service
+class Uc2Processor : LibraProcessor {
     override fun process(ucTxn: UseCaseTxn, flowStatus: Workflow, session: WorkflowSession) {
         TODO("not implemented")
     }
 }
 
-@Service("reme3Processor")
+@Service("uc3Processor")
 class Reme3Processor : LibraProcessor {
     override fun process(ucTxn: UseCaseTxn, flowStatus: Workflow, session: WorkflowSession) {
         TODO("not implemented")

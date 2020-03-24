@@ -1,5 +1,6 @@
 package xyz.ivyxjc.libra.core.mock.biz
 
+import com.ivyxjc.libra.starter.config.source.annotation.EnableLibraSourceConfig
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
 import org.mybatis.spring.annotation.MapperScan
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,7 +16,7 @@ import org.springframework.jms.config.DefaultJmsListenerContainerFactory
 import org.springframework.jms.connection.CachingConnectionFactory
 import org.springframework.jms.core.JmsTemplate
 import xyz.ivyxjc.libra.core.CorePosition
-import xyz.ivyxjc.libra.jms.annotation.EnableLibraJms
+import xyz.ivyxjc.libra.starter.jms.annotation.EnableLibraJms
 import javax.jms.ConnectionFactory
 import javax.jms.DeliveryMode
 import javax.jms.Session
@@ -24,6 +25,7 @@ import javax.jms.Session
 @PropertySource(value = ["private-endpoint.properties", "private-jdbc.properties"])
 @MapperScan("xyz.ivyxjc.libra.core.dao")
 @EnableLibraJms
+@EnableLibraSourceConfig
 open class ApplicationRunner
 
 
