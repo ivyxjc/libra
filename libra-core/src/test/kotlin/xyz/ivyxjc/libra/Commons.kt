@@ -8,7 +8,7 @@ import kotlin.random.Random
 fun buildRawTrans(): RawTransaction {
     val res = RawTransaction()
     res.gcGuid = Random.nextInt().toString()
-    res.sourceId = Random.nextInt().toLong()
+    res.sourceId = Random.nextInt()
     res.rawRecord = RandomStringUtils.random(1000)
     return res
 }

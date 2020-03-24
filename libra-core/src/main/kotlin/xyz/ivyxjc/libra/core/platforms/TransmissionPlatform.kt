@@ -2,12 +2,12 @@ package xyz.ivyxjc.libra.core.platforms
 
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.jms.core.JmsTemplate
 import org.springframework.stereotype.Service
 import xyz.ivyxjc.libra.common.utils.loggerFor
 import xyz.ivyxjc.libra.core.dao.RawTransMapper
 import xyz.ivyxjc.libra.core.models.RawTransaction
 import xyz.ivyxjc.libra.core.service.SourceConfigService
-import xyz.ivyxjc.libra.jms.core.LibraJmsTemplate
 import javax.jms.Queue
 
 
@@ -23,7 +23,7 @@ class TransmissionPlatform : Dispatcher<RawTransaction>, InitializingBean {
     }
 
     @Autowired
-    private lateinit var jmsTemplate: LibraJmsTemplate
+    private lateinit var jmsTemplate: JmsTemplate
 
     @Autowired
     private lateinit var sourceConfigService: SourceConfigService

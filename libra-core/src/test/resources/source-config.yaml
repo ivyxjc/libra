@@ -1,6 +1,0 @@
-12:
-    transformationQueue: IVY.TRANSFORMATION1
-    transformation: trans1,trans2
-    remediation: reme1,reme2
-    usecase: GBM02,GBM05
-    status: hh

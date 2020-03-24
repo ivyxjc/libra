@@ -1,7 +1,7 @@
 package xyz.ivyxjc.libra.core.endpoint
 
 import org.apache.activemq.artemis.jms.client.ActiveMQBytesMessage
-import org.springframework.beans.factory.InitializingBean
+import org.apache.commons.lang3.StringUtils
 import xyz.ivyxjc.libra.common.utils.loggerFor
 import xyz.ivyxjc.libra.core.models.AbstractTransaction
 import xyz.ivyxjc.libra.core.models.RawTransaction
@@ -14,31 +14,37 @@ import javax.jms.Message
 import javax.jms.MessageListener
 
 
-abstract class AbstractMessageListener : MessageListener, InitializingBean {
+abstract class AbstractMessageListener : MessageListener {
     companion object {
         @JvmStatic
         private val log = loggerFor(AbstractMessageListener::class.java)
     }
 
-    lateinit var dispatcher: Dispatcher<AbstractTransaction>
+    var dispatcher: Dispatcher<AbstractTransaction>? = null
 
-    lateinit var sourceIds: Array<Long>
-
-    private lateinit var sourceIdsSet: Set<Long>
-
-    protected var sourceId: Long? = null
-
-
-    override fun afterPropertiesSet() {
-        sourceIdsSet = sourceIds.toSet()
-        sourceId = if (sourceIds.size == 1) {
-            sourceIds[0]
-        } else {
-            null
+    var sourceIdStr: String = "ALL"
+        set(value) {
+            val sourceIds: Array<Int>
+            if (!StringUtils.equalsIgnoreCase(value, "ALL")) {
+                val sourceIdStrList = (value as String).split(",")
+                sourceIds = Array(sourceIdStrList.size) {
+                    sourceIdStrList[it].toInt()
+                }
+                this.sourceIdsSet = sourceIds.toSet()
+                if (this.sourceIdsSet.size == 1) {
+                    this.sourceId = this.sourceIdsSet.first()
+                }
+            } else {
+                this.sourceIdsSet = HashSet()
+                this.sourceId = -1
+            }
         }
-    }
 
-    protected fun handleSourceId(msgSourceId: Long?): Long? {
+    private lateinit var sourceIdsSet: Set<Int>
+
+    protected var sourceId: Int? = null
+
+    protected fun handleSourceId(msgSourceId: Int?): Int? {
         if (msgSourceId == null) {
             return if (sourceId != null) {
                 sourceId
@@ -86,7 +92,7 @@ class UsecaseTxnMessageListener : AbstractMessageListener() {
             }
             ucTxn.attributes.putAll(pUcTxn.attributesMap)
             ucTxn.gcGuid = pUcTxn.gcGuid
-            dispatcher.dispatch(ucTxn)
+            dispatcher!!.dispatch(ucTxn)
         }
     }
 }
@@ -121,7 +127,7 @@ class RawTransactionMessageListener : AbstractMessageListener() {
                 //todo check duplicate and version
                 rawTrans.duplicateFlg = 0
                 rawTrans.version = 0
-                dispatcher.dispatch(rawTrans)
+                dispatcher!!.dispatch(rawTrans)
             }
             else -> {
                 log.info("receive not byte message :{}", message)

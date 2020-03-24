@@ -13,16 +13,17 @@ data class Remediation(val processors: List<LibraProcessor>)
 
 
 class SourceConfig {
-    var sourceId: Long = -1
+    var sourceId: Int = -1
     var transformationQueue: String? = null
     var transformation: Transformation = Transformation(listOf())
-    var remediation: Remediation? = Remediation(listOf())
-    var usecases: List<String>? = null
-    var status: List<String>? = null
+
+    // todo support multiple UsecaseConfig
+    var usecases: List<UsecaseConfig> = mutableListOf()
 
 
     override fun toString(): String {
         return ToStringBuilder.reflectionToString(this)
     }
 }
+
 

@@ -11,8 +11,8 @@ import kotlin.random.Random
 fun buildUcBytes(): ByteArray {
     val ucTxn = UseCaseTxn()
     ucTxn.gcGuid = "abcdefgh"
-    ucTxn.sourceId = Random.nextLong()
-    ucTxn.ucTxnId = Random.nextLong()
+    ucTxn.sourceId = Random.nextInt()
+    ucTxn.ucTxnId = Random.nextInt()
     ucTxn.attributes.putIfAbsent(Random.nextLong().toString(), Random.nextLong().toString())
     ucTxn.attributes.putIfAbsent(Random.nextLong().toString(), Random.nextLong().toString())
     ucTxn.attributes.putIfAbsent(Random.nextLong().toString(), Random.nextLong().toString())
@@ -30,7 +30,7 @@ fun buildUcBytes(): ByteArray {
 fun buildRawTransBytes(): ByteArray {
     val rawTrans = RawTransaction()
     rawTrans.gcGuid = Random.nextLong().toString()
-    rawTrans.sourceId = Random.nextLong()
+    rawTrans.sourceId = Random.nextInt()
     rawTrans.rawRecord = RandomStringUtils.random(100)
     println(rawTrans)
     val builder = ProtoRawTransaction.PRawTransaction.newBuilder()

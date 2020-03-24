@@ -1,4 +1,4 @@
-@file:JvmName("CoreCommons")
+@file:JvmName("InternalCoreCommons")
 
 package xyz.ivyxjc.libra.core
 
