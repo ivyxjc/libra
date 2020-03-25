@@ -1,6 +1,0 @@
-12:
-    transformationQueue: IVY.TRANSFORMATION1
-    transformation:
-    remediation: reme1Processor,reme2Processor,reme3Processor
-    usecase: GBM02,GBM05
-    status:

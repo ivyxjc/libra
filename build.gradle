@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'org.jetbrains.kotlin.jvm' version '1.3.11' apply false
+    id 'org.jetbrains.kotlin.jvm' version '1.3.70' apply false
     id "org.springframework.boot" version '2.1.6.RELEASE' apply false
     id "me.champeau.gradle.jmh" version "0.4.8" apply false
     id "io.morethan.jmhreport" version "0.9.0" apply false
@@ -10,7 +10,7 @@ plugins {
 ext {
     base_version = '0.0.1-SNAPSHOT'
 
-    kotlin_version = '1.3.11'
+    kotlin_version = '1.3.70'
 
     commons_lang3_version = '3.7'
     druid_version = '1.1.20'
@@ -33,25 +33,26 @@ ext {
     mybatis_version = '3.5.2'
     okhttp_version = '4.0.1'
     slf4j_version = '1.7.25'
+    snakeyaml_version = '1.23'
     spring_version = '5.1.9.RELEASE'
     spring_boot_version = '2.1.8.RELEASE'
     spring_kafka_version = '2.2.7.RELEASE'
 }
 
-group 'xyz.ivyxjc'
+group 'com.ivyxjc'
 version base_version
 
 configure(allprojects) { project ->
-    group = 'xyz.ivyxjc'
+    group = 'com.ivyxjc'
 
     apply plugin: 'java'
     apply plugin: 'org.jetbrains.kotlin.jvm'
 
-    sourceCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
 
     repositories {
         mavenLocal()
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
         mavenCentral()
     }
 
@@ -76,14 +77,14 @@ configure(allprojects) { project ->
     }
 
     compileJava {
-        sourceCompatibility = JavaVersion.VERSION_1_8 // can be switched to 11 for testing
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11// can be switched to 11 for testing
+        targetCompatibility = JavaVersion.VERSION_11
         options.encoding = "UTF-8"
     }
 
     compileTestJava {
-        sourceCompatibility = JavaVersion.VERSION_1_8  // can be switched to 11 for testing
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11  // can be switched to 11 for testing
+        targetCompatibility = JavaVersion.VERSION_11
         options.encoding = "UTF-8"
         options.compilerArgs += "-parameters"
     }
@@ -138,7 +139,6 @@ configure(allprojects) { project ->
 
 project("libra-core") {
 
-
     publishing {
         publications {
             maven(MavenPublication) {
@@ -157,7 +157,7 @@ project("libra-core") {
 
     dependencies {
         implementation project(":libra-core-common")
-        implementation project(":libra-jms")
+//        implementation project(":libra-jms")
 
         implementation group: 'org.yaml', name: 'snakeyaml', version: '1.25'
 
@@ -166,6 +166,8 @@ project("libra-core") {
         implementation group: 'javax.jms', name: 'javax.jms-api', version: jms_version
 
         compileOnly group: 'org.mybatis', name: 'mybatis', version: '3.5.2'
+
+
         compileOnly group: 'org.springframework', name: 'spring-context', version: spring_version
         compileOnly group: 'javax.jms', name: 'javax.jms-api', version: '2.0.1'
         compileOnly group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.10.0'
@@ -194,7 +196,8 @@ project("libra-core") {
 project("libra-core-mock-biz") {
     dependencies {
         implementation project(":libra-core")
-        implementation project(":libra-jms")
+        implementation project(":libra-starter-jms")
+        implementation project(":libra-starter-config")
 
         implementation group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: spring_boot_version
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter', version: spring_boot_version
@@ -250,22 +253,59 @@ project("libra-benchmark") {
     }
 }
 
-project("libra-jms") {
+project("libra-starter-config") {
 
     dependencies {
+        implementation project(":libra-core")
         implementation project(":libra-core-common")
+
         implementation group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: kotlin_version
 
+        // jaxb starts
+        implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+        runtimeOnly group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
+        // jaxb ends
+
+        compileOnly group: 'org.springframework.boot', name: 'spring-boot', version: spring_boot_version
+//        compileOnly group: 'org.springframework', name: 'spring-core', version: spring_version
+
+        compileOnly group: 'org.springframework', name: 'spring-context', version: spring_version
+        //spring-boot-starer contains this lib
+        compileOnly group: 'org.yaml', name: 'snakeyaml', version: snakeyaml_version
+
+//        implementation group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.10.0'
+//        implementation group: 'org.springframework', name: 'spring-jms', version: spring_version
+//        implementation group: 'javax.jms', name: 'javax.jms-api', version: jms_version
+
+        testImplementation group: 'org.yaml', name: 'snakeyaml', version: snakeyaml_version
+
+
+    }
+}
+
+
+project("libra-starter-jms") {
+
+    dependencies {
+        implementation project(":libra-core")
+        implementation project(":libra-core-common")
+
+        implementation group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: kotlin_version
+
+        compileOnly group: 'org.springframework', name: 'spring-context', version: spring_version
         compileOnly group: 'org.springframework', name: 'spring-jms', version: spring_version
         compileOnly group: 'javax.jms', name: 'javax.jms-api', version: jms_version
+        //spring-boot-starer contains this lib
+        compileOnly group: 'org.yaml', name: 'snakeyaml', version: snakeyaml_version
 
-        implementation group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.10.0'
-        implementation group: 'org.springframework', name: 'spring-jms', version: spring_version
-        implementation group: 'javax.jms', name: 'javax.jms-api', version: jms_version
+//        implementation group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.10.0'
+//        implementation group: 'org.springframework', name: 'spring-jms', version: spring_version
+//        implementation group: 'javax.jms', name: 'javax.jms-api', version: jms_version
 
         testImplementation group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.10.0'
         testImplementation group: 'org.springframework', name: 'spring-jms', version: spring_version
         testImplementation group: 'javax.jms', name: 'javax.jms-api', version: jms_version
+        testImplementation group: 'org.yaml', name: 'snakeyaml', version: snakeyaml_version
     }
 }
 

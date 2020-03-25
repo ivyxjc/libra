@@ -1,28 +1,16 @@
-connectionFactories:
-    artemisConnectionFactory:
-        class: org.apache.activemq.artemis.jms.client.ActiveMQQueueConnectionFactory
-        funcname: artemisConnectionFactory
-        url: ${artemis.url}
-    aqConnectionFactory:
-        class: org.apache.activemq.artemis.jms.client.ActiveMQQueueConnectionFactory
-        funcname: aqConnectionFactory
-        url: ${aq.url}
-
 endpointListeners:
     listener1:
-        class: xyz.ivyxjc.libra.core.endpoint.ArtemisEndpointListener
-        jmsConnectionFactory: artemisConnectionFactory
-        messageListener: rawTransactionMessageListener
-        dispatcher: transmissionPlatform
-        address: IVY.TRANSMISSION1
+        destination: IVY.TRANSMISSION11
+        containerFactory: internalContainerFactory
+        concurrency: 4-4
         sourceIds: ALL
-        listenerCount: 8
-    listener2:
-        class: xyz.ivyxjc.libra.core.endpoint.ArtemisEndpointListener
-        jmsConnectionFactory: artemisConnectionFactory
-        messageListener: rawTransactionMessageListener
+        messageListener: rawTransactionMessageLisasdfener
         dispatcher: transmissionPlatform
-        address: IVY.TRANSMISSION2
-        sourceIds: '3001,3002'
-        listenerCount: 8
+    listener2:
+        destination: TRANS2
+        containerFactory: internalContainerFactory
+        concurrency: 8-8
+        sourceIds: 3001,3002
+        messageListener: rawTransactionMessageLisasdfener
+        dispatcher: transmissionPlatform
 

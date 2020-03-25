@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="source-config.xsd"
+            targetNamespace="source-config.xsd"
+            elementFormDefault="qualified">
+
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+
+    <xsd:annotation>
+        <xsd:documentation><![CDATA[
+		]]></xsd:documentation>
+    </xsd:annotation>
+
+    <!-- Top-level <beans> tag -->
+    <xsd:element name="libra-flow-config">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+			]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="description" minOccurs="0"/>
+                <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                    <xsd:element ref="source-config"/>
+                    <xsd:element ref="usecase-config"/>
+                </xsd:choice>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="description">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+			]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType mixed="true">
+            <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="usecase-config">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+			]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="identifiedType">
+                    <xsd:group ref="usecaseElements"/>
+                    <xsd:attribute name="type" type="usecase-type" use="required"/>
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:group name="usecaseElements">
+        <xsd:sequence>
+            <xsd:element ref="description" minOccurs="0"/>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element ref="processor"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:group>
+
+
+    <xsd:element name="source-config">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+			]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="identifiedIntType">
+                    <xsd:group ref="sourceElements"/>
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:group name="sourceElements">
+        <xsd:sequence>
+            <xsd:element ref="description" minOccurs="0"/>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element ref="processor"/>
+                <xsd:element name="usecase">
+                    <xsd:complexType>
+                        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+                            <xsd:element name="id" type="xsd:string"/>
+                        </xsd:choice>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:group>
+
+    <xsd:element name="processor" type="processorType">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+              ]]></xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:complexType name="processorType">
+        <xsd:attribute name="ref" type="xsd:string" use="required"/>
+        <xsd:attribute name="status" type="xsd:string"/>
+        <xsd:attribute name="order" type="xsd:int"/>
+    </xsd:complexType>
+
+    <xsd:simpleType name="usecase-type">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="simple"/>
+            <xsd:enumeration value="status"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="identifiedType" abstract="true">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+			]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="id" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+				]]></xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="identifiedIntType" abstract="true">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+			]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="id" type="xsd:int" use="required">
+            <xsd:annotation>
+                <xsd:documentation><![CDATA[
+				]]></xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+
+</xsd:schema>
