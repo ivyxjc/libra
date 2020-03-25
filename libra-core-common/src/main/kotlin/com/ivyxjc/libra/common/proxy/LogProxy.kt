@@ -4,7 +4,9 @@ import org.slf4j.Logger
 import org.slf4j.Marker
 
 
-class LoggerProxy(val log: Logger) : Logger {
+abstract class LoggerProxy : Logger
+
+class LoggerProxyImpl(val log: Logger) : LoggerProxy() {
 
     override fun trace(msg: String?) {
         log.trace(msg)
