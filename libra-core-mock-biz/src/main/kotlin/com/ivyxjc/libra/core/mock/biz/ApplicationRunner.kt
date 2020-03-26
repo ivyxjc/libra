@@ -2,6 +2,7 @@ package com.ivyxjc.libra.core.mock.biz
 
 import com.ivyxjc.libra.core.CorePosition
 import com.ivyxjc.libra.starter.config.source.annotation.EnableLibraSourceConfig
+import com.ivyxjc.libra.starter.config.usecases.annotation.EnableLibraUsecaseConfig
 import com.ivyxjc.libra.starter.jms.annotation.EnableLibraJms
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
 import org.mybatis.spring.annotation.MapperScan
@@ -26,8 +27,8 @@ import javax.jms.Session
 @MapperScan("com.ivyxjc.libra.core.dao")
 @EnableLibraJms
 @EnableLibraSourceConfig
+@EnableLibraUsecaseConfig
 open class ApplicationRunner
-
 
 fun main() {
     SpringApplication.run(ApplicationRunner::class.java)

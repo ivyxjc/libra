@@ -5,12 +5,9 @@ import com.ivyxjc.libra.common.utils.loggerFor
 import com.ivyxjc.libra.core.exception.LibraConfigConflictException
 import com.ivyxjc.libra.core.models.SourceConfig
 import com.ivyxjc.libra.core.models.Transformation
-import com.ivyxjc.libra.core.models.UsecaseConfig
 import com.ivyxjc.libra.core.process.LibraProcessor
 import com.ivyxjc.libra.core.service.SourceConfigService
-import com.ivyxjc.libra.starter.config.source.model.inner.SourceConfigStr
-import com.ivyxjc.libra.starter.config.source.model.inner.xsds.XsdUtils
-import com.ivyxjc.libra.starter.config.source.utils.ConfigConstants
+import com.ivyxjc.libra.starter.config.utils.XsdUtils
 import org.springframework.beans.factory.BeanFactory
 import org.springframework.beans.factory.BeanFactoryAware
 import org.springframework.beans.factory.SmartInitializingSingleton
@@ -39,48 +36,23 @@ class LibraSourceConfigAnnotationBeanPostProcessor : BeanFactoryAware, SmartInit
         val libraFlowConfig = XsdUtils.parseXml("source-config.xml")
         val pair = XsdUtils.parse(libraFlowConfig)
         val sourceConfigService = this.beanFactory!!.getBean(SourceConfigService::class.java)
-
-        val sourceConfigStrMap = mutableMapOf<Int, SourceConfigStr>()
-
-        val usecaseMap = mutableMapOf<String, UsecaseConfig>()
-
-        pair.second.forEach {
-            val simpleProcessors = mutableListOf<LibraProcessor>()
-            val statusProcessorMap = mutableMapOf<String, LibraProcessor>()
-            when (it.type) {
-                ConfigConstants.USECASE_TYPE_SIMPLE -> it.getSimpleProcessors().forEach { p ->
-                    simpleProcessors.add(getBean(p))
-                }
-                ConfigConstants.USECASE_TYPE_STATUS -> it.getStatusProcessor().forEach { p ->
-                    statusProcessorMap[p.key] = getBean(p.value)
-                }
-                else -> throw LibraConfigConflictException(
-                    "Usecase Type must be one of [simple, status]",
-                    ErrorConstants.SOURCE_CONFIG,
-                    "Usecase"
-                )
-            }
-            usecaseMap[it.name] = UsecaseConfig(it.name, it.type, simpleProcessors, statusProcessorMap)
-        }
+        val sourceConfigs = mutableListOf<SourceConfig>()
 
         pair.first.forEach {
-            val sourceConfig = SourceConfig()
-            sourceConfig.sourceId = it.sourceId
-            sourceConfig.transformation = getTransformations(it.transformationProcessor)
-            sourceConfig.usecases = getUsecases(it.usecases, usecaseMap);
-            sourceConfigService.registerConfig(it.sourceId, sourceConfig)
+            val sourceConfig = SourceConfig.Builder()
+                .sourceId(it.sourceId)
+                .transformation(buildTransformations(it.transformationProcessor))
+                .transformationQueue(it.transformationQueue!!)
+                .usecases(it.usecases)
+                .build()
+            sourceConfigs.add(sourceConfig)
+        }
+        sourceConfigs.forEach {
+            sourceConfigService.registerConfig(it.sourceId, it)
         }
     }
 
-    private fun getUsecases(list: List<String>, usecaseMap: Map<String, UsecaseConfig>): List<UsecaseConfig> {
-        val res = mutableListOf<UsecaseConfig>()
-        list.forEach {
-            res.add(usecaseMap.getValue(it))
-        }
-        return res
-    }
-
-    private fun getTransformations(list: List<String>): Transformation {
+    private fun buildTransformations(list: List<String>): Transformation {
         val processors = mutableListOf<LibraProcessor>()
         list.forEach {
             processors.add(getBean(it))
@@ -89,14 +61,10 @@ class LibraSourceConfigAnnotationBeanPostProcessor : BeanFactoryAware, SmartInit
     }
 
     private fun getBean(beanName: String): LibraProcessor {
-        val obj = this.beanFactory!!.getBean(beanName)
-        if (obj !is LibraProcessor) {
-            throw LibraConfigConflictException(
-                "SourceConfig transformation processors must be type LibraProcessor",
-                ErrorConstants.SOURCE_CONFIG,
-                "Transformation"
-            )
-        }
-        return obj
+        return beanFactory!!.getBean(beanName) as? LibraProcessor ?: throw LibraConfigConflictException(
+            "SourceConfig transformation processors must be type LibraProcessor",
+            ErrorConstants.SOURCE_CONFIG,
+            "Transformation"
+        )
     }
 }

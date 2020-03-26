@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder
 internal class UsecaseConfigStr {
     lateinit var name: String
     lateinit var type: String
+    lateinit var queue: String
 
     private var simpleProcessors = mutableListOf<String>()
     private var statusProcessorMap = mutableMapOf<String, String>()

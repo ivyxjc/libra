@@ -22,6 +22,7 @@
             <xsd:sequence>
                 <xsd:element ref="description" minOccurs="0"/>
                 <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                    <xsd:element ref="q-prefix"/>
                     <xsd:element ref="source-config"/>
                     <xsd:element ref="usecase-config"/>
                 </xsd:choice>
@@ -39,6 +40,21 @@
         </xsd:complexType>
     </xsd:element>
 
+    <xsd:element name="q-prefix">
+        <xsd:annotation>
+            <xsd:documentation><![CDATA[
+			]]></xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="identifiedType">
+                    <xsd:attribute name="queue" type="xsd:string"/>
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+
+
     <xsd:element name="usecase-config">
         <xsd:annotation>
             <xsd:documentation><![CDATA[
@@ -49,6 +65,8 @@
                 <xsd:extension base="identifiedType">
                     <xsd:group ref="usecaseElements"/>
                     <xsd:attribute name="type" type="usecase-type" use="required"/>
+                    <xsd:attribute name="q-prefix" type="xsd:string"/>
+                    <xsd:attribute name="queue" type="xsd:string"/>
                 </xsd:extension>
             </xsd:complexContent>
         </xsd:complexType>
@@ -63,7 +81,6 @@
         </xsd:sequence>
     </xsd:group>
 
-
     <xsd:element name="source-config">
         <xsd:annotation>
             <xsd:documentation><![CDATA[
@@ -73,6 +90,8 @@
             <xsd:complexContent>
                 <xsd:extension base="identifiedIntType">
                     <xsd:group ref="sourceElements"/>
+                    <xsd:attribute name="q-prefix" type="xsd:string" use="optional"/>
+                    <xsd:attribute name="queue" type="xsd:string" use="optional"/>
                 </xsd:extension>
             </xsd:complexContent>
         </xsd:complexType>

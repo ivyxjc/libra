@@ -4,7 +4,7 @@ import com.ivyxjc.libra.common.utils.loggerFor
 import com.ivyxjc.libra.core.models.UseCaseTxn
 import com.ivyxjc.libra.core.process.Workflow
 import com.ivyxjc.libra.core.process.WorkflowSession
-import com.ivyxjc.libra.core.service.UseCaseService
+import com.ivyxjc.libra.core.service.UseCaseConfigService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service
 class RemediationPlatform : Dispatcher<UseCaseTxn> {
 
     @Autowired
-    private lateinit var mUseCaseService: UseCaseService
+    private lateinit var mUseCaseConfigService: UseCaseConfigService
 
     companion object {
         private val log = loggerFor(RemediationPlatform::class.java)
@@ -23,7 +23,7 @@ class RemediationPlatform : Dispatcher<UseCaseTxn> {
 
     override fun dispatch(@Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE") ucTxn: UseCaseTxn) {
         val sourceId = ucTxn.sourceId
-        val process = mUseCaseService.getProcess(ucTxn)
+        val process = mUseCaseConfigService.getProcess(ucTxn.usecaseName)
         var index = 0
         try {
             val flow = Workflow()
