@@ -1,7 +1,9 @@
 <libra-flow-config
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="source-config.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="source-config.xsd">
+
+    <q-prefix id="default" queue="LIBRA.Q.DEFAULT"/>
 
     <source-config id="12">
         <processor ref="trans1Processor"/>

@@ -22,3 +22,4 @@ class SourceConfigServiceMockImpl : SourceConfigService {
         return sourceMap[sourceId]
     }
 }
+

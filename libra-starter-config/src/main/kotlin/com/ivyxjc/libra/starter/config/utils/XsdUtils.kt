@@ -1,9 +1,10 @@
-package com.ivyxjc.libra.starter.config.source.model.inner.xsds
+package com.ivyxjc.libra.starter.config.utils
 
 import com.ivyxjc.libra.core.exception.LibraMissingConfigException
 import com.ivyxjc.libra.starter.config.source.model.inner.SourceConfigStr
 import com.ivyxjc.libra.starter.config.source.model.inner.UsecaseConfigStr
-import com.ivyxjc.libra.starter.config.source.utils.ConfigConstants
+import com.ivyxjc.libra.starter.config.source.model.inner.xsds.*
+import org.apache.commons.lang3.StringUtils
 import javax.xml.bind.JAXBContext
 import javax.xml.transform.Source
 import javax.xml.transform.stream.StreamSource
@@ -31,10 +32,21 @@ class XsdUtils {
 
         @JvmStatic
         internal fun parse(flowConfig: XsdLibraFlowConfig): Pair<List<SourceConfigStr>, List<UsecaseConfigStr>> {
+            val qPrefixMap = mutableMapOf<String, String>()
             val sourceList = mutableListOf<SourceConfigStr>()
             val usecaseList = mutableListOf<UsecaseConfigStr>()
-            flowConfig.getSourceConfigOrUsecaseConfig().forEach {
+            flowConfig.qPrefixOrSourceConfigOrUsecaseConfig.forEach {
+                if (it is XsdQPrefix) {
+                    qPrefixMap[it.id] = it.queue
+                }
+            }
+            flowConfig.qPrefixOrSourceConfigOrUsecaseConfig.forEach {
                 if (it is XsdUsecaseConfig) {
+                    var qPrefix = ""
+                    if (StringUtils.isBlank(it.qPrefix)) {
+                        qPrefix = ConfigConstants.Q_PEFIX_DEFAULT
+                    }
+                    val queue = buildQueueName(qPrefixMap, qPrefix, it.queue)
                     when (it.type) {
                         XsdUsecaseType.SIMPLE -> {
                             // only attribute ref works
@@ -47,6 +59,7 @@ class XsdUtils {
                             val tUsecaseConfigStr = UsecaseConfigStr()
                             tUsecaseConfigStr.type = ConfigConstants.USECASE_TYPE_SIMPLE
                             tUsecaseConfigStr.name = tId
+                            tUsecaseConfigStr.queue = queue
                             tUsecaseConfigStr.addAllSimpleProcessors(tList)
                             usecaseList.add(tUsecaseConfigStr)
                         }
@@ -60,6 +73,7 @@ class XsdUtils {
                             val tUsecaseConfigStr = UsecaseConfigStr()
                             tUsecaseConfigStr.type = ConfigConstants.USECASE_TYPE_STATUS
                             tUsecaseConfigStr.name = tId
+                            tUsecaseConfigStr.queue = queue
                             tUsecaseConfigStr.putAllStatusProcessorMap(tMap)
                             usecaseList.add(tUsecaseConfigStr)
                         }
@@ -72,6 +86,11 @@ class XsdUtils {
                 }
 
                 if (it is XsdSourceConfig) {
+                    var qPrefix = ""
+                    if (StringUtils.isBlank(it.qPrefix)) {
+                        qPrefix = ConfigConstants.Q_PEFIX_DEFAULT
+                    }
+                    val queue = buildQueueName(qPrefixMap, qPrefix, it.queue)
                     val tSourceId = it.id
                     val tProcessors = mutableListOf<String>()
                     val tUsecases = mutableListOf<String>()
@@ -86,19 +105,28 @@ class XsdUtils {
                         }
                     }
                     val sourceConfigStr = SourceConfigStr()
+                    sourceConfigStr.transformationQueue = queue
                     sourceConfigStr.sourceId = tSourceId
                     sourceConfigStr.transformationProcessor = tProcessors
-                    sourceConfigStr.usecases = tUsecases
+                    sourceConfigStr.usecases = tUsecases.toSet()
                     sourceList.add(sourceConfigStr)
                 }
             }
             return Pair(sourceList, usecaseList)
         }
+
+        private fun buildQueueName(qPrefixMap: Map<String, String>, qPrefixId: String, queue: String?): String {
+            if (StringUtils.isNotBlank(queue)) {
+                return queue!!
+            }
+            val qPrefix = qPrefixMap[qPrefixId]
+            if (StringUtils.isBlank(qPrefix)) {
+                TODO("throw config not correct exception")
+            }
+            return qPrefix!!
+        }
     }
+
+
 }
 
-fun main() {
-    val libraFlowConfig = XsdUtils.parseXml("source-config.xml")
-    val map = XsdUtils.parse(libraFlowConfig)
-    println(map)
-}

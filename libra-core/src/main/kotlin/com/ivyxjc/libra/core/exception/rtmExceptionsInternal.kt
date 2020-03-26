@@ -4,11 +4,11 @@ class LibraMissingConfigException : RuntimeException {
     /**
      * Constructs a LibraMissingConfigException with the specified information.
      * A detail message is a String that describes this particular exception.
-     * @param s the detail message
+     * @param msg the detail message
      * @param configName the name of the config
      * @param key the key for the missing resource.
      */
-    constructor(s: String, configName: String, key: String) : super(s) {
+    constructor(msg: String, configName: String, key: String) : super(msg) {
         this.configName = configName
         this.key = key
     }
