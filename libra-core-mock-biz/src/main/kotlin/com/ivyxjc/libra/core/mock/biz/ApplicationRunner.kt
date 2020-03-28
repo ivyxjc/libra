@@ -1,9 +1,9 @@
 package com.ivyxjc.libra.core.mock.biz
 
+import com.ivyxjc.libra.core.CoreCommons
 import com.ivyxjc.libra.core.CorePosition
 import com.ivyxjc.libra.starter.config.source.annotation.EnableLibraSourceConfig
-import com.ivyxjc.libra.starter.config.usecases.annotation.EnableLibraUsecaseConfig
-import com.ivyxjc.libra.starter.jms.annotation.EnableLibraJms
+import com.ivyxjc.libra.starter.platforms.transformation.EnableLibraTransformation
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
 import org.mybatis.spring.annotation.MapperScan
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,9 +25,8 @@ import javax.jms.Session
 @SpringBootApplication(exclude = [JmsAutoConfiguration::class], scanBasePackageClasses = [CorePosition::class])
 @PropertySource(value = ["private-endpoint.properties", "private-jdbc.properties"])
 @MapperScan("com.ivyxjc.libra.core.dao")
-@EnableLibraJms
 @EnableLibraSourceConfig
-@EnableLibraUsecaseConfig
+@EnableLibraTransformation
 open class ApplicationRunner
 
 fun main() {
@@ -40,7 +39,7 @@ open class JmsConfig {
     @Autowired
     private lateinit var env: Environment
 
-    @Bean
+    @Bean(CoreCommons.BeansConstants.INTERNAL_JMS_CONNECTION_FACTORY_NAME)
     open fun internalConnectionFactory(): ConnectionFactory {
         val url = env["libra.internal.mq.url"]
         val connectionFactory = ActiveMQConnectionFactory(url)
@@ -52,14 +51,13 @@ open class JmsConfig {
         return cachingConnectionFactory
     }
 
-    @Bean
+    @Bean(CoreCommons.BeansConstants.INTERNAL_JMS_CONTAINER_FACTORY_NAME)
     open fun internalContainerFactory(internalConnectionFactory: ConnectionFactory): DefaultJmsListenerContainerFactory {
         val containerFactory = DefaultJmsListenerContainerFactory()
         containerFactory.setConnectionFactory(internalConnectionFactory)
         return containerFactory
     }
 
-    @Bean
     open fun jmsTemplate(internalConnectionFactory: ConnectionFactory): JmsTemplate {
         val jmsTemplate = JmsTemplate(internalConnectionFactory)
         jmsTemplate.sessionAcknowledgeMode = Session.DUPS_OK_ACKNOWLEDGE
