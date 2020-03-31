@@ -7,14 +7,13 @@ import com.ivyxjc.libra.core.process.Workflow
 import com.ivyxjc.libra.core.process.WorkflowSession
 import com.ivyxjc.libra.core.process.WorkflowStatus
 import com.ivyxjc.libra.core.rawTransToUcTxn
-import org.springframework.stereotype.Service
+import com.ivyxjc.libra.core.service.SourceConfigService
 
 
 /**
  * Should be Thread-safe
  */
-@Service("transformationPlatform")
-class TransformationPlatform : Dispatcher<RawTransaction> {
+class TransformationPlatform(val sourceConfigService: SourceConfigService) : Dispatcher<RawTransaction> {
 
     companion object {
         @JvmStatic

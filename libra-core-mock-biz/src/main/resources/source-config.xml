@@ -3,14 +3,23 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="source-config.xsd">
 
-    <q-prefix id="default" queue="LIBRA.Q.DEFAULT"/>
+    <q-prefix id="default" queue="LIBRA.Q.DEFAULT."/>
 
-    <source-config id="12">
+    <source-config id="3000">
         <processor ref="trans1Processor"/>
         <processor ref="trans2Processor"/>
         <processor ref="trans3Processor"/>
         <usecase>
             <id>GBM01</id>
+            <id>GBM02</id>
+        </usecase>
+    </source-config>
+
+    <source-config id="18">
+        <processor ref="trans1Processor"/>
+        <processor ref="trans2Processor"/>
+        <processor ref="trans3Processor"/>
+        <usecase>
             <id>GBM02</id>
         </usecase>
     </source-config>

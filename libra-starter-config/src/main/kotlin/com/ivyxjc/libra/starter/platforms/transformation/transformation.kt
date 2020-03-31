@@ -6,6 +6,7 @@ import com.ivyxjc.libra.core.service.SourceConfigService
 import com.ivyxjc.libra.core.service.SourceConfigServiceMockImpl
 import com.ivyxjc.libra.starter.common.model.LibraJmsListenerYaml
 import com.ivyxjc.libra.starter.common.processors.AbstractLibraJmsAnnBeanPostProcessor
+import com.ivyxjc.libra.starter.config.source.annotation.EnableLibraSourceConfig
 import com.ivyxjc.libra.starter.config.utils.ConfigConstants
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Bean
@@ -19,6 +20,7 @@ import org.springframework.jms.annotation.EnableJms
 @MustBeDocumented
 @Import(LibraTransformationBootstrapConfiguration::class)
 @EnableJms
+@EnableLibraSourceConfig
 annotation class EnableLibraTransformation
 
 

@@ -1,15 +1,14 @@
 package com.ivyxjc.libra.core.service
 
 import com.ivyxjc.libra.core.models.UsecaseConfig
-import org.springframework.stereotype.Service
 
-interface UseCaseConfigService {
+interface UsecaseConfigService {
     fun registerConfig(name: String, config: UsecaseConfig)
     fun getProcess(name: String): UsecaseConfig
+    fun listAppUsecases(): Set<UsecaseConfig>
 }
 
-@Service
-class UsecaseConfigServiceMockImpl : UseCaseConfigService {
+class UsecaseConfigServiceMockImpl : UsecaseConfigService {
     private var usecaseMap = mutableMapOf<String, UsecaseConfig>()
 
     override fun registerConfig(name: String, config: UsecaseConfig) {
@@ -19,10 +18,14 @@ class UsecaseConfigServiceMockImpl : UseCaseConfigService {
     override fun getProcess(name: String): UsecaseConfig {
         return usecaseMap[name]!!
     }
+
+    override fun listAppUsecases(): Set<UsecaseConfig> {
+        return usecaseMap.values.toSet()
+    }
 }
 
 
-class UseCaseConfigServiceImpl : UseCaseConfigService {
+class UsecaseConfigServiceImpl : UsecaseConfigService {
 
     override fun registerConfig(name: String, config: UsecaseConfig) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -30,5 +33,9 @@ class UseCaseConfigServiceImpl : UseCaseConfigService {
 
     override fun getProcess(name: String): UsecaseConfig {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun listAppUsecases(): Set<UsecaseConfig> {
+        TODO("Not yet implemented")
     }
 }

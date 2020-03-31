@@ -1,50 +1,38 @@
 package com.ivyxjc.libra.core.platforms
 
+import com.ivyxjc.libra.aspect.LibraMetrics
 import com.ivyxjc.libra.common.utils.loggerFor
 import com.ivyxjc.libra.core.dao.RawTransMapper
 import com.ivyxjc.libra.core.models.RawTransaction
 import com.ivyxjc.libra.core.service.SourceConfigService
-import org.springframework.beans.factory.InitializingBean
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jms.core.JmsTemplate
-import org.springframework.stereotype.Service
-import javax.jms.Queue
+import org.springframework.transaction.annotation.Transactional
+import javax.jms.ConnectionFactory
 
 
 /**
  * Should be Thread-safe
  */
-@Service("transmissionPlatform")
-class TransmissionPlatform : Dispatcher<RawTransaction>, InitializingBean {
+open class TransmissionPlatform(
+    private val sourceConfigService: SourceConfigService,
+    private val connectionFactory: ConnectionFactory,
+    private val rawTransMapper: RawTransMapper,
+    private val jmsTemplate: JmsTemplate
+) : Dispatcher<RawTransaction> {
 
     companion object {
         @JvmStatic
         private val log = loggerFor(TransmissionPlatform::class.java)
     }
 
-    @Autowired
-    private lateinit var jmsTemplate: JmsTemplate
-
-    @Autowired
-    private lateinit var sourceConfigService: SourceConfigService
-
-    @Autowired
-    private lateinit var rawTransMapper: RawTransMapper
-
-    private lateinit var queue: Queue
-
-    override fun afterPropertiesSet() {
-    }
-
+    @Transactional
+    @LibraMetrics
     override fun dispatch(trans: RawTransaction) {
         log.debug("receive trans: {}", trans)
-//        rawTransMapper.insertRaw(trans)
+        rawTransMapper.insertRaw(trans)
         val sourceConfig = sourceConfigService.getSourceConfig(trans.sourceId)
-        val transformationQueue = sourceConfig!!.transformationQueue!!
-        val t1 = System.currentTimeMillis()
+        val transformationQueue = sourceConfig!!.transformationQueue
         jmsTemplate.convertAndSend(transformationQueue, trans)
-        val t2 = System.currentTimeMillis()
-        println("================${t2 - t1}======================")
     }
 }
 

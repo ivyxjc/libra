@@ -4,7 +4,9 @@ import com.ivyxjc.libra.common.utils.loggerFor
 import com.ivyxjc.libra.core.endpoint.BlankMessageListener
 import com.ivyxjc.libra.core.endpoint.RawTransactionMessageListener
 import com.ivyxjc.libra.core.endpoint.UsecaseTxnMessageListener
-import com.ivyxjc.libra.core.platforms.*
+import com.ivyxjc.libra.core.exception.LibraConfigIncorrectException
+import com.ivyxjc.libra.core.models.AbstractTransaction
+import com.ivyxjc.libra.core.platforms.Dispatcher
 import com.ivyxjc.libra.starter.common.model.LibraJmsListenerYaml
 import com.ivyxjc.libra.starter.config.utils.ConfigConstants
 import org.springframework.beans.factory.*
@@ -31,6 +33,9 @@ abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListe
     private var embeddedValueResolver: StringValueResolver? = null
 
     private val counter = AtomicInteger()
+
+    override fun afterSingletonsInstantiated() {
+    }
 
 
     override fun configureJmsListeners(registrar: JmsListenerEndpointRegistrar) {
@@ -92,15 +97,16 @@ abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListe
         }
         val msgListener = when (libraJmsListenerYaml.messageListener) {
             "rawTransactionMessageListener" -> RawTransactionMessageListener()
-            "UsecaseTxnMessageListener" -> UsecaseTxnMessageListener()
-            else -> BlankMessageListener()
+            "usecaseTxnMessageListener" -> UsecaseTxnMessageListener()
+            "blankMessageListener" -> BlankMessageListener()
+            else -> throw LibraConfigIncorrectException("message listener does not exist")
         }
         val dispatcher = when (libraJmsListenerYaml.dispatcher) {
-            ConfigConstants.TRANSMISSION_PLATFORM -> this.beanFactory!!.getBean(TransmissionPlatform::class.java)
-            ConfigConstants.TRANSFORMATION_PLATFORM -> this.beanFactory!!.getBean(TransformationPlatform::class.java)
-            ConfigConstants.REMEDIATION_PLATFORM -> this.beanFactory!!.getBean(RemediationPlatform::class.java)
-            ConfigConstants.BLANK_RAW_TRANS_DISPATCHER -> this.beanFactory!!.getBean(BlankRawTransDispatcher::class.java)
-            ConfigConstants.BLANK_USE_CASE_DISPATCHER -> this.beanFactory!!.getBean(BlankUcTxnDispatcher::class.java)
+            ConfigConstants.TRANSMISSION_PLATFORM -> this.beanFactory!!.getBean(ConfigConstants.TRANSMISSION_PLATFORM) as Dispatcher<AbstractTransaction>
+            ConfigConstants.TRANSFORMATION_PLATFORM -> this.beanFactory!!.getBean(ConfigConstants.TRANSFORMATION_PLATFORM) as Dispatcher<AbstractTransaction>
+            ConfigConstants.REMEDIATION_PLATFORM -> this.beanFactory!!.getBean(ConfigConstants.REMEDIATION_PLATFORM) as Dispatcher<AbstractTransaction>
+            ConfigConstants.BLANK_RAW_TRANS_DISPATCHER -> this.beanFactory!!.getBean(ConfigConstants.BLANK_RAW_TRANS_DISPATCHER) as Dispatcher<AbstractTransaction>
+            ConfigConstants.BLANK_USE_CASE_DISPATCHER -> this.beanFactory!!.getBean(ConfigConstants.BLANK_USE_CASE_DISPATCHER) as Dispatcher<AbstractTransaction>
             else -> {
                 if (msgListener !is BlankMessageListener) {
                     throw RuntimeException("MessageListener [${libraJmsListenerYaml.messageListener}] must have dispatcher")

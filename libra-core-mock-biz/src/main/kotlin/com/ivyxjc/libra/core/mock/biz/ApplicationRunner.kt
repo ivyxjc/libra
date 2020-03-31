@@ -2,32 +2,34 @@ package com.ivyxjc.libra.core.mock.biz
 
 import com.ivyxjc.libra.core.CoreCommons
 import com.ivyxjc.libra.core.CorePosition
-import com.ivyxjc.libra.starter.config.source.annotation.EnableLibraSourceConfig
-import com.ivyxjc.libra.starter.platforms.transformation.EnableLibraTransformation
+import com.ivyxjc.libra.starter.platforms.transmission.EnableLibraTransmission
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
 import org.mybatis.spring.annotation.MapperScan
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.jms.JmsAutoConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.EnableAspectJAutoProxy
 import org.springframework.context.annotation.PropertySource
 import org.springframework.core.env.Environment
 import org.springframework.core.env.get
+import org.springframework.jdbc.datasource.DataSourceTransactionManager
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory
 import org.springframework.jms.connection.CachingConnectionFactory
-import org.springframework.jms.core.JmsTemplate
+import org.springframework.jms.connection.JmsTransactionManager
+import org.springframework.transaction.annotation.EnableTransactionManagement
 import javax.jms.ConnectionFactory
-import javax.jms.DeliveryMode
-import javax.jms.Session
+import javax.sql.DataSource
 
-@SpringBootApplication(exclude = [JmsAutoConfiguration::class], scanBasePackageClasses = [CorePosition::class])
+@SpringBootApplication(scanBasePackageClasses = [CorePosition::class])
 @PropertySource(value = ["private-endpoint.properties", "private-jdbc.properties"])
 @MapperScan("com.ivyxjc.libra.core.dao")
-@EnableLibraSourceConfig
-@EnableLibraTransformation
+@EnableTransactionManagement
+@EnableLibraTransmission
+@EnableAspectJAutoProxy
 open class ApplicationRunner
+
 
 fun main() {
     SpringApplication.run(ApplicationRunner::class.java)
@@ -52,16 +54,21 @@ open class JmsConfig {
     }
 
     @Bean(CoreCommons.BeansConstants.INTERNAL_JMS_CONTAINER_FACTORY_NAME)
-    open fun internalContainerFactory(internalConnectionFactory: ConnectionFactory): DefaultJmsListenerContainerFactory {
+    open fun internalContainerFactory(
+        internalConnectionFactory: ConnectionFactory
+    ): DefaultJmsListenerContainerFactory {
         val containerFactory = DefaultJmsListenerContainerFactory()
         containerFactory.setConnectionFactory(internalConnectionFactory)
+        containerFactory.setTransactionManager(jmsTransactionManager(internalConnectionFactory))
         return containerFactory
     }
 
-    open fun jmsTemplate(internalConnectionFactory: ConnectionFactory): JmsTemplate {
-        val jmsTemplate = JmsTemplate(internalConnectionFactory)
-        jmsTemplate.sessionAcknowledgeMode = Session.DUPS_OK_ACKNOWLEDGE
-        jmsTemplate.deliveryMode = DeliveryMode.NON_PERSISTENT
-        return jmsTemplate
+    @Bean
+    open fun dataSourceTransactionManager(dataSource: DataSource): DataSourceTransactionManager {
+        return DataSourceTransactionManager(dataSource)
+    }
+
+    private fun jmsTransactionManager(internalConnectionFactory: ConnectionFactory): JmsTransactionManager {
+        return JmsTransactionManager(internalConnectionFactory)
     }
 }
