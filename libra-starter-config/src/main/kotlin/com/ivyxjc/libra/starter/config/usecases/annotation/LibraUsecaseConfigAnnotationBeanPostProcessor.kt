@@ -5,7 +5,7 @@ import com.ivyxjc.libra.common.utils.loggerFor
 import com.ivyxjc.libra.core.exception.LibraConfigConflictException
 import com.ivyxjc.libra.core.models.UsecaseConfig
 import com.ivyxjc.libra.core.process.LibraProcessor
-import com.ivyxjc.libra.core.service.UseCaseConfigService
+import com.ivyxjc.libra.core.service.UsecaseConfigService
 import com.ivyxjc.libra.starter.config.utils.ConfigConstants
 import com.ivyxjc.libra.starter.config.utils.XsdUtils
 import org.springframework.beans.factory.BeanFactory
@@ -36,7 +36,7 @@ class LibraUsecaseConfigAnnotationBeanPostProcessor : BeanFactoryAware, SmartIni
         // todo just use a static method for temp usage
         val libraFlowConfig = XsdUtils.parseXml("source-config.xml")
         val pair = XsdUtils.parse(libraFlowConfig)
-        val usecaseConfigService = this.beanFactory!!.getBean(UseCaseConfigService::class.java)
+        val usecaseConfigService = this.beanFactory!!.getBean(UsecaseConfigService::class.java)
         val usecases = mutableListOf<UsecaseConfig>()
 
         pair.second.forEach {

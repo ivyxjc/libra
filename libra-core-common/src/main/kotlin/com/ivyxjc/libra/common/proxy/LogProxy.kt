@@ -4,7 +4,37 @@ import org.slf4j.Logger
 import org.slf4j.Marker
 
 
-abstract class LoggerProxy : Logger
+abstract class LoggerProxy : Logger {
+    fun trace(msg: () -> String) {
+        if (isTraceEnabled) {
+            trace(msg.invoke())
+        }
+    }
+
+    fun debug(msg: () -> String) {
+        if (isDebugEnabled) {
+            debug(msg.invoke())
+        }
+    }
+
+    fun info(msg: () -> String) {
+        if (isInfoEnabled) {
+            info(msg.invoke())
+        }
+    }
+
+    fun warn(msg: () -> String) {
+        if (isWarnEnabled) {
+            warn(msg.invoke())
+        }
+    }
+
+    fun error(msg: () -> String) {
+        if (isErrorEnabled) {
+            error(msg.invoke())
+        }
+    }
+}
 
 class LoggerProxyImpl(val log: Logger) : LoggerProxy() {
 

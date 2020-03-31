@@ -1,16 +1,17 @@
 endpointListeners:
     listener1:
         destination: IVY.TRANSMISSION11
-        containerFactory: internalContainerFactory
-        concurrency: 4-4
+        containerFactory: internalJmsContainerFactory
+        concurrency: 1-1
         sourceIds: ALL
-        messageListener: rawTransactionMessageLisasdfener
+        messageListener: rawTransactionMessageListener
+        #        messageListener: blankMessageListener
         dispatcher: transmissionPlatform
-    listener2:
-        destination: TRANS2
-        containerFactory: internalContainerFactory
-        concurrency: 8-8
-        sourceIds: 3001,3002
-        messageListener: rawTransactionMessageLisasdfener
-        dispatcher: transmissionPlatform
+#    listener2:
+#        destination: TRANS2
+#        containerFactory: internalJmsContainerFactory
+#        concurrency: 8-8
+#        sourceIds: 3001,3002
+#        messageListener: rawTransactionMessageListener
+#        dispatcher: transmissionPlatform
 

@@ -46,7 +46,7 @@ class XsdUtils {
                     if (StringUtils.isBlank(it.qPrefix)) {
                         qPrefix = ConfigConstants.Q_PEFIX_DEFAULT
                     }
-                    val queue = buildQueueName(qPrefixMap, qPrefix, it.queue)
+                    val queue = buildQueueName(qPrefixMap, qPrefix, it.queue, it.id)
                     when (it.type) {
                         XsdUsecaseType.SIMPLE -> {
                             // only attribute ref works
@@ -90,7 +90,7 @@ class XsdUtils {
                     if (StringUtils.isBlank(it.qPrefix)) {
                         qPrefix = ConfigConstants.Q_PEFIX_DEFAULT
                     }
-                    val queue = buildQueueName(qPrefixMap, qPrefix, it.queue)
+                    val queue = buildQueueName(qPrefixMap, qPrefix, it.queue, it.id.toString())
                     val tSourceId = it.id
                     val tProcessors = mutableListOf<String>()
                     val tUsecases = mutableListOf<String>()
@@ -115,7 +115,12 @@ class XsdUtils {
             return Pair(sourceList, usecaseList)
         }
 
-        private fun buildQueueName(qPrefixMap: Map<String, String>, qPrefixId: String, queue: String?): String {
+        private fun buildQueueName(
+            qPrefixMap: Map<String, String>,
+            qPrefixId: String,
+            queue: String?,
+            id: String
+        ): String {
             if (StringUtils.isNotBlank(queue)) {
                 return queue!!
             }
@@ -123,7 +128,7 @@ class XsdUtils {
             if (StringUtils.isBlank(qPrefix)) {
                 TODO("throw config not correct exception")
             }
-            return qPrefix!!
+            return qPrefix!! + id
         }
     }
 

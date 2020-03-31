@@ -8,6 +8,7 @@ pluginManagement {
 
 rootProject.name = "libra"
 
+include "libra-aspect"
 include "libra-benchmark"
 include "libra-core"
 include "libra-core-mock-biz"

@@ -9,6 +9,17 @@ object BeansConstants {
 
     const val LIBRA_USECASE_CONFIG_PROCESSOR_BEAN_NAME =
         "com.ivyxjc.libra.jms.config.internalUsecaseConfigAnnotationProcessor"
+
+    const val LIBRA_TRANSMISSION_PROCESSOR_BEAN_NAME =
+        "com.ivyxjc.libra.jms.config.internalTransmissionAnnotationProcessor"
+
+    const val LIBRA_TRANSFORMATION_PROCESSOR_BEAN_NAME =
+        "com.ivyxjc.libra.jms.config.internalTransformationAnnotationProcessor"
+
+    const val LIBRA_REMEDIATION_PROCESSOR_BEAN_NAME =
+        "com.ivyxjc.libra.jms.config.internalRemediationAnnotationProcessor"
+
+
 }
 
 object ErrorConstants {

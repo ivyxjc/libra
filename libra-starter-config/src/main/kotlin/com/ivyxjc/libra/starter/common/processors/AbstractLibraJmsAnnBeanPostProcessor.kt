@@ -1,10 +1,14 @@
-package com.ivyxjc.libra.starter.jms.annotation
+package com.ivyxjc.libra.starter.common.processors
 
+import com.ivyxjc.libra.common.utils.loggerFor
 import com.ivyxjc.libra.core.endpoint.BlankMessageListener
 import com.ivyxjc.libra.core.endpoint.RawTransactionMessageListener
 import com.ivyxjc.libra.core.endpoint.UsecaseTxnMessageListener
-import com.ivyxjc.libra.core.platforms.*
-import com.ivyxjc.libra.starter.jms.model.inner.LibraJmsListenerYaml
+import com.ivyxjc.libra.core.exception.LibraConfigIncorrectException
+import com.ivyxjc.libra.core.models.AbstractTransaction
+import com.ivyxjc.libra.core.platforms.Dispatcher
+import com.ivyxjc.libra.starter.common.model.LibraJmsListenerYaml
+import com.ivyxjc.libra.starter.config.utils.ConfigConstants
 import org.springframework.beans.factory.*
 import org.springframework.beans.factory.config.ConfigurableBeanFactory
 import org.springframework.beans.factory.config.EmbeddedValueResolver
@@ -15,17 +19,33 @@ import org.springframework.jms.config.SimpleJmsListenerEndpoint
 import org.springframework.util.Assert
 import org.springframework.util.StringUtils
 import org.springframework.util.StringValueResolver
-import org.yaml.snakeyaml.Yaml
 import java.util.concurrent.atomic.AtomicInteger
 
-class LibraJmsListenerAnnotationBeanPostProcessor : JmsListenerConfigurer, BeanFactoryAware,
+abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListenerConfigurer, BeanFactoryAware,
     SmartInitializingSingleton {
+
+    companion object {
+        private val log = loggerFor(this::class.java)
+    }
 
     private var beanFactory: BeanFactory? = null
 
     private var embeddedValueResolver: StringValueResolver? = null
 
     private val counter = AtomicInteger()
+
+    override fun afterSingletonsInstantiated() {
+    }
+
+
+    override fun configureJmsListeners(registrar: JmsListenerEndpointRegistrar) {
+        registrar.setBeanFactory(this.beanFactory!!)
+        val listeners = processJmsListenerConfig()
+        listeners.forEach {
+            processJmsListener(registrar, it)
+            log.info { "successfully register listener ${it.destination} in container factory ${it.containerFactory}. Listener detail is ${it}" }
+        }
+    }
 
     override fun setBeanFactory(beanFactory: BeanFactory) {
         this.beanFactory = beanFactory
@@ -34,16 +54,7 @@ class LibraJmsListenerAnnotationBeanPostProcessor : JmsListenerConfigurer, BeanF
         }
     }
 
-    override fun configureJmsListeners(registrar: JmsListenerEndpointRegistrar) {
-        registrar.setBeanFactory(this.beanFactory!!)
-        val listeners = processJmsListenerConfig()
-        listeners.forEach {
-            processJmsListener(registrar, it)
-        }
-    }
-
-    override fun afterSingletonsInstantiated() {
-    }
+    internal abstract fun processJmsListenerConfig(): List<LibraJmsListenerYaml>
 
     private fun processJmsListener(
         registrar: JmsListenerEndpointRegistrar,
@@ -79,18 +90,23 @@ class LibraJmsListenerAnnotationBeanPostProcessor : JmsListenerConfigurer, BeanF
                             " with id '" + containerFactoryBeanName + "' was found in the application context", ex
                 )
             }
+        } else {
+            throw BeanInitializationException(
+                "Could not get JMS container factory $containerFactoryBeanName , please config it"
+            )
         }
         val msgListener = when (libraJmsListenerYaml.messageListener) {
             "rawTransactionMessageListener" -> RawTransactionMessageListener()
-            "UsecaseTxnMessageListener" -> UsecaseTxnMessageListener()
-            else -> BlankMessageListener()
+            "usecaseTxnMessageListener" -> UsecaseTxnMessageListener()
+            "blankMessageListener" -> BlankMessageListener()
+            else -> throw LibraConfigIncorrectException("message listener does not exist")
         }
         val dispatcher = when (libraJmsListenerYaml.dispatcher) {
-            "transmissionPlatform" -> this.beanFactory!!.getBean(TransmissionPlatform::class.java)
-            "transformationPlatform" -> this.beanFactory!!.getBean(TransformationPlatform::class.java)
-            "remediationPlatform" -> this.beanFactory!!.getBean(RemediationPlatform::class.java)
-            "blankRawTransDispatcher:" -> this.beanFactory!!.getBean(BlankRawTransDispatcher::class.java)
-            "blankUcTxnDispatcher" -> this.beanFactory!!.getBean(BlankUcTxnDispatcher::class.java)
+            ConfigConstants.TRANSMISSION_PLATFORM -> this.beanFactory!!.getBean(ConfigConstants.TRANSMISSION_PLATFORM) as Dispatcher<AbstractTransaction>
+            ConfigConstants.TRANSFORMATION_PLATFORM -> this.beanFactory!!.getBean(ConfigConstants.TRANSFORMATION_PLATFORM) as Dispatcher<AbstractTransaction>
+            ConfigConstants.REMEDIATION_PLATFORM -> this.beanFactory!!.getBean(ConfigConstants.REMEDIATION_PLATFORM) as Dispatcher<AbstractTransaction>
+            ConfigConstants.BLANK_RAW_TRANS_DISPATCHER -> this.beanFactory!!.getBean(ConfigConstants.BLANK_RAW_TRANS_DISPATCHER) as Dispatcher<AbstractTransaction>
+            ConfigConstants.BLANK_USE_CASE_DISPATCHER -> this.beanFactory!!.getBean(ConfigConstants.BLANK_USE_CASE_DISPATCHER) as Dispatcher<AbstractTransaction>
             else -> {
                 if (msgListener !is BlankMessageListener) {
                     throw RuntimeException("MessageListener [${libraJmsListenerYaml.messageListener}] must have dispatcher")
@@ -112,38 +128,12 @@ class LibraJmsListenerAnnotationBeanPostProcessor : JmsListenerConfigurer, BeanF
         return SimpleJmsListenerEndpoint()
     }
 
-    private fun processJmsListenerConfig(): List<LibraJmsListenerYaml> {
-        val yaml = Yaml()
-        val input = LibraJmsBootstrapConfiguration::class.java.classLoader.getResourceAsStream("endpoint.yaml")
-        val res = mutableListOf<LibraJmsListenerYaml>()
-        input.use {
-            val endpointMap: Map<String, *> = yaml.load(input)
-            @Suppress("UNCHECKED_CAST")
-            val endpointListenersMap = endpointMap["endpointListeners"] as? Map<String, Map<String, String>>
-            endpointListenersMap?.forEach {
-                val tmpListenerYaml = LibraJmsListenerYaml()
-                val listenerMap = it.value
-                tmpListenerYaml.id = it.key
-                tmpListenerYaml.subscription = listenerMap["subscription"] ?: ""
-                tmpListenerYaml.selector = listenerMap["selector"] ?: ""
-                tmpListenerYaml.concurrency = listenerMap["concurrency"] ?: "4-4"
-                tmpListenerYaml.sourceIds = listenerMap["sourceIds"] ?: "ALL"
-                tmpListenerYaml.containerFactory = listenerMap.getValue("containerFactory")
-                tmpListenerYaml.destination = listenerMap.getValue("destination")
-                tmpListenerYaml.messageListener = listenerMap.getValue("messageListener")
-                tmpListenerYaml.dispatcher = listenerMap.getValue("dispatcher")
-                res.add(tmpListenerYaml)
-            }
-        }
-        return res
-    }
-
     private fun getEndpointId(libraJmsListenerYaml: LibraJmsListenerYaml): String {
         return if (StringUtils.hasText(libraJmsListenerYaml.id)) {
             val id = resolve(libraJmsListenerYaml.id)
             id ?: ""
         } else {
-            "org.springframework.jms.JmsListenerEndpointContainer#" + this.counter.getAndIncrement()
+            "org.springframework.jms.JmsListenerEndpointContainer[$name]#${this.counter.getAndIncrement()}"
         }
     }
 

@@ -2,7 +2,6 @@ package com.ivyxjc.libra.core.endpoint
 
 
 import com.ivyxjc.libra.common.utils.loggerFor
-import org.springframework.beans.factory.InitializingBean
 import javax.jms.*
 
 
@@ -14,7 +13,7 @@ interface EndpointListener {
  * for the reason that you cannot access the same jms session in multiple threads
  * So the AbstractEndpointListener should be one listener one thread
  */
-abstract class AbstractEndpointListener : EndpointListener, InitializingBean {
+abstract class AbstractEndpointListener : EndpointListener {
     companion object {
         @JvmStatic
         private val log = loggerFor(AbstractEndpointListener::class.java)
@@ -33,10 +32,6 @@ abstract class AbstractEndpointListener : EndpointListener, InitializingBean {
     protected var session: Session? = null
 
     protected var messageConsumer: MessageConsumer? = null
-
-    override fun afterPropertiesSet() {
-        start()
-    }
 
     override fun start() {
         setupConnection()
