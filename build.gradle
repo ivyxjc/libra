@@ -4,6 +4,8 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.70' apply false
     id "org.springframework.boot" version '2.1.6.RELEASE' apply false
     id "me.champeau.gradle.jmh" version "0.4.8" apply false
+    id "io.freefair.aspectj.post-compile-weaving" version "5.0.0-rc6" apply false
+    id "io.freefair.aspectj" version "5.0.0-rc6" apply false
     id "io.morethan.jmhreport" version "0.9.0" apply false
 }
 
@@ -12,6 +14,7 @@ ext {
 
     kotlin_version = '1.3.70'
 
+    aspectj_version = '1.9.5'
     commons_lang3_version = '3.7'
     druid_version = '1.1.20'
     druid_starter_version = '1.1.20'
@@ -46,7 +49,9 @@ configure(allprojects) { project ->
     group = 'com.ivyxjc'
 
     apply plugin: 'java'
-    apply plugin: 'org.jetbrains.kotlin.jvm'
+    if (name != 'libra-aspect') {
+        apply plugin: 'org.jetbrains.kotlin.jvm'
+    }
 
     sourceCompatibility = JavaVersion.VERSION_11
 
@@ -137,7 +142,17 @@ configure(allprojects) { project ->
     }
 }
 
+project("libra-aspect") {
+    apply plugin: 'io.freefair.aspectj'
+
+    dependencies {
+        compileOnly project(":libra-core-common")
+        compileOnly group: 'org.aspectj', name: 'aspectjweaver', version: aspectj_version
+    }
+}
+
 project("libra-core") {
+    apply plugin: 'io.freefair.aspectj.post-compile-weaving'
 
     publishing {
         publications {
@@ -155,9 +170,24 @@ project("libra-core") {
     sourceSets.main.java.srcDirs += ["src/transformation-api/java", "src/transformtion-api/kotlin"]
     sourceSets.main.java.srcDirs += ["src/remediation-api/java", "src/remediation-api/kotlin"]
 
+    configurations {
+        compile.exclude group: 'org.springframework', module: 'spring-core'
+        compile.exclude group: 'org.springframework', module: 'spring-messaging'
+    }
+
+    compileJava.ajc.options.compilerArgs += "-showWeaveInfo"
+    compileKotlin.ajc.options.compilerArgs += "-showWeaveInfo"
+//    compileJava.ajc.options.compilerArgs += "-verbose"
+//    compileKotlin.ajc.options.compilerArgs += "-verbose"
+    compileJava.ajc.options.compilerArgs += "-Xlint:ignore"
+    compileKotlin.ajc.options.compilerArgs += "-Xlint:ignore"
+
     dependencies {
+        aspect project(":libra-aspect")
+        compileOnly group: 'org.aspectj', name: 'aspectjtools', version: aspectj_version
+
         implementation project(":libra-core-common")
-//        implementation project(":libra-jms")
+
 
         implementation group: 'org.yaml', name: 'snakeyaml', version: '1.25'
 
@@ -167,15 +197,13 @@ project("libra-core") {
 
         compileOnly group: 'org.mybatis', name: 'mybatis', version: '3.5.2'
 
-
-        compileOnly group: 'org.springframework', name: 'spring-context', version: spring_version
         compileOnly group: 'javax.jms', name: 'javax.jms-api', version: '2.0.1'
         compileOnly group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.10.0'
         compileOnly(group: 'org.apache.activemq', name: 'activemq-client', version: '5.15.10') {
             exclude group: "org.apache.geronimo.specs", module: "geronimo-jms_1.1_spec"
         }
-        compileOnly group: 'org.springframework', name: 'spring-jms', version: spring_version
-
+        compileOnly(group: 'org.springframework', name: 'spring-tx', version: spring_version)
+        compileOnly(group: 'org.springframework', name: 'spring-jms', version: spring_version)
 
         testImplementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.1.0'
         testImplementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-test-autoconfigure', version: '2.1.0'
@@ -194,6 +222,8 @@ project("libra-core") {
 }
 
 project("libra-core-mock-biz") {
+    apply plugin: "io.freefair.aspectj"
+
     dependencies {
         implementation project(":libra-core")
         implementation project(":libra-starter-jms")
@@ -201,9 +231,11 @@ project("libra-core-mock-biz") {
 
         implementation group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: spring_boot_version
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter', version: spring_boot_version
+        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: spring_boot_version
 
         implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.1.0'
         implementation group: 'org.springframework', name: 'spring-jms', version: spring_version
+        implementation group: 'org.springframework', name: 'spring-aspects', version: spring_version
 
         implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.17'
 
@@ -266,7 +298,12 @@ project("libra-starter-config") {
         runtimeOnly group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
         // jaxb ends
 
+        compileOnly group: 'javax.jms', name: 'javax.jms-api', version: jms_version
+        compileOnly group: 'org.springframework', name: 'spring-jms', version: spring_version
+        compileOnly group: 'org.springframework', name: 'spring-aspects', version: spring_version
+
         compileOnly group: 'org.springframework.boot', name: 'spring-boot', version: spring_boot_version
+        compileOnly group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: spring_boot_version
 //        compileOnly group: 'org.springframework', name: 'spring-core', version: spring_version
 
         compileOnly group: 'org.springframework', name: 'spring-context', version: spring_version
