@@ -183,7 +183,7 @@ project("libra-core") {
     compileKotlin.ajc.options.compilerArgs += "-Xlint:ignore"
 
     dependencies {
-        aspect project(":libra-aspect")
+        compileOnly project(":libra-aspect")
         compileOnly group: 'org.aspectj', name: 'aspectjtools', version: aspectj_version
 
         implementation project(":libra-core-common")
@@ -222,9 +222,22 @@ project("libra-core") {
 }
 
 project("libra-core-mock-biz") {
-    apply plugin: "io.freefair.aspectj"
+    apply plugin: 'io.freefair.aspectj.post-compile-weaving'
+    apply plugin: "org.springframework.boot"
+
+    compileJava.ajc.options.compilerArgs += "-showWeaveInfo"
+    compileKotlin.ajc.options.compilerArgs += "-showWeaveInfo"
+//    compileJava.ajc.options.compilerArgs += "-verbose"
+//    compileKotlin.ajc.options.compilerArgs += "-verbose"
+    compileJava.ajc.options.compilerArgs += "-Xlint:ignore"
+    compileKotlin.ajc.options.compilerArgs += "-Xlint:ignore"
 
     dependencies {
+//        aspect project(":libra-aspect")
+//        inpath project(":libra-core")
+//        inpath(group: 'org.springframework', name: 'spring-tx', version: spring_version)
+//        inpath(group: 'org.springframework', name: 'spring-jms', version: spring_version)
+//        inpath(group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.10.0')
         implementation project(":libra-core")
         implementation project(":libra-starter-jms")
         implementation project(":libra-starter-config")

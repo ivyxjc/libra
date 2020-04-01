@@ -2,8 +2,8 @@ endpointListeners:
     listener1:
         destination: IVY.TRANSMISSION11
         containerFactory: internalJmsContainerFactory
-        concurrency: 1-1
-        sourceIds: ALL
+        concurrency: 8-8
+        sourceIds: '3000'
         messageListener: rawTransactionMessageListener
         #        messageListener: blankMessageListener
         dispatcher: transmissionPlatform

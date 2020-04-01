@@ -3,7 +3,8 @@ spring:
         url: ${jdbc.url}
         username: ${jdbc.username}
         password: ${jdbc.password}
-        maximum-pool-size: 10
+        hikari:
+            maximum-pool-size: 18
 mybatis:
     type-aliases-package: com.ivyxjc.libra.core.dao
     mapper-locations: classpath:mybatis/*.xml
