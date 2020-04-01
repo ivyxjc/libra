@@ -1,5 +1,7 @@
 package com.ivyxjc.libra.core.endpoint
 
+import com.ivyxjc.libra.aspect.LibraMetrics
+import com.ivyxjc.libra.common.DtoInConstants
 import com.ivyxjc.libra.common.utils.loggerFor
 import com.ivyxjc.libra.core.models.AbstractTransaction
 import com.ivyxjc.libra.core.models.RawTransaction
@@ -7,11 +9,11 @@ import com.ivyxjc.libra.core.models.UseCaseTxn
 import com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction
 import com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn
 import com.ivyxjc.libra.core.platforms.Dispatcher
-import org.apache.activemq.artemis.jms.client.ActiveMQBytesMessage
 import org.apache.commons.lang3.StringUtils
 import javax.jms.BytesMessage
 import javax.jms.Message
 import javax.jms.MessageListener
+import javax.jms.TextMessage
 
 
 abstract class AbstractMessageListener : MessageListener {
@@ -40,7 +42,7 @@ abstract class AbstractMessageListener : MessageListener {
             }
         }
 
-    private lateinit var sourceIdsSet: Set<Int>
+    protected lateinit var sourceIdsSet: Set<Int>
 
     protected var sourceId: Int? = null
 
@@ -77,22 +79,28 @@ class UsecaseTxnMessageListener : AbstractMessageListener() {
         if (message == null) {
             return
         }
-        if (message is ActiveMQBytesMessage) {
-            val size = message.bodyLength
-            val bytes = ByteArray(size.toInt())
-            message.readBytes(bytes)
-            val pUcTxn = ProtoUsecaseTxn.PUseCaseTxn.parseFrom(bytes)
-            val ucTxn = UseCaseTxn()
-            val tmpSourceId = handleSourceId(pUcTxn.sourceId)
-            if (tmpSourceId != null) {
-                ucTxn.sourceId = tmpSourceId
-            } else {
-                log.error("cannot handle the source id for message: {}", pUcTxn.gcGuid)
-                return
+        when (message) {
+            is BytesMessage -> {
+                val size = message.bodyLength
+                val bytes = ByteArray(size.toInt())
+                message.readBytes(bytes)
+                val pUcTxn = ProtoUsecaseTxn.PUseCaseTxn.parseFrom(bytes)
+                val ucTxn = UseCaseTxn()
+                val tmpSourceId = handleSourceId(pUcTxn.sourceId)
+                if (tmpSourceId != null) {
+                    ucTxn.sourceId = tmpSourceId
+                } else {
+                    log.error("cannot handle the source id for message: {}", pUcTxn.gcGuid)
+                    return
+                }
+                ucTxn.attributes.putAll(pUcTxn.attributesMap)
+                ucTxn.gcGuid = pUcTxn.gcGuid
+                dispatcher!!.dispatch(ucTxn)
             }
-            ucTxn.attributes.putAll(pUcTxn.attributesMap)
-            ucTxn.gcGuid = pUcTxn.gcGuid
-            dispatcher!!.dispatch(ucTxn)
+            else -> {
+                log.warn("not support not BytesMessage, receive not byte message :{}", message)
+            }
+
         }
     }
 }
@@ -104,8 +112,9 @@ class RawTransactionMessageListener : AbstractMessageListener() {
         private val log = loggerFor(RawTransactionMessageListener::class.java)
     }
 
+    @LibraMetrics
     override fun onMessage(message: Message?) {
-        log.debug("receive message: {}", message)
+        log.debug { "receive message: $message" }
         if (message == null) {
             return
         }
@@ -123,27 +132,51 @@ class RawTransactionMessageListener : AbstractMessageListener() {
                     return
                 }
                 rawTrans.rawRecord = pRawTrans.rawRecord
-                rawTrans.gcGuid = pRawTrans.gcGuid
+                rawTrans.guid = pRawTrans.gcGuid
                 //todo check duplicate and version
                 rawTrans.duplicateFlg = 0
                 rawTrans.version = 0
                 dispatcher!!.dispatch(rawTrans)
             }
             else -> {
-                log.info("receive not byte message :{}", message)
+                log.warn { "not support not ByteMessage, receive not byte message :$message" }
             }
         }
     }
-
 }
 
-class BlankMessageListener : AbstractMessageListener() {
+class TextMessageListener : AbstractMessageListener() {
     companion object {
         @JvmStatic
-        private val log = loggerFor(BlankMessageListener::class.java)
+        private val log = loggerFor(TextMessageListener::class.java)
     }
 
+    @LibraMetrics
     override fun onMessage(message: Message?) {
-        log.debug("[BlankMessageListener]receive msg: {}", message)
+        log.debug("receive message: {}", message)
+        if (message == null) {
+            return
+        }
+        when (message) {
+            is TextMessage -> {
+                val msgSourceId = try {
+                    message.getIntProperty(DtoInConstants.sourceId)
+                } catch (e: Exception) {
+                    log.debug { "fail to get property SourceId from message" }
+                    null
+                }
+                val msg = message.text
+                val rawTransaction = RawTransaction()
+                val handledSourceId = handleSourceId(msgSourceId)
+                    ?: throw RuntimeException("The Message Listener is register for SourceId $sourceIdsSet, but receive msg with SourceId: $msgSourceId")
+                rawTransaction.sourceId = handledSourceId
+                rawTransaction.rawRecord = msg
+                rawTransaction.msgId = message.jmsMessageID
+                dispatcher!!.dispatch(rawTransaction)
+            }
+            else -> {
+                log.warn { "not support not TextMessage, receive not text message :$message" }
+            }
+        }
     }
 }

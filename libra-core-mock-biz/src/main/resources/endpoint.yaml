@@ -4,8 +4,8 @@ endpointListeners:
         containerFactory: internalJmsContainerFactory
         concurrency: 8-8
         sourceIds: '3000'
-        messageListener: rawTransactionMessageListener
-        #        messageListener: blankMessageListener
+        #        messageListener: rawTransactionMessageListener
+        messageListener: textMessageListener
         dispatcher: transmissionPlatform
 #    listener2:
 #        destination: TRANS2
