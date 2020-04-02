@@ -96,10 +96,10 @@ abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListe
             )
         }
         val msgListener = when (libraJmsListenerYaml.messageListener) {
-            "rawTransactionMessageListener" -> RawTransactionMessageListener()
-            "usecaseTxnMessageListener" -> UsecaseTxnMessageListener()
-            "textMessageListener" -> TextMessageListener()
-            else -> throw LibraConfigIncorrectException("message listener does not exist")
+            ConfigConstants.RAW_TRANS_MESSAGE_LISTENER -> RawTransactionMessageListener()
+            ConfigConstants.USE_CASE_MESSAGE_LISTENER -> UsecaseTxnMessageListener()
+            ConfigConstants.TEXT_MESSAGE_LISTENER -> TextMessageListener()
+            else -> throw LibraConfigIncorrectException("message listener ${libraJmsListenerYaml.messageListener} does not exist")
         }
         val dispatcher = when (libraJmsListenerYaml.dispatcher) {
             ConfigConstants.TRANSMISSION_PLATFORM -> this.beanFactory!!.getBean(ConfigConstants.TRANSMISSION_PLATFORM) as Dispatcher<AbstractTransaction>
@@ -116,10 +116,6 @@ abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListe
         }
         msgListener.dispatcher = dispatcher
         msgListener.sourceIdStr = libraJmsListenerYaml.sourceIds
-        when (libraJmsListenerYaml.messageListener) {
-            "rawTransactionMessageListener" -> RawTransactionMessageListener::class.java
-            "usecaseTxnMessageListener" -> UsecaseTxnMessageListener::class.java
-        }
         endpoint.messageListener = msgListener
         registrar.registerEndpoint(endpoint, factory)
     }
