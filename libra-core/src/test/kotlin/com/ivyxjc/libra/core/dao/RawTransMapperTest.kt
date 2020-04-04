@@ -22,7 +22,7 @@ open class RawTransMapperTest {
     @Test
     fun testInsert() {
         val raw = buildRawTrans()
-        println(raw.gcGuid)
+        println(raw.guid)
         mRawTransMapper.insertRaw(raw)
     }
 

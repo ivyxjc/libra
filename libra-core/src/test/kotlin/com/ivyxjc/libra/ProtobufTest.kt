@@ -4,7 +4,6 @@ import com.ivyxjc.libra.core.models.RawTransaction
 import com.ivyxjc.libra.core.models.UseCaseTxn
 import com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction
 import com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn
-import org.apache.commons.lang3.RandomStringUtils
 import kotlin.random.Random
 
 
@@ -29,12 +28,14 @@ fun buildUcBytes(): ByteArray {
 
 fun buildRawTransBytes(): ByteArray {
     val rawTrans = RawTransaction()
-    rawTrans.gcGuid = Random.nextLong().toString()
+    rawTrans.guid = Random.nextLong().toString()
     rawTrans.sourceId = Random.nextInt()
-    rawTrans.rawRecord = RandomStringUtils.random(100)
+    rawTrans.sourceId = 3000
+    rawTrans.rawRecord = "阿斯顿阿斯顿发撒打发士大夫士大夫十大"
+//    rawTrans.rawRecord = RandomStringUtils.random(100)
     println(rawTrans)
     val builder = ProtoRawTransaction.PRawTransaction.newBuilder()
-    builder.gcGuid = rawTrans.gcGuid
+    builder.gcGuid = rawTrans.guid
     builder.sourceId = rawTrans.sourceId
     builder.rawRecord = rawTrans.rawRecord
     val data = builder.build()
