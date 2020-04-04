@@ -2,7 +2,6 @@ package com.ivyxjc.libra.core.platforms
 
 import com.ivyxjc.libra.common.utils.loggerFor
 import com.ivyxjc.libra.core.models.RawTransaction
-import com.ivyxjc.libra.core.process.LibraProcessor
 import com.ivyxjc.libra.core.process.Workflow
 import com.ivyxjc.libra.core.process.WorkflowSession
 import com.ivyxjc.libra.core.process.WorkflowStatus
@@ -24,15 +23,14 @@ class TransformationPlatform(val sourceConfigService: SourceConfigService) : Dis
         val ucTxn = rawTransToUcTxn(rawTrans)
         val sourceId = ucTxn.sourceId
 
-        val processors = mutableListOf<LibraProcessor>()
+        val sourceConfig = sourceConfigService.getSourceConfig(sourceId)
+        val transformation = sourceConfig!!.transformation
         var index = 0
         try {
             val flow = Workflow()
             val session = WorkflowSession()
-            while (index < processors.size) {
-                if (index < processors.size) {
-                    processors[index].process(ucTxn, flow, session)
-                }
+            while (index < sourceConfig.transformation.size) {
+                transformation[index].process(ucTxn, flow, session)
                 index++
                 if (flow.status != WorkflowStatus.TERMINATED) {
                     log.debug("status is {}, do the following processors.", flow.status)

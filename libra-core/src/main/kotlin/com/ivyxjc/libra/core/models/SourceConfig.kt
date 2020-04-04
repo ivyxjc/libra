@@ -9,11 +9,34 @@ import org.apache.commons.lang3.StringUtils
 //data class Workflow(val transformation: Transformation, val remediation: Remediation)
 
 
-data class Transformation(val processors: List<LibraProcessor>) {
+data class Transformation(val processors: List<LibraProcessor>) : Iterable<LibraProcessor>, List<LibraProcessor> {
     companion object {
         @JvmStatic
         val EMPTY = Transformation(listOf())
     }
+
+    override fun iterator(): Iterator<LibraProcessor> = processors.iterator()
+
+    override val size: Int
+        get() = processors.size
+
+    override fun contains(element: LibraProcessor): Boolean = processors.contains(element)
+
+    override fun containsAll(elements: Collection<LibraProcessor>): Boolean = processors.containsAll(elements)
+
+    override fun get(index: Int): LibraProcessor = processors[index]
+
+    override fun indexOf(element: LibraProcessor): Int = processors.indexOf(element)
+
+    override fun isEmpty(): Boolean = processors.isEmpty()
+
+    override fun lastIndexOf(element: LibraProcessor): Int = processors.lastIndexOf(element)
+
+    override fun listIterator(): ListIterator<LibraProcessor> = processors.listIterator()
+
+    override fun listIterator(index: Int): ListIterator<LibraProcessor> = processors.listIterator(index)
+
+    override fun subList(fromIndex: Int, toIndex: Int): List<LibraProcessor> = processors.subList(fromIndex, toIndex)
 }
 
 data class Remediation(val processors: List<LibraProcessor>)
