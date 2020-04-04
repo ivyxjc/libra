@@ -42,13 +42,13 @@ ext {
     spring_kafka_version = '2.2.7.RELEASE'
 }
 
-group 'com.ivyxjc'
-version base_version
 
 configure(allprojects) { project ->
     group = 'com.ivyxjc'
+    version base_version
 
     apply plugin: 'java'
+    apply plugin: 'maven-publish'
     if (name != 'libra-aspect') {
         apply plugin: 'org.jetbrains.kotlin.jvm'
     }
@@ -79,6 +79,18 @@ configure(allprojects) { project ->
         print(configurations)
         from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
         with jar
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+
+                artifact sourceJar {
+                    classifier "sources"
+                }
+            }
+        }
     }
 
     compileJava {
@@ -153,18 +165,6 @@ project("libra-aspect") {
 
 project("libra-core") {
     apply plugin: 'io.freefair.aspectj.post-compile-weaving'
-
-    publishing {
-        publications {
-            maven(MavenPublication) {
-                groupId = 'org.gradle.sample'
-                artifactId = 'project1-sample'
-                version = '1.1'
-
-                from components.java
-            }
-        }
-    }
 
     sourceSets.main.java.srcDirs += ["src/transmission-api/java", "src/transmission-api/kotlin"]
     sourceSets.main.java.srcDirs += ["src/transformation-api/java", "src/transformtion-api/kotlin"]
@@ -259,7 +259,6 @@ project("libra-core-mock-biz") {
         implementation(group: 'org.apache.activemq', name: 'activemq-client', version: '5.15.10') {
             exclude group: "org.apache.geronimo.specs", module: "geronimo-jms_1.1_spec"
         }
-
     }
 }
 
