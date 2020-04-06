@@ -251,7 +251,7 @@ project("libra-core") {
     }
 
     task testInit(type: Copy) {
-        from "../database/DML/"
+        from "../database/h2/DML/"
         into "${project.buildDir}/resources/test/"
 
     }
@@ -286,35 +286,34 @@ project("libra-starter-config") {
     }
 }
 
-project("libra-starter-jms") {
-
-    dependencies {
-        implementation project(":libra-core")
-        implementation project(":libra-core-common")
-
-        implementation group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: kotlin_version
-
-        compileOnly group: 'org.springframework', name: 'spring-context', version: spring_version
-        compileOnly group: 'org.springframework', name: 'spring-jms', version: spring_version
-        compileOnly group: 'javax.jms', name: 'javax.jms-api', version: jms_version
-        //spring-boot-starer contains this lib
-        compileOnly group: 'org.yaml', name: 'snakeyaml', version: snakeyaml_version
-
-        compileOnly group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.10.0'
-        compileOnly(group: 'org.apache.activemq', name: 'activemq-client', version: '5.15.10') {
-            exclude group: "org.apache.geronimo.specs", module: "geronimo-jms_1.1_spec"
-        }
-
-        testCompileOnly group: 'javax.jms', name: 'javax.jms-api', version: jms_version
-
-        testImplementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: kotlin_coroutine_version
-
-        testImplementation group: 'org.apache.activemq', name: 'activemq-client', version: activemq_version
-        testImplementation group: 'org.apache.activemq', name: 'artemis-jms-client', version: artemis_version
-
-        testImplementation group: 'org.springframework', name: 'spring-jms', version: spring_version
-        testImplementation group: 'org.yaml', name: 'snakeyaml', version: snakeyaml_version
-    }
-}
-
+//project("libra-starter-jms") {
+//
+//    dependencies {
+//        implementation project(":libra-core")
+//        implementation project(":libra-core-common")
+//
+//        implementation group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: kotlin_version
+//
+//        compileOnly group: 'org.springframework', name: 'spring-context', version: spring_version
+//        compileOnly group: 'org.springframework', name: 'spring-jms', version: spring_version
+//        compileOnly group: 'javax.jms', name: 'javax.jms-api', version: jms_version
+//        //spring-boot-starer contains this lib
+//        compileOnly group: 'org.yaml', name: 'snakeyaml', version: snakeyaml_version
+//
+//        compileOnly group: 'org.apache.activemq', name: 'artemis-jms-client', version: '2.10.0'
+//        compileOnly(group: 'org.apache.activemq', name: 'activemq-client', version: '5.15.10') {
+//            exclude group: "org.apache.geronimo.specs", module: "geronimo-jms_1.1_spec"
+//        }
+//
+//        testCompileOnly group: 'javax.jms', name: 'javax.jms-api', version: jms_version
+//
+//        testImplementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: kotlin_coroutine_version
+//
+//        testImplementation group: 'org.apache.activemq', name: 'activemq-client', version: activemq_version
+//        testImplementation group: 'org.apache.activemq', name: 'artemis-jms-client', version: artemis_version
+//
+//        testImplementation group: 'org.springframework', name: 'spring-jms', version: spring_version
+//        testImplementation group: 'org.yaml', name: 'snakeyaml', version: snakeyaml_version
+//    }
+//}
 

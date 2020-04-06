@@ -4,7 +4,7 @@ option java_outer_classname = "ProtoUsecaseTxn";
 
 message PUseCaseTxn {
     int32 sourceId = 1;
-    string gcGuid = 2;
+    string guid = 2;
     int32 ucTxnId = 3;
     map<string, string> attributes = 4;
 }

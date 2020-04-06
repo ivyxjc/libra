@@ -17,14 +17,11 @@ import org.springframework.test.context.junit4.SpringRunner
 open class RawTransMapperTest {
 
     @Autowired
-    private lateinit var mRawTransMapper: RawTransMapper
+    private lateinit var rawTransMapper: RawTransMapper
 
     @Test
     fun testInsert() {
         val raw = buildRawTrans()
-        println(raw.guid)
-        mRawTransMapper.insertRaw(raw)
+        rawTransMapper.insertRaw(raw)
     }
-
-
 }

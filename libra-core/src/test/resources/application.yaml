@@ -1,11 +1,9 @@
 spring:
     datasource:
-        url: jdbc:h2:mem;MODE=MySQL
+        url: jdbc:h2:mem::LIBRA;MODE=MySQL
         username: user
         password: password
-        schema: classpath:RawTransaction.sql
-        hikari:
-            schema: LIBRA
+        schema: classpath:TestInit.sql
 
 mybatis:
     type-aliases-package: com.ivyxjc.libra.core.dao

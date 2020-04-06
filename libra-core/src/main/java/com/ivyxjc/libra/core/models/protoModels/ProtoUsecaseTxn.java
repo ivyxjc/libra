@@ -4,1182 +4,1166 @@
 package com.ivyxjc.libra.core.models.protoModels;
 
 public final class ProtoUsecaseTxn {
-    private static final com.google.protobuf.Descriptors.Descriptor
-            internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor;
+  private static final com.google.protobuf.Descriptors.Descriptor
+          internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor;
+  private static final
+  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+          internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_AttributesEntry_descriptor;
+  private static final
+  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_AttributesEntry_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.FileDescriptor
+          descriptor;
 
-    public static void registerAllExtensions(
-            com.google.protobuf.ExtensionRegistryLite registry) {
-    }
+  static {
+    String[] descriptorData = {
+            "\n\020UseCaseTxn.proto\022(com.ivyxjc.libra.cor" +
+                    "e.models.protoModels\"\314\001\n\013PUseCaseTxn\022\020\n\010" +
+                    "sourceId\030\001 \001(\005\022\014\n\004guid\030\002 \001(\t\022\017\n\007ucTxnId\030" +
+                    "\003 \001(\005\022Y\n\nattributes\030\004 \003(\0132E.com.ivyxjc.l" +
+                    "ibra.core.models.protoModels.PUseCaseTxn" +
+                    ".AttributesEntry\0321\n\017AttributesEntry\022\013\n\003k" +
+                    "ey\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001B\021B\017ProtoUsec" +
+                    "aseTxnb\006proto3"
+    };
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+            .internalBuildGeneratedFileFrom(descriptorData,
+                    new com.google.protobuf.Descriptors.FileDescriptor[]{
+                    });
+    internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+    internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor,
+            new String[]{"SourceId", "Guid", "UcTxnId", "Attributes",});
+    internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_AttributesEntry_descriptor =
+            internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor.getNestedTypes().get(0);
+    internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_AttributesEntry_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_AttributesEntry_descriptor,
+            new String[]{"Key", "Value",});
+  }
 
-    public static void registerAllExtensions(
-            com.google.protobuf.ExtensionRegistry registry) {
-        registerAllExtensions(
-                (com.google.protobuf.ExtensionRegistryLite) registry);
-    }
-    private static final
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-            internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_fieldAccessorTable;
-    private static final com.google.protobuf.Descriptors.Descriptor
-            internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_AttributesEntry_descriptor;
-    private static final
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-            internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_AttributesEntry_fieldAccessorTable;
-    private static com.google.protobuf.Descriptors.FileDescriptor
-            descriptor;
+  private ProtoUsecaseTxn() {
+  }
+
+  public static void registerAllExtensions(
+          com.google.protobuf.ExtensionRegistryLite registry) {
+  }
+
+  public static void registerAllExtensions(
+          com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+            (com.google.protobuf.ExtensionRegistryLite) registry);
+  }
+
+  public static com.google.protobuf.Descriptors.FileDescriptor
+  getDescriptor() {
+    return descriptor;
+  }
+
+  public interface PUseCaseTxnOrBuilder extends
+          // @@protoc_insertion_point(interface_extends:com.ivyxjc.libra.core.models.protoModels.PUseCaseTxn)
+          com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 sourceId = 1;</code>
+     *
+     * @return The sourceId.
+     */
+    int getSourceId();
+
+    /**
+     * <code>string guid = 2;</code>
+     *
+     * @return The guid.
+     */
+    String getGuid();
+
+    /**
+     * <code>string guid = 2;</code>
+     *
+     * @return The bytes for guid.
+     */
+    com.google.protobuf.ByteString
+    getGuidBytes();
+
+    /**
+     * <code>int32 ucTxnId = 3;</code>
+     *
+     * @return The ucTxnId.
+     */
+    int getUcTxnId();
+
+    /**
+     * <code>map&lt;string, string&gt; attributes = 4;</code>
+     */
+    int getAttributesCount();
+
+    /**
+     * <code>map&lt;string, string&gt; attributes = 4;</code>
+     */
+    boolean containsAttributes(
+            String key);
+
+    /**
+     * Use {@link #getAttributesMap()} instead.
+     */
+    @Deprecated
+    java.util.Map<String, String>
+    getAttributes();
+
+    /**
+     * <code>map&lt;string, string&gt; attributes = 4;</code>
+     */
+    java.util.Map<String, String>
+    getAttributesMap();
+
+    /**
+     * <code>map&lt;string, string&gt; attributes = 4;</code>
+     */
+
+    String getAttributesOrDefault(
+            String key,
+            String defaultValue);
+
+    /**
+     * <code>map&lt;string, string&gt; attributes = 4;</code>
+     */
+
+    String getAttributesOrThrow(
+            String key);
+  }
+
+  /**
+   * Protobuf type {@code com.ivyxjc.libra.core.models.protoModels.PUseCaseTxn}
+   */
+  public static final class PUseCaseTxn extends
+          com.google.protobuf.GeneratedMessageV3 implements
+          // @@protoc_insertion_point(message_implements:com.ivyxjc.libra.core.models.protoModels.PUseCaseTxn)
+          PUseCaseTxnOrBuilder {
+    public static final int SOURCEID_FIELD_NUMBER = 1;
+    public static final int GUID_FIELD_NUMBER = 2;
+    public static final int UCTXNID_FIELD_NUMBER = 3;
+    public static final int ATTRIBUTES_FIELD_NUMBER = 4;
+    private static final long serialVersionUID = 0L;
+    // @@protoc_insertion_point(class_scope:com.ivyxjc.libra.core.models.protoModels.PUseCaseTxn)
+    private static final PUseCaseTxn DEFAULT_INSTANCE;
+    private static final com.google.protobuf.Parser<PUseCaseTxn>
+            PARSER = new com.google.protobuf.AbstractParser<PUseCaseTxn>() {
+      @Override
+      public PUseCaseTxn parsePartialFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
+        return new PUseCaseTxn(input, extensionRegistry);
+      }
+    };
 
     static {
-        java.lang.String[] descriptorData = {
-                "\n\020UseCaseTxn.proto\022(com.ivyxjc.libra.cor" +
-                        "e.models.protoModels\"\316\001\n\013PUseCaseTxn\022\020\n\010" +
-                        "sourceId\030\001 \001(\005\022\016\n\006gcGuid\030\002 \001(\t\022\017\n\007ucTxnI" +
-                        "d\030\003 \001(\005\022Y\n\nattributes\030\004 \003(\0132E.com.ivyxjc" +
-                        ".libra.core.models.protoModels.PUseCaseT" +
-                        "xn.AttributesEntry\0321\n\017AttributesEntry\022\013\n" +
-                        "\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001B\021B\017ProtoUs" +
-                        "ecaseTxnb\006proto3"
-        };
-        descriptor = com.google.protobuf.Descriptors.FileDescriptor
-                .internalBuildGeneratedFileFrom(descriptorData,
-                        new com.google.protobuf.Descriptors.FileDescriptor[]{
-                        });
-        internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor =
-                getDescriptor().getMessageTypes().get(0);
-        internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_fieldAccessorTable = new
-                com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-                internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor,
-                new java.lang.String[]{"SourceId", "GcGuid", "UcTxnId", "Attributes",});
-        internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_AttributesEntry_descriptor =
-                internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor.getNestedTypes().get(0);
-        internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_AttributesEntry_fieldAccessorTable = new
-                com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-                internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_AttributesEntry_descriptor,
-                new java.lang.String[]{"Key", "Value",});
-    }
-    private ProtoUsecaseTxn() {
+      DEFAULT_INSTANCE = new PUseCaseTxn();
     }
 
-    public static com.google.protobuf.Descriptors.FileDescriptor
+    private int sourceId_;
+    private volatile Object guid_;
+    private int ucTxnId_;
+    private com.google.protobuf.MapField<
+            String, String> attributes_;
+    private byte memoizedIsInitialized = -1;
+
+    // Use PUseCaseTxn.newBuilder() to construct.
+    private PUseCaseTxn(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+
+    private PUseCaseTxn() {
+      guid_ = "";
+    }
+
+    private PUseCaseTxn(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+              com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              sourceId_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              String s = input.readStringRequireUtf8();
+
+              guid_ = s;
+              break;
+            }
+            case 24: {
+
+              ucTxnId_ = input.readInt32();
+              break;
+            }
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                attributes_ = com.google.protobuf.MapField.newMapField(
+                        AttributesDefaultEntryHolder.defaultEntry);
+                mutable_bitField0_ |= 0x00000001;
+              }
+              com.google.protobuf.MapEntry<String, String>
+                      attributes__ = input.readMessage(
+                      AttributesDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
+              attributes_.getMutableMap().put(
+                      attributes__.getKey(), attributes__.getValue());
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                      input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+                e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
-        return descriptor;
+      return ProtoUsecaseTxn.internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor;
     }
 
-    public interface PUseCaseTxnOrBuilder extends
-            // @@protoc_insertion_point(interface_extends:com.ivyxjc.libra.core.models.protoModels.PUseCaseTxn)
-            com.google.protobuf.MessageOrBuilder {
+    public static PUseCaseTxn parseFrom(
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
 
-        /**
-         * <code>int32 sourceId = 1;</code>
-         *
-         * @return The sourceId.
-         */
-        int getSourceId();
+    public static PUseCaseTxn parseFrom(
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
 
-        /**
-         * <code>string gcGuid = 2;</code>
-         *
-         * @return The gcGuid.
-         */
-        java.lang.String getGcGuid();
+    public static PUseCaseTxn parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
 
-        /**
-         * <code>string gcGuid = 2;</code>
-         *
-         * @return The bytes for gcGuid.
-         */
-        com.google.protobuf.ByteString
-        getGcGuidBytes();
+    public static PUseCaseTxn parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
 
-        /**
-         * <code>int32 ucTxnId = 3;</code>
-         *
-         * @return The ucTxnId.
-         */
-        int getUcTxnId();
+    public static PUseCaseTxn parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
 
-        /**
-         * <code>map&lt;string, string&gt; attributes = 4;</code>
-         */
-        int getAttributesCount();
+    public static PUseCaseTxn parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
 
-        /**
-         * <code>map&lt;string, string&gt; attributes = 4;</code>
-         */
-        boolean containsAttributes(
-                java.lang.String key);
+    public static PUseCaseTxn parseFrom(java.io.InputStream input)
+            throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+              .parseWithIOException(PARSER, input);
+    }
 
-        /**
-         * Use {@link #getAttributesMap()} instead.
-         */
-        @java.lang.Deprecated
-        java.util.Map<java.lang.String, java.lang.String>
-        getAttributes();
+    public static PUseCaseTxn parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+              .parseWithIOException(PARSER, input, extensionRegistry);
+    }
 
-        /**
-         * <code>map&lt;string, string&gt; attributes = 4;</code>
-         */
-        java.util.Map<java.lang.String, java.lang.String>
-        getAttributesMap();
+    public static PUseCaseTxn parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+              .parseDelimitedWithIOException(PARSER, input);
+    }
 
-        /**
-         * <code>map&lt;string, string&gt; attributes = 4;</code>
-         */
+    public static PUseCaseTxn parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+              .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
 
-        java.lang.String getAttributesOrDefault(
-                java.lang.String key,
-                java.lang.String defaultValue);
+    public static PUseCaseTxn parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+              .parseWithIOException(PARSER, input);
+    }
 
-        /**
-         * <code>map&lt;string, string&gt; attributes = 4;</code>
-         */
+    public static PUseCaseTxn parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+              .parseWithIOException(PARSER, input, extensionRegistry);
+    }
 
-        java.lang.String getAttributesOrThrow(
-                java.lang.String key);
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+
+    public static Builder newBuilder(PUseCaseTxn prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+
+    public static PUseCaseTxn getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    public static com.google.protobuf.Parser<PUseCaseTxn> parser() {
+      return PARSER;
+    }
+
+    @Override
+    @SuppressWarnings({"unused"})
+    protected Object newInstance(
+            UnusedPrivateParameter unused) {
+      return new PUseCaseTxn();
+    }
+
+    @Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+
+    @SuppressWarnings({"rawtypes"})
+    @Override
+    protected com.google.protobuf.MapField internalGetMapField(
+            int number) {
+      switch (number) {
+        case 4:
+          return internalGetAttributes();
+        default:
+          throw new RuntimeException(
+                  "Invalid map field number: " + number);
+      }
+    }
+
+    @Override
+    protected FieldAccessorTable
+    internalGetFieldAccessorTable() {
+      return ProtoUsecaseTxn.internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                      PUseCaseTxn.class, Builder.class);
+    }
+
+    /**
+     * <code>int32 sourceId = 1;</code>
+     * @return The sourceId.
+     */
+    public int getSourceId() {
+      return sourceId_;
+    }
+
+    /**
+     * <code>string guid = 2;</code>
+     * @return The guid.
+     */
+    public String getGuid() {
+      Object ref = guid_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        guid_ = s;
+        return s;
+      }
+    }
+
+    /**
+     * <code>string guid = 2;</code>
+     * @return The bytes for guid.
+     */
+    public com.google.protobuf.ByteString
+    getGuidBytes() {
+      Object ref = guid_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (String) ref);
+        guid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    /**
+     * <code>int32 ucTxnId = 3;</code>
+     * @return The ucTxnId.
+     */
+    public int getUcTxnId() {
+      return ucTxnId_;
+    }
+
+    private com.google.protobuf.MapField<String, String>
+    internalGetAttributes() {
+      if (attributes_ == null) {
+        return com.google.protobuf.MapField.emptyMapField(
+                AttributesDefaultEntryHolder.defaultEntry);
+      }
+      return attributes_;
+    }
+
+    public int getAttributesCount() {
+      return internalGetAttributes().getMap().size();
+    }
+
+    /**
+     * <code>map&lt;string, string&gt; attributes = 4;</code>
+     */
+
+    public boolean containsAttributes(
+            String key) {
+      if (key == null) {
+        throw new NullPointerException();
+      }
+      return internalGetAttributes().getMap().containsKey(key);
+    }
+
+    /**
+     * Use {@link #getAttributesMap()} instead.
+     */
+    @Deprecated
+    public java.util.Map<String, String> getAttributes() {
+      return getAttributesMap();
+    }
+
+    /**
+     * <code>map&lt;string, string&gt; attributes = 4;</code>
+     */
+
+    public java.util.Map<String, String> getAttributesMap() {
+      return internalGetAttributes().getMap();
+    }
+
+    /**
+     * <code>map&lt;string, string&gt; attributes = 4;</code>
+     */
+
+    public String getAttributesOrDefault(
+            String key,
+            String defaultValue) {
+      if (key == null) {
+        throw new NullPointerException();
+      }
+      java.util.Map<String, String> map =
+              internalGetAttributes().getMap();
+      return map.containsKey(key) ? map.get(key) : defaultValue;
+    }
+
+    /**
+     * <code>map&lt;string, string&gt; attributes = 4;</code>
+     */
+
+    public String getAttributesOrThrow(
+            String key) {
+      if (key == null) {
+        throw new NullPointerException();
+      }
+      java.util.Map<String, String> map =
+              internalGetAttributes().getMap();
+      if (!map.containsKey(key)) {
+        throw new IllegalArgumentException();
+      }
+      return map.get(key);
+    }
+
+    @Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+            throws java.io.IOException {
+      if (sourceId_ != 0) {
+        output.writeInt32(1, sourceId_);
+      }
+      if (!getGuidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, guid_);
+      }
+      if (ucTxnId_ != 0) {
+        output.writeInt32(3, ucTxnId_);
+      }
+      com.google.protobuf.GeneratedMessageV3
+              .serializeStringMapTo(
+                      output,
+                      internalGetAttributes(),
+                      AttributesDefaultEntryHolder.defaultEntry,
+                      4);
+      unknownFields.writeTo(output);
+    }
+
+    @Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (sourceId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+                .computeInt32Size(1, sourceId_);
+      }
+      if (!getGuidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, guid_);
+      }
+      if (ucTxnId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+                .computeInt32Size(3, ucTxnId_);
+      }
+      for (java.util.Map.Entry<String, String> entry
+              : internalGetAttributes().getMap().entrySet()) {
+        com.google.protobuf.MapEntry<String, String>
+                attributes__ = AttributesDefaultEntryHolder.defaultEntry.newBuilderForType()
+                .setKey(entry.getKey())
+                .setValue(entry.getValue())
+                .build();
+        size += com.google.protobuf.CodedOutputStream
+                .computeMessageSize(4, attributes__);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+      if (obj == this) {
+        return true;
+      }
+      if (!(obj instanceof PUseCaseTxn)) {
+        return super.equals(obj);
+      }
+      PUseCaseTxn other = (PUseCaseTxn) obj;
+
+      if (getSourceId()
+              != other.getSourceId()) return false;
+      if (!getGuid()
+              .equals(other.getGuid())) return false;
+      if (getUcTxnId()
+              != other.getUcTxnId()) return false;
+      if (!internalGetAttributes().equals(
+              other.internalGetAttributes())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + SOURCEID_FIELD_NUMBER;
+      hash = (53 * hash) + getSourceId();
+      hash = (37 * hash) + GUID_FIELD_NUMBER;
+      hash = (53 * hash) + getGuid().hashCode();
+      hash = (37 * hash) + UCTXNID_FIELD_NUMBER;
+      hash = (53 * hash) + getUcTxnId();
+      if (!internalGetAttributes().getMap().isEmpty()) {
+        hash = (37 * hash) + ATTRIBUTES_FIELD_NUMBER;
+        hash = (53 * hash) + internalGetAttributes().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    @Override
+    public Builder newBuilderForType() {
+      return newBuilder();
+    }
+
+    @Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+              ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @Override
+    protected Builder newBuilderForType(
+            BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+
+    @Override
+    public com.google.protobuf.Parser<PUseCaseTxn> getParserForType() {
+      return PARSER;
+    }
+
+    @Override
+    public PUseCaseTxn getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final class AttributesDefaultEntryHolder {
+      static final com.google.protobuf.MapEntry<
+              String, String> defaultEntry =
+              com.google.protobuf.MapEntry
+                      .<String, String>newDefaultInstance(
+                              ProtoUsecaseTxn.internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_AttributesEntry_descriptor,
+                              com.google.protobuf.WireFormat.FieldType.STRING,
+                              "",
+                              com.google.protobuf.WireFormat.FieldType.STRING,
+                              "");
     }
 
     /**
      * Protobuf type {@code com.ivyxjc.libra.core.models.protoModels.PUseCaseTxn}
      */
-    public static final class PUseCaseTxn extends
-            com.google.protobuf.GeneratedMessageV3 implements
-            // @@protoc_insertion_point(message_implements:com.ivyxjc.libra.core.models.protoModels.PUseCaseTxn)
+    public static final class Builder extends
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:com.ivyxjc.libra.core.models.protoModels.PUseCaseTxn)
             PUseCaseTxnOrBuilder {
-        private static final long serialVersionUID = 0L;
+      private int bitField0_;
+      private int sourceId_;
+      private Object guid_ = "";
+      private int ucTxnId_;
+      private com.google.protobuf.MapField<
+              String, String> attributes_;
 
-        // Use PUseCaseTxn.newBuilder() to construct.
-        private PUseCaseTxn(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-            super(builder);
+      // Construct using com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+              BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+
+      public static final com.google.protobuf.Descriptors.Descriptor
+      getDescriptor() {
+        return ProtoUsecaseTxn.internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor;
+      }
+
+      @SuppressWarnings({"rawtypes"})
+      protected com.google.protobuf.MapField internalGetMapField(
+              int number) {
+        switch (number) {
+          case 4:
+            return internalGetAttributes();
+          default:
+            throw new RuntimeException(
+                    "Invalid map field number: " + number);
+        }
+      }
+
+      @SuppressWarnings({"rawtypes"})
+      protected com.google.protobuf.MapField internalGetMutableMapField(
+              int number) {
+        switch (number) {
+          case 4:
+            return internalGetMutableAttributes();
+          default:
+            throw new RuntimeException(
+                    "Invalid map field number: " + number);
+        }
+      }
+
+      @Override
+      protected FieldAccessorTable
+      internalGetFieldAccessorTable() {
+        return ProtoUsecaseTxn.internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                        PUseCaseTxn.class, Builder.class);
+      }
+
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+
+      @Override
+      public Builder clear() {
+        super.clear();
+        sourceId_ = 0;
+
+        guid_ = "";
+
+        ucTxnId_ = 0;
+
+        internalGetMutableAttributes().clear();
+        return this;
+      }
+
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+      getDescriptorForType() {
+        return ProtoUsecaseTxn.internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor;
+      }
+
+      @Override
+      public PUseCaseTxn getDefaultInstanceForType() {
+        return PUseCaseTxn.getDefaultInstance();
+      }
+
+      @Override
+      public PUseCaseTxn build() {
+        PUseCaseTxn result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @Override
+      public PUseCaseTxn buildPartial() {
+        PUseCaseTxn result = new PUseCaseTxn(this);
+        int from_bitField0_ = bitField0_;
+        result.sourceId_ = sourceId_;
+        result.guid_ = guid_;
+        result.ucTxnId_ = ucTxnId_;
+        result.attributes_ = internalGetAttributes();
+        result.attributes_.makeImmutable();
+        onBuilt();
+        return result;
+      }
+
+      @Override
+      public Builder clone() {
+        return super.clone();
+      }
+
+      @Override
+      public Builder setField(
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              Object value) {
+        return super.setField(field, value);
+      }
+
+      @Override
+      public Builder clearField(
+              com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+
+      @Override
+      public Builder clearOneof(
+              com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+
+      @Override
+      public Builder setRepeatedField(
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              int index, Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+
+      @Override
+      public Builder addRepeatedField(
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              Object value) {
+        return super.addRepeatedField(field, value);
+      }
+
+      @Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof PUseCaseTxn) {
+          return mergeFrom((PUseCaseTxn) other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(PUseCaseTxn other) {
+        if (other == PUseCaseTxn.getDefaultInstance()) return this;
+        if (other.getSourceId() != 0) {
+          setSourceId(other.getSourceId());
+        }
+        if (!other.getGuid().isEmpty()) {
+          guid_ = other.guid_;
+          onChanged();
+        }
+        if (other.getUcTxnId() != 0) {
+          setUcTxnId(other.getUcTxnId());
+        }
+        internalGetMutableAttributes().mergeFrom(
+                other.internalGetAttributes());
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @Override
+      public Builder mergeFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
+        PUseCaseTxn parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (PUseCaseTxn) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      /**
+       * <code>int32 sourceId = 1;</code>
+       * @return The sourceId.
+       */
+      public int getSourceId() {
+        return sourceId_;
+      }
+
+      /**
+       * <code>int32 sourceId = 1;</code>
+       * @param value The sourceId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSourceId(int value) {
+
+        sourceId_ = value;
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>int32 sourceId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSourceId() {
+
+        sourceId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>string guid = 2;</code>
+       * @return The guid.
+       */
+      public String getGuid() {
+        Object ref = guid_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+                  (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          guid_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+
+      /**
+       * <code>string guid = 2;</code>
+       * @param value The guid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGuid(
+              String value) {
+        if (value == null) {
+          throw new NullPointerException();
         }
 
-        private PUseCaseTxn() {
-            gcGuid_ = "";
+        guid_ = value;
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>string guid = 2;</code>
+       * @return The bytes for guid.
+       */
+      public com.google.protobuf.ByteString
+      getGuidBytes() {
+        Object ref = guid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (String) ref);
+          guid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
         }
+      }
 
-        public static final int SOURCEID_FIELD_NUMBER = 1;
-        public static final int GCGUID_FIELD_NUMBER = 2;
-
-        private PUseCaseTxn(
-                com.google.protobuf.CodedInputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            this();
-            if (extensionRegistry == null) {
-                throw new java.lang.NullPointerException();
-            }
-            int mutable_bitField0_ = 0;
-            com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-                    com.google.protobuf.UnknownFieldSet.newBuilder();
-            try {
-                boolean done = false;
-                while (!done) {
-                    int tag = input.readTag();
-                    switch (tag) {
-                        case 0:
-                            done = true;
-                            break;
-                        case 8: {
-
-                            sourceId_ = input.readInt32();
-                            break;
-                        }
-                        case 18: {
-                            java.lang.String s = input.readStringRequireUtf8();
-
-                            gcGuid_ = s;
-                            break;
-                        }
-                        case 24: {
-
-                            ucTxnId_ = input.readInt32();
-                            break;
-                        }
-                        case 34: {
-                            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-                                attributes_ = com.google.protobuf.MapField.newMapField(
-                                        AttributesDefaultEntryHolder.defaultEntry);
-                                mutable_bitField0_ |= 0x00000001;
-                            }
-                            com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
-                                    attributes__ = input.readMessage(
-                                    AttributesDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
-                            attributes_.getMutableMap().put(
-                                    attributes__.getKey(), attributes__.getValue());
-                            break;
-                        }
-                        default: {
-                            if (!parseUnknownField(
-                                    input, unknownFields, extensionRegistry, tag)) {
-                                done = true;
-                            }
-                            break;
-                        }
-                    }
-                }
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                throw e.setUnfinishedMessage(this);
-            } catch (java.io.IOException e) {
-                throw new com.google.protobuf.InvalidProtocolBufferException(
-                        e).setUnfinishedMessage(this);
-            } finally {
-                this.unknownFields = unknownFields.build();
-                makeExtensionsImmutable();
-            }
+      /**
+       * <code>string guid = 2;</code>
+       * @param value The bytes for guid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGuidBytes(
+              com.google.protobuf.ByteString value) {
+        if (value == null) {
+          throw new NullPointerException();
         }
-        public static final int UCTXNID_FIELD_NUMBER = 3;
+        checkByteStringIsUtf8(value);
 
-        @SuppressWarnings({"rawtypes"})
-        @java.lang.Override
-        protected com.google.protobuf.MapField internalGetMapField(
-                int number) {
-            switch (number) {
-                case 4:
-                    return internalGetAttributes();
-                default:
-                    throw new RuntimeException(
-                            "Invalid map field number: " + number);
-            }
+        guid_ = value;
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>string guid = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearGuid() {
+
+        guid_ = getDefaultInstance().getGuid();
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>int32 ucTxnId = 3;</code>
+       * @return The ucTxnId.
+       */
+      public int getUcTxnId() {
+        return ucTxnId_;
+      }
+
+      /**
+       * <code>int32 ucTxnId = 3;</code>
+       * @param value The ucTxnId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUcTxnId(int value) {
+
+        ucTxnId_ = value;
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>int32 ucTxnId = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUcTxnId() {
+
+        ucTxnId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.MapField<String, String>
+      internalGetAttributes() {
+        if (attributes_ == null) {
+          return com.google.protobuf.MapField.emptyMapField(
+                  AttributesDefaultEntryHolder.defaultEntry);
         }
-        public static final int ATTRIBUTES_FIELD_NUMBER = 4;
-        // @@protoc_insertion_point(class_scope:com.ivyxjc.libra.core.models.protoModels.PUseCaseTxn)
-        private static final com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn DEFAULT_INSTANCE;
-        private static final com.google.protobuf.Parser<PUseCaseTxn>
-                PARSER = new com.google.protobuf.AbstractParser<PUseCaseTxn>() {
-            @java.lang.Override
-            public PUseCaseTxn parsePartialFrom(
-                    com.google.protobuf.CodedInputStream input,
-                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                    throws com.google.protobuf.InvalidProtocolBufferException {
-                return new PUseCaseTxn(input, extensionRegistry);
-            }
-        };
+        return attributes_;
+      }
 
-        static {
-            DEFAULT_INSTANCE = new com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn();
+      private com.google.protobuf.MapField<String, String>
+      internalGetMutableAttributes() {
+        onChanged();
+        ;
+        if (attributes_ == null) {
+          attributes_ = com.google.protobuf.MapField.newMapField(
+                  AttributesDefaultEntryHolder.defaultEntry);
         }
-
-        private int sourceId_;
-        private volatile java.lang.Object gcGuid_;
-
-        /**
-         * <code>string gcGuid = 2;</code>
-         *
-         * @return The gcGuid.
-         */
-        public java.lang.String getGcGuid() {
-            java.lang.Object ref = gcGuid_;
-            if (ref instanceof java.lang.String) {
-                return (java.lang.String) ref;
-            } else {
-                com.google.protobuf.ByteString bs =
-                        (com.google.protobuf.ByteString) ref;
-                java.lang.String s = bs.toStringUtf8();
-                gcGuid_ = s;
-                return s;
-            }
+        if (!attributes_.isMutable()) {
+          attributes_ = attributes_.copy();
         }
+        return attributes_;
+      }
 
-        /**
-         * <code>string gcGuid = 2;</code>
-         *
-         * @return The bytes for gcGuid.
-         */
-        public com.google.protobuf.ByteString
-        getGcGuidBytes() {
-            java.lang.Object ref = gcGuid_;
-            if (ref instanceof java.lang.String) {
-                com.google.protobuf.ByteString b =
-                        com.google.protobuf.ByteString.copyFromUtf8(
-                                (java.lang.String) ref);
-                gcGuid_ = b;
-                return b;
-            } else {
-                return (com.google.protobuf.ByteString) ref;
-            }
+      public int getAttributesCount() {
+        return internalGetAttributes().getMap().size();
+      }
+
+      /**
+       * <code>map&lt;string, string&gt; attributes = 4;</code>
+       */
+
+      public boolean containsAttributes(
+              String key) {
+        if (key == null) {
+          throw new NullPointerException();
         }
-        private int ucTxnId_;
-        private com.google.protobuf.MapField<
-                java.lang.String, java.lang.String> attributes_;
-        private byte memoizedIsInitialized = -1;
+        return internalGetAttributes().getMap().containsKey(key);
+      }
 
-        public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-            return com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor;
+      /**
+       * Use {@link #getAttributesMap()} instead.
+       */
+      @Deprecated
+      public java.util.Map<String, String> getAttributes() {
+        return getAttributesMap();
+      }
+
+      /**
+       * <code>map&lt;string, string&gt; attributes = 4;</code>
+       */
+
+      public java.util.Map<String, String> getAttributesMap() {
+        return internalGetAttributes().getMap();
+      }
+
+      /**
+       * <code>map&lt;string, string&gt; attributes = 4;</code>
+       */
+
+      public String getAttributesOrDefault(
+              String key,
+              String defaultValue) {
+        if (key == null) {
+          throw new NullPointerException();
         }
+        java.util.Map<String, String> map =
+                internalGetAttributes().getMap();
+        return map.containsKey(key) ? map.get(key) : defaultValue;
+      }
 
-        public static com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn parseFrom(
-                java.nio.ByteBuffer data)
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
+      /**
+       * <code>map&lt;string, string&gt; attributes = 4;</code>
+       */
+
+      public String getAttributesOrThrow(
+              String key) {
+        if (key == null) {
+          throw new NullPointerException();
         }
-
-        public static com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn parseFrom(
-                java.nio.ByteBuffer data,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
+        java.util.Map<String, String> map =
+                internalGetAttributes().getMap();
+        if (!map.containsKey(key)) {
+          throw new IllegalArgumentException();
         }
+        return map.get(key);
+      }
 
-        private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-        internalGetAttributes() {
-            if (attributes_ == null) {
-                return com.google.protobuf.MapField.emptyMapField(
-                        AttributesDefaultEntryHolder.defaultEntry);
-            }
-            return attributes_;
+      public Builder clearAttributes() {
+        internalGetMutableAttributes().getMutableMap()
+                .clear();
+        return this;
+      }
+
+      /**
+       * <code>map&lt;string, string&gt; attributes = 4;</code>
+       */
+
+      public Builder removeAttributes(
+              String key) {
+        if (key == null) {
+          throw new NullPointerException();
         }
+        internalGetMutableAttributes().getMutableMap()
+                .remove(key);
+        return this;
+      }
 
-        public int getAttributesCount() {
-            return internalGetAttributes().getMap().size();
+      /**
+       * Use alternate mutation accessors instead.
+       */
+      @Deprecated
+      public java.util.Map<String, String>
+      getMutableAttributes() {
+        return internalGetMutableAttributes().getMutableMap();
+      }
+
+      /**
+       * <code>map&lt;string, string&gt; attributes = 4;</code>
+       */
+      public Builder putAttributes(
+              String key,
+              String value) {
+        if (key == null) {
+          throw new NullPointerException();
         }
-
-        /**
-         * <code>map&lt;string, string&gt; attributes = 4;</code>
-         */
-
-        public boolean containsAttributes(
-                java.lang.String key) {
-            if (key == null) {
-                throw new java.lang.NullPointerException();
-            }
-            return internalGetAttributes().getMap().containsKey(key);
+        if (value == null) {
+          throw new NullPointerException();
         }
-
-        /**
-         * Use {@link #getAttributesMap()} instead.
-         */
-        @java.lang.Deprecated
-        public java.util.Map<java.lang.String, java.lang.String> getAttributes() {
-            return getAttributesMap();
-        }
-
-        /**
-         * <code>map&lt;string, string&gt; attributes = 4;</code>
-         */
-
-        public java.util.Map<java.lang.String, java.lang.String> getAttributesMap() {
-            return internalGetAttributes().getMap();
-        }
-
-        /**
-         * <code>map&lt;string, string&gt; attributes = 4;</code>
-         */
-
-        public java.lang.String getAttributesOrDefault(
-                java.lang.String key,
-                java.lang.String defaultValue) {
-            if (key == null) {
-                throw new java.lang.NullPointerException();
-            }
-            java.util.Map<java.lang.String, java.lang.String> map =
-                    internalGetAttributes().getMap();
-            return map.containsKey(key) ? map.get(key) : defaultValue;
-        }
-
-        /**
-         * <code>map&lt;string, string&gt; attributes = 4;</code>
-         */
-
-        public java.lang.String getAttributesOrThrow(
-                java.lang.String key) {
-            if (key == null) {
-                throw new java.lang.NullPointerException();
-            }
-            java.util.Map<java.lang.String, java.lang.String> map =
-                    internalGetAttributes().getMap();
-            if (!map.containsKey(key)) {
-                throw new java.lang.IllegalArgumentException();
-            }
-            return map.get(key);
-        }
-
-        public static com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn parseFrom(
-                com.google.protobuf.ByteString data)
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
-        }
-
-        @java.lang.Override
-        public final boolean isInitialized() {
-            byte isInitialized = memoizedIsInitialized;
-            if (isInitialized == 1) return true;
-            if (isInitialized == 0) return false;
-
-            memoizedIsInitialized = 1;
-            return true;
-        }
-
-        public static com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn parseFrom(
-                com.google.protobuf.ByteString data,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
-        }
-
-        public static com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn parseFrom(byte[] data)
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
-        }
-
-        public static com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn parseFrom(
-                byte[] data,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
-        }
-
-        public static com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn parseFrom(java.io.InputStream input)
-                throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3
-                    .parseWithIOException(PARSER, input);
-        }
-
-        public static com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn parseFrom(
-                java.io.InputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3
-                    .parseWithIOException(PARSER, input, extensionRegistry);
-        }
-
-        public static com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn parseDelimitedFrom(java.io.InputStream input)
-                throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3
-                    .parseDelimitedWithIOException(PARSER, input);
-        }
-
-        public static com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn parseDelimitedFrom(
-                java.io.InputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3
-                    .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-        }
-
-        public static com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn parseFrom(
-                com.google.protobuf.CodedInputStream input)
-                throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3
-                    .parseWithIOException(PARSER, input);
-        }
-
-        public static com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn parseFrom(
-                com.google.protobuf.CodedInputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3
-                    .parseWithIOException(PARSER, input, extensionRegistry);
-        }
-
-        public static Builder newBuilder() {
-            return DEFAULT_INSTANCE.toBuilder();
-        }
-
-        public static Builder newBuilder(com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn prototype) {
-            return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-        }
-
-        public static com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn getDefaultInstance() {
-            return DEFAULT_INSTANCE;
-        }
-
-        public static com.google.protobuf.Parser<PUseCaseTxn> parser() {
-            return PARSER;
-        }
-
-        @java.lang.Override
-        @SuppressWarnings({"unused"})
-        protected java.lang.Object newInstance(
-                UnusedPrivateParameter unused) {
-            return new PUseCaseTxn();
-        }
-
-        @java.lang.Override
-        public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
-            return this.unknownFields;
-        }
-
-        @java.lang.Override
-        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-            return com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_fieldAccessorTable
-                    .ensureFieldAccessorsInitialized(
-                            com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn.class, com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn.Builder.class);
-        }
-
-        @java.lang.Override
-        public Builder newBuilderForType() {
-            return newBuilder();
-        }
-
-        /**
-         * <code>int32 sourceId = 1;</code>
-         *
-         * @return The sourceId.
-         */
-        public int getSourceId() {
-            return sourceId_;
-        }
-
-        /**
-         * <code>int32 ucTxnId = 3;</code>
-         *
-         * @return The ucTxnId.
-         */
-        public int getUcTxnId() {
-            return ucTxnId_;
-        }
-
-        @java.lang.Override
-        public Builder toBuilder() {
-            return this == DEFAULT_INSTANCE
-                    ? new Builder() : new Builder().mergeFrom(this);
-        }
-
-        @java.lang.Override
-        protected Builder newBuilderForType(
-                com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-            Builder builder = new Builder(parent);
-            return builder;
-        }
-
-        @java.lang.Override
-        public void writeTo(com.google.protobuf.CodedOutputStream output)
-                throws java.io.IOException {
-            if (sourceId_ != 0) {
-                output.writeInt32(1, sourceId_);
-            }
-            if (!getGcGuidBytes().isEmpty()) {
-                com.google.protobuf.GeneratedMessageV3.writeString(output, 2, gcGuid_);
-            }
-            if (ucTxnId_ != 0) {
-                output.writeInt32(3, ucTxnId_);
-            }
-            com.google.protobuf.GeneratedMessageV3
-                    .serializeStringMapTo(
-                            output,
-                            internalGetAttributes(),
-                            AttributesDefaultEntryHolder.defaultEntry,
-                            4);
-            unknownFields.writeTo(output);
-        }
-
-        @java.lang.Override
-        public int getSerializedSize() {
-            int size = memoizedSize;
-            if (size != -1) return size;
-
-            size = 0;
-            if (sourceId_ != 0) {
-                size += com.google.protobuf.CodedOutputStream
-                        .computeInt32Size(1, sourceId_);
-            }
-            if (!getGcGuidBytes().isEmpty()) {
-                size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, gcGuid_);
-            }
-            if (ucTxnId_ != 0) {
-                size += com.google.protobuf.CodedOutputStream
-                        .computeInt32Size(3, ucTxnId_);
-            }
-            for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
-                    : internalGetAttributes().getMap().entrySet()) {
-                com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
-                        attributes__ = AttributesDefaultEntryHolder.defaultEntry.newBuilderForType()
-                        .setKey(entry.getKey())
-                        .setValue(entry.getValue())
-                        .build();
-                size += com.google.protobuf.CodedOutputStream
-                        .computeMessageSize(4, attributes__);
-            }
-            size += unknownFields.getSerializedSize();
-            memoizedSize = size;
-            return size;
-        }
-
-        @java.lang.Override
-        public boolean equals(final java.lang.Object obj) {
-            if (obj == this) {
-                return true;
-            }
-            if (!(obj instanceof com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn)) {
-                return super.equals(obj);
-            }
-            com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn other = (com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn) obj;
-
-            if (getSourceId()
-                    != other.getSourceId()) return false;
-            if (!getGcGuid()
-                    .equals(other.getGcGuid())) return false;
-            if (getUcTxnId()
-                    != other.getUcTxnId()) return false;
-            if (!internalGetAttributes().equals(
-                    other.internalGetAttributes())) return false;
-            if (!unknownFields.equals(other.unknownFields)) return false;
-            return true;
-        }
-
-        @java.lang.Override
-        public int hashCode() {
-            if (memoizedHashCode != 0) {
-                return memoizedHashCode;
-            }
-            int hash = 41;
-            hash = (19 * hash) + getDescriptor().hashCode();
-            hash = (37 * hash) + SOURCEID_FIELD_NUMBER;
-            hash = (53 * hash) + getSourceId();
-            hash = (37 * hash) + GCGUID_FIELD_NUMBER;
-            hash = (53 * hash) + getGcGuid().hashCode();
-            hash = (37 * hash) + UCTXNID_FIELD_NUMBER;
-            hash = (53 * hash) + getUcTxnId();
-            if (!internalGetAttributes().getMap().isEmpty()) {
-                hash = (37 * hash) + ATTRIBUTES_FIELD_NUMBER;
-                hash = (53 * hash) + internalGetAttributes().hashCode();
-            }
-            hash = (29 * hash) + unknownFields.hashCode();
-            memoizedHashCode = hash;
-            return hash;
-        }
-
-        @java.lang.Override
-        public com.google.protobuf.Parser<PUseCaseTxn> getParserForType() {
-            return PARSER;
-        }
-
-        @java.lang.Override
-        public com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn getDefaultInstanceForType() {
-            return DEFAULT_INSTANCE;
-        }
-
-        private static final class AttributesDefaultEntryHolder {
-            static final com.google.protobuf.MapEntry<
-                    java.lang.String, java.lang.String> defaultEntry =
-                    com.google.protobuf.MapEntry
-                            .<java.lang.String, java.lang.String>newDefaultInstance(
-                                    com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_AttributesEntry_descriptor,
-                                    com.google.protobuf.WireFormat.FieldType.STRING,
-                                    "",
-                                    com.google.protobuf.WireFormat.FieldType.STRING,
-                                    "");
-        }
-
-        /**
-         * Protobuf type {@code com.ivyxjc.libra.core.models.protoModels.PUseCaseTxn}
-         */
-        public static final class Builder extends
-                com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-                // @@protoc_insertion_point(builder_implements:com.ivyxjc.libra.core.models.protoModels.PUseCaseTxn)
-                com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxnOrBuilder {
-            private int bitField0_;
-
-            @SuppressWarnings({"rawtypes"})
-            protected com.google.protobuf.MapField internalGetMapField(
-                    int number) {
-                switch (number) {
-                    case 4:
-                        return internalGetAttributes();
-                    default:
-                        throw new RuntimeException(
-                                "Invalid map field number: " + number);
-                }
-            }
-
-            @SuppressWarnings({"rawtypes"})
-            protected com.google.protobuf.MapField internalGetMutableMapField(
-                    int number) {
-                switch (number) {
-                    case 4:
-                        return internalGetMutableAttributes();
-                    default:
-                        throw new RuntimeException(
-                                "Invalid map field number: " + number);
-                }
-            }
-            private int sourceId_;
-            private java.lang.Object gcGuid_ = "";
-
-            private Builder(
-                    com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-                super(parent);
-                maybeForceBuilderInitialization();
-            }
-            private int ucTxnId_;
-            private com.google.protobuf.MapField<
-                    java.lang.String, java.lang.String> attributes_;
-
-            // Construct using com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn.newBuilder()
-            private Builder() {
-                maybeForceBuilderInitialization();
-            }
-
-            public static final com.google.protobuf.Descriptors.Descriptor
-            getDescriptor() {
-                return com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor;
-            }
-
-            @java.lang.Override
-            protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-            internalGetFieldAccessorTable() {
-                return com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_fieldAccessorTable
-                        .ensureFieldAccessorsInitialized(
-                                com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn.class, com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn.Builder.class);
-            }
-
-            private void maybeForceBuilderInitialization() {
-                if (com.google.protobuf.GeneratedMessageV3
-                        .alwaysUseFieldBuilders) {
-                }
-            }
-
-            @java.lang.Override
-            public Builder clone() {
-                return super.clone();
-            }
-
-            @java.lang.Override
-            public Builder setField(
-                    com.google.protobuf.Descriptors.FieldDescriptor field,
-                    java.lang.Object value) {
-                return super.setField(field, value);
-            }
-
-            @java.lang.Override
-            public Builder clearField(
-                    com.google.protobuf.Descriptors.FieldDescriptor field) {
-                return super.clearField(field);
-            }
-
-            @java.lang.Override
-            public Builder clearOneof(
-                    com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-                return super.clearOneof(oneof);
-            }
-
-            @java.lang.Override
-            public Builder setRepeatedField(
-                    com.google.protobuf.Descriptors.FieldDescriptor field,
-                    int index, java.lang.Object value) {
-                return super.setRepeatedField(field, index, value);
-            }
-
-            @java.lang.Override
-            public Builder addRepeatedField(
-                    com.google.protobuf.Descriptors.FieldDescriptor field,
-                    java.lang.Object value) {
-                return super.addRepeatedField(field, value);
-            }
-
-            @java.lang.Override
-            public Builder clear() {
-                super.clear();
-                sourceId_ = 0;
-
-                gcGuid_ = "";
-
-                ucTxnId_ = 0;
-
-                internalGetMutableAttributes().clear();
-                return this;
-            }
-
-            @java.lang.Override
-            public com.google.protobuf.Descriptors.Descriptor
-            getDescriptorForType() {
-                return com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.internal_static_com_ivyxjc_libra_core_models_protoModels_PUseCaseTxn_descriptor;
-            }
-
-            @java.lang.Override
-            public final boolean isInitialized() {
-                return true;
-            }
-
-            @java.lang.Override
-            public com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn getDefaultInstanceForType() {
-                return com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn.getDefaultInstance();
-            }
-
-            @java.lang.Override
-            public com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn build() {
-                com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn result = buildPartial();
-                if (!result.isInitialized()) {
-                    throw newUninitializedMessageException(result);
-                }
-                return result;
-            }
-
-            @java.lang.Override
-            public com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn buildPartial() {
-                com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn result = new com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn(this);
-                int from_bitField0_ = bitField0_;
-                result.sourceId_ = sourceId_;
-                result.gcGuid_ = gcGuid_;
-                result.ucTxnId_ = ucTxnId_;
-                result.attributes_ = internalGetAttributes();
-                result.attributes_.makeImmutable();
-                onBuilt();
-                return result;
-            }
-
-            @java.lang.Override
-            public Builder mergeFrom(com.google.protobuf.Message other) {
-                if (other instanceof com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn) {
-                    return mergeFrom((com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn) other);
-                } else {
-                    super.mergeFrom(other);
-                    return this;
-                }
-            }
-
-            public Builder mergeFrom(com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn other) {
-                if (other == com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn.getDefaultInstance())
-                    return this;
-                if (other.getSourceId() != 0) {
-                    setSourceId(other.getSourceId());
-                }
-                if (!other.getGcGuid().isEmpty()) {
-                    gcGuid_ = other.gcGuid_;
-                    onChanged();
-                }
-                if (other.getUcTxnId() != 0) {
-                    setUcTxnId(other.getUcTxnId());
-                }
-                internalGetMutableAttributes().mergeFrom(
-                        other.internalGetAttributes());
-                this.mergeUnknownFields(other.unknownFields);
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>int32 sourceId = 1;</code>
-             *
-             * @return This builder for chaining.
-             */
-            public Builder clearSourceId() {
-
-                sourceId_ = 0;
-                onChanged();
-                return this;
-            }
-
-            @java.lang.Override
-            public Builder mergeFrom(
-                    com.google.protobuf.CodedInputStream input,
-                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                    throws java.io.IOException {
-                com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn parsedMessage = null;
-                try {
-                    parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                    parsedMessage = (com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn.PUseCaseTxn) e.getUnfinishedMessage();
-                    throw e.unwrapIOException();
-                } finally {
-                    if (parsedMessage != null) {
-                        mergeFrom(parsedMessage);
-                    }
-                }
-                return this;
-            }
-
-            /**
-             * <code>string gcGuid = 2;</code>
-             *
-             * @return The gcGuid.
-             */
-            public java.lang.String getGcGuid() {
-                java.lang.Object ref = gcGuid_;
-                if (!(ref instanceof java.lang.String)) {
-                    com.google.protobuf.ByteString bs =
-                            (com.google.protobuf.ByteString) ref;
-                    java.lang.String s = bs.toStringUtf8();
-                    gcGuid_ = s;
-                    return s;
-                } else {
-                    return (java.lang.String) ref;
-                }
-            }
-
-            /**
-             * <code>string gcGuid = 2;</code>
-             *
-             * @return The bytes for gcGuid.
-             */
-            public com.google.protobuf.ByteString
-            getGcGuidBytes() {
-                java.lang.Object ref = gcGuid_;
-                if (ref instanceof String) {
-                    com.google.protobuf.ByteString b =
-                            com.google.protobuf.ByteString.copyFromUtf8(
-                                    (java.lang.String) ref);
-                    gcGuid_ = b;
-                    return b;
-                } else {
-                    return (com.google.protobuf.ByteString) ref;
-                }
-            }
-
-            /**
-             * <code>int32 sourceId = 1;</code>
-             *
-             * @return The sourceId.
-             */
-            public int getSourceId() {
-                return sourceId_;
-            }
-
-            /**
-             * <code>int32 sourceId = 1;</code>
-             *
-             * @param value The sourceId to set.
-             * @return This builder for chaining.
-             */
-            public Builder setSourceId(int value) {
-
-                sourceId_ = value;
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>string gcGuid = 2;</code>
-             *
-             * @param value The bytes for gcGuid to set.
-             * @return This builder for chaining.
-             */
-            public Builder setGcGuidBytes(
-                    com.google.protobuf.ByteString value) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                checkByteStringIsUtf8(value);
-
-                gcGuid_ = value;
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>string gcGuid = 2;</code>
-             *
-             * @param value The gcGuid to set.
-             * @return This builder for chaining.
-             */
-            public Builder setGcGuid(
-                    java.lang.String value) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-
-                gcGuid_ = value;
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>int32 ucTxnId = 3;</code>
-             *
-             * @return The ucTxnId.
-             */
-            public int getUcTxnId() {
-                return ucTxnId_;
-            }
-
-            /**
-             * <code>int32 ucTxnId = 3;</code>
-             *
-             * @param value The ucTxnId to set.
-             * @return This builder for chaining.
-             */
-            public Builder setUcTxnId(int value) {
-
-                ucTxnId_ = value;
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>int32 ucTxnId = 3;</code>
-             *
-             * @return This builder for chaining.
-             */
-            public Builder clearUcTxnId() {
-
-                ucTxnId_ = 0;
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>string gcGuid = 2;</code>
-             *
-             * @return This builder for chaining.
-             */
-            public Builder clearGcGuid() {
-
-                gcGuid_ = getDefaultInstance().getGcGuid();
-                onChanged();
-                return this;
-            }
-
-            private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-            internalGetAttributes() {
-                if (attributes_ == null) {
-                    return com.google.protobuf.MapField.emptyMapField(
-                            AttributesDefaultEntryHolder.defaultEntry);
-                }
-                return attributes_;
-            }
-
-            private com.google.protobuf.MapField<java.lang.String, java.lang.String>
-            internalGetMutableAttributes() {
-                onChanged();
-                ;
-                if (attributes_ == null) {
-                    attributes_ = com.google.protobuf.MapField.newMapField(
-                            AttributesDefaultEntryHolder.defaultEntry);
-                }
-                if (!attributes_.isMutable()) {
-                    attributes_ = attributes_.copy();
-                }
-                return attributes_;
-            }
-
-            public int getAttributesCount() {
-                return internalGetAttributes().getMap().size();
-            }
-
-            /**
-             * <code>map&lt;string, string&gt; attributes = 4;</code>
-             */
-
-            public boolean containsAttributes(
-                    java.lang.String key) {
-                if (key == null) {
-                    throw new java.lang.NullPointerException();
-                }
-                return internalGetAttributes().getMap().containsKey(key);
-            }
-
-            /**
-             * Use {@link #getAttributesMap()} instead.
-             */
-            @java.lang.Deprecated
-            public java.util.Map<java.lang.String, java.lang.String> getAttributes() {
-                return getAttributesMap();
-            }
-
-            /**
-             * <code>map&lt;string, string&gt; attributes = 4;</code>
-             */
-
-            public java.util.Map<java.lang.String, java.lang.String> getAttributesMap() {
-                return internalGetAttributes().getMap();
-            }
-
-            /**
-             * <code>map&lt;string, string&gt; attributes = 4;</code>
-             */
-
-            public java.lang.String getAttributesOrDefault(
-                    java.lang.String key,
-                    java.lang.String defaultValue) {
-                if (key == null) {
-                    throw new java.lang.NullPointerException();
-                }
-                java.util.Map<java.lang.String, java.lang.String> map =
-                        internalGetAttributes().getMap();
-                return map.containsKey(key) ? map.get(key) : defaultValue;
-            }
-
-            /**
-             * <code>map&lt;string, string&gt; attributes = 4;</code>
-             */
-
-            public java.lang.String getAttributesOrThrow(
-                    java.lang.String key) {
-                if (key == null) {
-                    throw new java.lang.NullPointerException();
-                }
-                java.util.Map<java.lang.String, java.lang.String> map =
-                        internalGetAttributes().getMap();
-                if (!map.containsKey(key)) {
-                    throw new java.lang.IllegalArgumentException();
-                }
-                return map.get(key);
-            }
-
-            public Builder clearAttributes() {
-                internalGetMutableAttributes().getMutableMap()
-                        .clear();
-                return this;
-            }
-
-            /**
-             * <code>map&lt;string, string&gt; attributes = 4;</code>
-             */
-
-            public Builder removeAttributes(
-                    java.lang.String key) {
-                if (key == null) {
-                    throw new java.lang.NullPointerException();
-                }
-                internalGetMutableAttributes().getMutableMap()
-                        .remove(key);
-                return this;
-            }
-
-            /**
-             * Use alternate mutation accessors instead.
-             */
-            @java.lang.Deprecated
-            public java.util.Map<java.lang.String, java.lang.String>
-            getMutableAttributes() {
-                return internalGetMutableAttributes().getMutableMap();
-            }
-
-            /**
-             * <code>map&lt;string, string&gt; attributes = 4;</code>
-             */
-            public Builder putAttributes(
-                    java.lang.String key,
-                    java.lang.String value) {
-                if (key == null) {
-                    throw new java.lang.NullPointerException();
-                }
-                if (value == null) {
-                    throw new java.lang.NullPointerException();
-                }
-                internalGetMutableAttributes().getMutableMap()
-                        .put(key, value);
-                return this;
-            }
-
-            /**
-             * <code>map&lt;string, string&gt; attributes = 4;</code>
-             */
-
-            public Builder putAllAttributes(
-                    java.util.Map<java.lang.String, java.lang.String> values) {
-                internalGetMutableAttributes().getMutableMap()
-                        .putAll(values);
-                return this;
-            }
-
-            @java.lang.Override
-            public final Builder setUnknownFields(
-                    final com.google.protobuf.UnknownFieldSet unknownFields) {
-                return super.setUnknownFields(unknownFields);
-            }
-
-            @java.lang.Override
-            public final Builder mergeUnknownFields(
-                    final com.google.protobuf.UnknownFieldSet unknownFields) {
-                return super.mergeUnknownFields(unknownFields);
-            }
-
-
-            // @@protoc_insertion_point(builder_scope:com.ivyxjc.libra.core.models.protoModels.PUseCaseTxn)
-        }
-
+        internalGetMutableAttributes().getMutableMap()
+                .put(key, value);
+        return this;
+      }
+
+      /**
+       * <code>map&lt;string, string&gt; attributes = 4;</code>
+       */
+
+      public Builder putAllAttributes(
+              java.util.Map<String, String> values) {
+        internalGetMutableAttributes().getMutableMap()
+                .putAll(values);
+        return this;
+      }
+
+      @Override
+      public final Builder setUnknownFields(
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @Override
+      public final Builder mergeUnknownFields(
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.ivyxjc.libra.core.models.protoModels.PUseCaseTxn)
     }
 
-    // @@protoc_insertion_point(outer_class_scope)
+  }
+
+  // @@protoc_insertion_point(outer_class_scope)
 }

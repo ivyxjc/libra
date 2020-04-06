@@ -3,7 +3,7 @@
 <mapper namespace="com.ivyxjc.libra.core.dao.RawTransMapper">
     <resultMap id="BaseResultMap" type="com.ivyxjc.libra.core.models.RawTransaction">
         <id column="GUID" jdbcType="INTEGER" property="guid"
-            typeHandler="com.ivyxjc.libra.core.dao.GuidLongHandler"/>
+            typeHandler="com.ivyxjc.libra.core.dao.handler.GuidLongHandler"/>
         <result column="SOURCE_ID" jdbcType="INTEGER" property="sourceId"/>
         <result column="SEQUENCE" jdbcType="INTEGER" property="sequence"/>
         <result column="MSG_ID" jdbcType="VARCHAR" property="msgId"/>
@@ -20,7 +20,7 @@
         <result column="RAW_RECORD" jdbcType="LONGNVARCHAR" property="rawRecord"/>
     </resultMap>
     <insert id="insertRaw" parameterType="com.ivyxjc.libra.core.models.RawTransaction">
-        insert into LIBRA.RAW_TRANSACTION (GUID, SOURCE_ID, SEQUENCE,
+        insert into RAW_TRANSACTION (GUID, SOURCE_ID, SEQUENCE,
         MSG_ID, CREATED_AT, CREATED_BY,
         CREATED_FROM, VERSION,DUPLICATE_FLG,RAW_RECORD)
         values (#{guid,jdbcType=INTEGER},
