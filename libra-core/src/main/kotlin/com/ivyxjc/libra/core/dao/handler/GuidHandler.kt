@@ -1,4 +1,4 @@
-package com.ivyxjc.libra.core.dao
+package com.ivyxjc.libra.core.dao.handler
 
 import org.apache.ibatis.type.BaseTypeHandler
 import org.apache.ibatis.type.JdbcType

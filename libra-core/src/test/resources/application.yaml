@@ -1,8 +1,12 @@
 spring:
     datasource:
-        url: ${jdbc.url}
-        username: ${jdbc.username}
-        password: ${jdbc.password}
+        url: jdbc:h2:mem;MODE=MySQL
+        username: user
+        password: password
+        schema: classpath:RawTransaction.sql
+        hikari:
+            schema: LIBRA
+
 mybatis:
     type-aliases-package: com.ivyxjc.libra.core.dao
     mapper-locations: classpath:mybatis/*.xml

@@ -1,16 +1,13 @@
-package com.ivyxjc.libra
+package com.ivyxjc.libra.starter.jms
 
 import com.ivyxjc.libra.common.utils.getProperty
-import com.ivyxjc.libra.core.connection.JmsConnectionUtils
-import com.ivyxjc.libra.core.endpoint.AqEndpointListener
-import com.ivyxjc.libra.core.endpoint.ArtemisEndpointListener
 import com.ivyxjc.libra.core.endpoint.RawTransactionMessageListener
 import com.ivyxjc.libra.core.endpoint.UsecaseTxnMessageListener
 import com.ivyxjc.libra.core.platforms.BlankRawTransDispatcher
 import com.ivyxjc.libra.core.platforms.BlankUcTxnDispatcher
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
+import org.apache.activemq.ActiveMQConnectionFactory
 import javax.jms.MessageListener
 import javax.jms.Session
 

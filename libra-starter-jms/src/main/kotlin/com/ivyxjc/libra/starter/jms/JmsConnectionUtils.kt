@@ -1,4 +1,4 @@
-package com.ivyxjc.libra.core.connection
+package com.ivyxjc.libra.starter.jms
 
 import org.apache.activemq.ActiveMQConnectionFactory
 import org.apache.activemq.artemis.jms.client.ActiveMQQueueConnectionFactory
