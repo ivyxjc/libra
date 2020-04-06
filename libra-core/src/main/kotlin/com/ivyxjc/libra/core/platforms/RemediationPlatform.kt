@@ -1,7 +1,7 @@
 package com.ivyxjc.libra.core.platforms
 
 import com.ivyxjc.libra.common.utils.loggerFor
-import com.ivyxjc.libra.core.models.UseCaseTxn
+import com.ivyxjc.libra.core.models.UsecaseTxn
 import com.ivyxjc.libra.core.process.Workflow
 import com.ivyxjc.libra.core.process.WorkflowSession
 import com.ivyxjc.libra.core.service.UsecaseConfigService
@@ -9,13 +9,13 @@ import com.ivyxjc.libra.core.service.UsecaseConfigService
 /**
  * Should be Thread-safe
  */
-class RemediationPlatform(val usecaseConfigService: UsecaseConfigService) : Dispatcher<UseCaseTxn> {
+class RemediationPlatform(val usecaseConfigService: UsecaseConfigService) : Dispatcher<UsecaseTxn> {
 
     companion object {
         private val log = loggerFor(RemediationPlatform::class.java)
     }
 
-    override fun dispatch(@Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE") ucTxn: UseCaseTxn) {
+    override fun dispatch(@Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE") ucTxn: UsecaseTxn) {
         val sourceId = ucTxn.sourceId
         val process = usecaseConfigService.getProcess(ucTxn.usecaseName)
         var index = 0

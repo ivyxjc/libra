@@ -5,7 +5,7 @@ import com.ivyxjc.libra.common.DtoInConstants
 import com.ivyxjc.libra.common.utils.loggerFor
 import com.ivyxjc.libra.core.models.AbstractTransaction
 import com.ivyxjc.libra.core.models.RawTransaction
-import com.ivyxjc.libra.core.models.UseCaseTxn
+import com.ivyxjc.libra.core.models.UsecaseTxn
 import com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction
 import com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn
 import com.ivyxjc.libra.core.platforms.Dispatcher
@@ -85,7 +85,7 @@ class UsecaseTxnMessageListener : AbstractMessageListener() {
                 val bytes = ByteArray(size.toInt())
                 message.readBytes(bytes)
                 val pUcTxn = ProtoUsecaseTxn.PUseCaseTxn.parseFrom(bytes)
-                val ucTxn = UseCaseTxn()
+                val ucTxn = UsecaseTxn()
                 val tmpSourceId = handleSourceId(pUcTxn.sourceId)
                 if (tmpSourceId != null) {
                     ucTxn.sourceId = tmpSourceId
