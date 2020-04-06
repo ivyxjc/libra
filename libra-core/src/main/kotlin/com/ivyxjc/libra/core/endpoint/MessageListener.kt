@@ -90,11 +90,11 @@ class UsecaseTxnMessageListener : AbstractMessageListener() {
                 if (tmpSourceId != null) {
                     ucTxn.sourceId = tmpSourceId
                 } else {
-                    log.error("cannot handle the source id for message: {}", pUcTxn.gcGuid)
+                    log.error("cannot handle the source id for message: {}", pUcTxn.guid)
                     return
                 }
                 ucTxn.attributes.putAll(pUcTxn.attributesMap)
-                ucTxn.gcGuid = pUcTxn.gcGuid
+                ucTxn.guid = pUcTxn.guid
                 dispatcher!!.dispatch(ucTxn)
             }
             else -> {
@@ -132,7 +132,7 @@ class RawTransactionMessageListener : AbstractMessageListener() {
                     return
                 }
                 rawTrans.rawRecord = pRawTrans.rawRecord
-                rawTrans.guid = pRawTrans.gcGuid
+                rawTrans.guid = pRawTrans.guid
                 //todo check duplicate and version
                 rawTrans.duplicateFlg = 0
                 rawTrans.version = 0

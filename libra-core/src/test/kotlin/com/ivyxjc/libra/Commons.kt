@@ -1,6 +1,5 @@
 package com.ivyxjc.libra
 
-import com.ivyxjc.libra.core.models.GoldCopyTransaction
 import com.ivyxjc.libra.core.models.RawTransaction
 import com.ivyxjc.libra.core.models.UseCaseTxn
 import com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction
@@ -16,17 +15,9 @@ fun buildRawTrans(): RawTransaction {
     return res
 }
 
-fun buildGcTxn(): GoldCopyTransaction {
-    val res = GoldCopyTransaction()
-    res.gcGuid = Random.nextInt().toString()
-    res.sourceId = Random.nextInt().toLong()
-    res.ssbAssetId = RandomStringUtils.random(10)
-    return res
-}
-
 fun buildUcBytes(): ByteArray {
     val ucTxn = UseCaseTxn()
-    ucTxn.gcGuid = "abcdefgh"
+    ucTxn.guid = "abcdefgh"
     ucTxn.sourceId = Random.nextInt()
     ucTxn.ucTxnId = Random.nextInt()
     ucTxn.attributes.putIfAbsent(Random.nextLong().toString(), Random.nextLong().toString())
@@ -35,7 +26,7 @@ fun buildUcBytes(): ByteArray {
     ucTxn.attributes.putIfAbsent(Random.nextLong().toString(), Random.nextLong().toString())
 
     val builder = ProtoUsecaseTxn.PUseCaseTxn.newBuilder()
-    builder.gcGuid = ucTxn.gcGuid
+    builder.guid = ucTxn.guid
     builder.sourceId = ucTxn.sourceId
     builder.ucTxnId = ucTxn.ucTxnId
     builder.putAllAttributes(ucTxn.attributes)
@@ -49,10 +40,9 @@ fun buildRawTransBytes(): ByteArray {
     rawTrans.sourceId = Random.nextInt()
     rawTrans.sourceId = 3000
     rawTrans.rawRecord = "阿斯顿阿斯顿发撒打发士大夫士大夫十大"
-//    rawTrans.rawRecord = RandomStringUtils.random(100)
     println(rawTrans)
     val builder = ProtoRawTransaction.PRawTransaction.newBuilder()
-    builder.gcGuid = rawTrans.guid
+    builder.guid = rawTrans.guid
     builder.sourceId = rawTrans.sourceId
     builder.rawRecord = rawTrans.rawRecord
     val data = builder.build()
