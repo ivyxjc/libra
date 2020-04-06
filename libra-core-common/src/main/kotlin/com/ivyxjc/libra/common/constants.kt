@@ -28,3 +28,6 @@ object ErrorConstants {
     const val JMS_CONFIG = "jms-config"
 }
 
+object DtoInConstants {
+    const val sourceId = "SourceId"
+}

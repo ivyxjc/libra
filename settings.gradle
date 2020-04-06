@@ -10,14 +10,9 @@ rootProject.name = "libra"
 
 include "libra-aspect"
 include "libra-benchmark"
-include "libra-core"
-include "libra-core-mock-biz"
-include "libra-core-common"
 include "libra-biz-common"
+include "libra-core"
+include "libra-core-common"
 include "libra-dsl"
-include "libra-transmission"
-include "libra-transformation"
-
-
 include "libra-starter-jms"
 include "libra-starter-config"

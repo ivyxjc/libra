@@ -1,8 +1,8 @@
 package com.ivyxjc.libra.starter.common.processors
 
 import com.ivyxjc.libra.common.utils.loggerFor
-import com.ivyxjc.libra.core.endpoint.BlankMessageListener
 import com.ivyxjc.libra.core.endpoint.RawTransactionMessageListener
+import com.ivyxjc.libra.core.endpoint.TextMessageListener
 import com.ivyxjc.libra.core.endpoint.UsecaseTxnMessageListener
 import com.ivyxjc.libra.core.exception.LibraConfigIncorrectException
 import com.ivyxjc.libra.core.models.AbstractTransaction
@@ -96,10 +96,10 @@ abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListe
             )
         }
         val msgListener = when (libraJmsListenerYaml.messageListener) {
-            "rawTransactionMessageListener" -> RawTransactionMessageListener()
-            "usecaseTxnMessageListener" -> UsecaseTxnMessageListener()
-            "blankMessageListener" -> BlankMessageListener()
-            else -> throw LibraConfigIncorrectException("message listener does not exist")
+            ConfigConstants.RAW_TRANS_MESSAGE_LISTENER -> RawTransactionMessageListener()
+            ConfigConstants.USE_CASE_MESSAGE_LISTENER -> UsecaseTxnMessageListener()
+            ConfigConstants.TEXT_MESSAGE_LISTENER -> TextMessageListener()
+            else -> throw LibraConfigIncorrectException("message listener ${libraJmsListenerYaml.messageListener} does not exist")
         }
         val dispatcher = when (libraJmsListenerYaml.dispatcher) {
             ConfigConstants.TRANSMISSION_PLATFORM -> this.beanFactory!!.getBean(ConfigConstants.TRANSMISSION_PLATFORM) as Dispatcher<AbstractTransaction>
@@ -108,7 +108,7 @@ abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListe
             ConfigConstants.BLANK_RAW_TRANS_DISPATCHER -> this.beanFactory!!.getBean(ConfigConstants.BLANK_RAW_TRANS_DISPATCHER) as Dispatcher<AbstractTransaction>
             ConfigConstants.BLANK_USE_CASE_DISPATCHER -> this.beanFactory!!.getBean(ConfigConstants.BLANK_USE_CASE_DISPATCHER) as Dispatcher<AbstractTransaction>
             else -> {
-                if (msgListener !is BlankMessageListener) {
+                if (msgListener !is TextMessageListener) {
                     throw RuntimeException("MessageListener [${libraJmsListenerYaml.messageListener}] must have dispatcher")
                 } else
                     null
@@ -116,10 +116,6 @@ abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListe
         }
         msgListener.dispatcher = dispatcher
         msgListener.sourceIdStr = libraJmsListenerYaml.sourceIds
-        when (libraJmsListenerYaml.messageListener) {
-            "rawTransactionMessageListener" -> RawTransactionMessageListener::class.java
-            "usecaseTxnMessageListener" -> UsecaseTxnMessageListener::class.java
-        }
         endpoint.messageListener = msgListener
         registrar.registerEndpoint(endpoint, factory)
     }

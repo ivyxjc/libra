@@ -1,4 +1,4 @@
-package com.ivyxjc.libra.core.endpoint
+package com.ivyxjc.libra.starter.jms
 
 import com.ivyxjc.libra.common.utils.loggerFor
 import org.apache.activemq.ActiveMQConnection

@@ -12,6 +12,8 @@ import com.ivyxjc.libra.starter.config.sourcelite.annotation.EnableLibraSourceLi
 import com.ivyxjc.libra.starter.config.utils.ConfigConstants
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.config.BeanDefinition
+import org.springframework.boot.autoconfigure.AutoConfigureOrder
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
@@ -30,6 +32,7 @@ annotation class EnableLibraTransmission
 
 
 @Configuration
+@AutoConfigureOrder(0)
 @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 open class LibraTransmissionBootstrapConfiguration {
 
@@ -44,6 +47,7 @@ open class LibraTransmissionBootstrapConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean(SourceConfigService::class)
     open fun sourceConfigService(): SourceConfigService {
         return SourceConfigServiceMockImpl()
     }
@@ -52,6 +56,7 @@ open class LibraTransmissionBootstrapConfiguration {
 }
 
 @Configuration
+@AutoConfigureOrder(1)
 open class LibraTransmissionJmsListenersConfiguration {
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)

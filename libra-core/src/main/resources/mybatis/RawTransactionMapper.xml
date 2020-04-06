@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ivyxjc.libra.core.dao.RawTransMapper">
     <resultMap id="BaseResultMap" type="com.ivyxjc.libra.core.models.RawTransaction">
-        <id column="GC_GUID" jdbcType="INTEGER" property="gcGuid"
+        <id column="GUID" jdbcType="INTEGER" property="guid"
             typeHandler="com.ivyxjc.libra.core.dao.GuidLongHandler"/>
         <result column="SOURCE_ID" jdbcType="INTEGER" property="sourceId"/>
         <result column="SEQUENCE" jdbcType="INTEGER" property="sequence"/>
@@ -20,10 +20,10 @@
         <result column="RAW_RECORD" jdbcType="LONGNVARCHAR" property="rawRecord"/>
     </resultMap>
     <insert id="insertRaw" parameterType="com.ivyxjc.libra.core.models.RawTransaction">
-        insert into LIBRA.RAW_TRANSACTION (GC_GUID, SOURCE_ID, SEQUENCE,
+        insert into LIBRA.RAW_TRANSACTION (GUID, SOURCE_ID, SEQUENCE,
         MSG_ID, CREATED_AT, CREATED_BY,
         CREATED_FROM, VERSION,DUPLICATE_FLG,RAW_RECORD)
-        values (#{gcGuid,jdbcType=INTEGER},
+        values (#{guid,jdbcType=INTEGER},
         #{sourceId,jdbcType=INTEGER},
         #{sequence,jdbcType=INTEGER},
         #{msgId,jdbcType=VARCHAR},

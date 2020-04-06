@@ -9,17 +9,17 @@ import com.ivyxjc.libra.starter.common.processors.AbstractLibraJmsAnnBeanPostPro
 import com.ivyxjc.libra.starter.config.source.annotation.EnableLibraSourceConfig
 import com.ivyxjc.libra.starter.config.utils.ConfigConstants
 import org.springframework.beans.factory.config.BeanDefinition
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Role
-import org.springframework.jms.annotation.EnableJms
+import org.springframework.jms.config.JmsListenerEndpointRegistry
 
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FILE)
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
-@Import(LibraTransformationBootstrapConfiguration::class)
-@EnableJms
+@Import(LibraTransformationBootstrapConfiguration::class, LibraTransformationJmsListenersConfiguration::class)
 @EnableLibraSourceConfig
 annotation class EnableLibraTransformation
 
@@ -34,16 +34,26 @@ open class LibraTransformationBootstrapConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean(SourceConfigService::class)
     open fun sourceConfigService(): SourceConfigService {
         return SourceConfigServiceMockImpl()
     }
+}
 
+@Configuration
+open class LibraTransformationJmsListenersConfiguration {
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
-    open fun libraTransformationJmsListenerAnnBeanPostProcessor(sourceConfigService: SourceConfigService)
+    open fun libraTransmissionJmsListenerAnnBeanPostProcessor(sourceConfigService: SourceConfigService)
             : LibraTransformationJmsListenerAnnBeanPostProcessor {
         return LibraTransformationJmsListenerAnnBeanPostProcessor(sourceConfigService)
     }
+
+    @Bean
+    open fun defaultJmsListenerEndpointRegistry(): JmsListenerEndpointRegistry? {
+        return JmsListenerEndpointRegistry()
+    }
+
 }
 
 
@@ -60,6 +70,7 @@ class LibraTransformationJmsListenerAnnBeanPostProcessor(val sourceConfigService
             tmpListenerYaml.destination = it.transformationQueue
             tmpListenerYaml.messageListener = ConfigConstants.RAW_TRANS_MESSAGE_LISTENER
             tmpListenerYaml.dispatcher = ConfigConstants.TRANSFORMATION_PLATFORM
+            tmpListenerYaml.concurrency = ConfigConstants.DEFAULT_CONCURRENCY
             list.add(tmpListenerYaml)
         }
         return list

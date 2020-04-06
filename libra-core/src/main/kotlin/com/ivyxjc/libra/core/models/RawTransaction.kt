@@ -3,7 +3,7 @@ package com.ivyxjc.libra.core.models
 import org.apache.commons.lang3.builder.ToStringBuilder
 
 class RawTransaction : AbstractTransaction() {
-    lateinit var gcGuid: String
+    lateinit var guid: String
     var sourceId: Int = -1
     var rawRecord: String? = null
     var sequence: Long = -1
