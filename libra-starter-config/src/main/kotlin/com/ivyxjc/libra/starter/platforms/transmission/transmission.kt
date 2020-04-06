@@ -8,7 +8,7 @@ import com.ivyxjc.libra.core.service.SourceConfigService
 import com.ivyxjc.libra.core.service.SourceConfigServiceMockImpl
 import com.ivyxjc.libra.starter.common.model.LibraJmsListenerYaml
 import com.ivyxjc.libra.starter.common.processors.AbstractLibraJmsAnnBeanPostProcessor
-import com.ivyxjc.libra.starter.config.source.annotation.EnableLibraSourceConfig
+import com.ivyxjc.libra.starter.config.sourcelite.annotation.EnableLibraSourceLiteConfig
 import com.ivyxjc.libra.starter.config.utils.ConfigConstants
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.config.BeanDefinition
@@ -27,7 +27,7 @@ import javax.jms.ConnectionFactory
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
 @Import(LibraTransmissionBootstrapConfiguration::class, LibraTransmissionJmsListenersConfiguration::class)
-@EnableLibraSourceConfig
+@EnableLibraSourceLiteConfig
 annotation class EnableLibraTransmission
 
 

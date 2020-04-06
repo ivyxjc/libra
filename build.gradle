@@ -171,7 +171,6 @@ project("libra-core") {
     sourceSets.main.java.srcDirs += ["src/remediation-api/java", "src/remediation-api/kotlin"]
 
     configurations {
-        compile.exclude group: 'org.springframework', module: 'spring-core'
         compile.exclude group: 'org.springframework', module: 'spring-messaging'
     }
 
@@ -202,8 +201,9 @@ project("libra-core") {
         compileOnly(group: 'org.apache.activemq', name: 'activemq-client', version: '5.15.10') {
             exclude group: "org.apache.geronimo.specs", module: "geronimo-jms_1.1_spec"
         }
-        compileOnly(group: 'org.springframework', name: 'spring-tx', version: spring_version)
-        compileOnly(group: 'org.springframework', name: 'spring-jms', version: spring_version)
+        compileOnly group: 'org.springframework', name: 'spring-core', version: spring_version
+        compileOnly group: 'org.springframework', name: 'spring-tx', version: spring_version
+        compileOnly group: 'org.springframework', name: 'spring-jms', version: spring_version
 
         testImplementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.1.0'
         testImplementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-test-autoconfigure', version: '2.1.0'
