@@ -71,10 +71,6 @@ configure(allprojects) { project ->
 
     buildDir = "${rootProject.projectDir.path}/build/${rootProject.name}/${project.name}"
 
-    if (name == 'libra-core-mock-biz') {
-        sourceSets.main.resources.srcDirs += "${rootProject.projectDir.path}/src/main/resources"
-    }
-
     sourceSets.test.resources.srcDirs += "${rootProject.projectDir.path}/src/test/resources"
 
     task sourceJar(type: Jar) {
