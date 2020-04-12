@@ -14,6 +14,8 @@ import com.ivyxjc.libra.core.service.SourceConfigService
  */
 class TransformationPlatform(val sourceConfigService: SourceConfigService) : Dispatcher<RawTransaction> {
 
+    private val libraPattern = LibraPattern.newPattern()
+
     companion object {
         @JvmStatic
         private val log = loggerFor(TransformationPlatform::class.java)
@@ -30,7 +32,8 @@ class TransformationPlatform(val sourceConfigService: SourceConfigService) : Dis
             val flow = Workflow()
             val session = WorkflowSession()
             while (index < sourceConfig.transformation.size) {
-                transformation[index].process(ucTxn, flow, session)
+                val processor = sourceConfig.transformation[index]
+                libraPattern.process(ucTxn, processor, flow, session)
                 index++
                 if (flow.status != WorkflowStatus.TERMINATED) {
                     log.debug("status is {}, do the following processors.", flow.status)

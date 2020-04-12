@@ -4,6 +4,7 @@ import com.ivyxjc.libra.aspect.LibraMetrics
 import com.ivyxjc.libra.common.utils.loggerFor
 import com.ivyxjc.libra.core.dao.RawTransMapper
 import com.ivyxjc.libra.core.models.RawTransaction
+import com.ivyxjc.libra.core.models.convertor.protobufFromRawTrans
 import com.ivyxjc.libra.core.service.SourceConfigService
 import org.springframework.jms.core.JmsTemplate
 import javax.jms.ConnectionFactory
@@ -33,7 +34,8 @@ open class TransmissionPlatform(
         rawTransMapper.insertRaw(trans)
         val sourceConfig = sourceConfigService.getSourceConfig(trans.sourceId)
         val transformationQueue = sourceConfig!!.transformationQueue
-        jmsTemplate.convertAndSend(transformationQueue, trans)
+        val protobuf = protobufFromRawTrans(trans)
+        jmsTemplate.convertAndSend(transformationQueue, protobuf.toByteArray())
     }
 }
 

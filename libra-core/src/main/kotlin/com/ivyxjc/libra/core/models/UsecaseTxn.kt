@@ -1,11 +1,12 @@
 package com.ivyxjc.libra.core.models
 
 class UsecaseTxn : AbstractTransaction() {
+    lateinit var guid: String
+
     var sourceId: Int = -1
     var usecaseId: Int = -1
     var usecaseName: String = ""
     var usecaseStatus: String = ""
-    lateinit var guid: String
     var ucTxnId: Int = -1
     val attributes = mutableMapOf<String, String>()
     var trans: AbstractTransaction? = null
