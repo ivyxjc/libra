@@ -4,8 +4,11 @@ package com.ivyxjc.libra.core.models.protoModels;
 option java_outer_classname = "ProtoRawTransaction";
 
 message PRawTransaction {
-    int32 sourceId = 1;
-    int32 sequence = 2;
-    string guid = 3;
-    string rawRecord = 4;
+    string guid = 1;
+    int32 sourceId = 2;
+    int64 sequence = 3;
+    string msgId = 4;
+    int32 version = 5;
+    int32 duplicateFlg = 6;
+    string rawRecord = 7;
 }

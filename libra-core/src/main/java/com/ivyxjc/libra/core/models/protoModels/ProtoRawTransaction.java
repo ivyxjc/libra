@@ -5,155 +5,173 @@ package com.ivyxjc.libra.core.models.protoModels;
 
 public final class ProtoRawTransaction {
   private static final com.google.protobuf.Descriptors.Descriptor
-          internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_descriptor;
+    internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_descriptor;
   private static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.FileDescriptor
-          descriptor;
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_fieldAccessorTable;
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
 
   static {
-    java.lang.String[] descriptorData = {
-            "\n\024RawTransaction.proto\022(com.ivyxjc.libra" +
-                    ".core.models.protoModels\"V\n\017PRawTransact" +
-                    "ion\022\020\n\010sourceId\030\001 \001(\005\022\020\n\010sequence\030\002 \001(\005\022" +
-                    "\014\n\004guid\030\003 \001(\t\022\021\n\trawRecord\030\004 \001(\tB\025B\023Prot" +
-                    "oRawTransactionb\006proto3"
+    String[] descriptorData = {
+      "\n\024RawTransaction.proto\022(com.ivyxjc.libra" +
+      ".core.models.protoModels\"\214\001\n\017PRawTransac" +
+      "tion\022\014\n\004guid\030\001 \001(\t\022\020\n\010sourceId\030\002 \001(\005\022\020\n\010" +
+      "sequence\030\003 \001(\003\022\r\n\005msgId\030\004 \001(\t\022\017\n\007version" +
+      "\030\005 \001(\005\022\024\n\014duplicateFlg\030\006 \001(\005\022\021\n\trawRecor" +
+      "d\030\007 \001(\tB\025B\023ProtoRawTransactionb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
-            .internalBuildGeneratedFileFrom(descriptorData,
-                    new com.google.protobuf.Descriptors.FileDescriptor[]{
-                    });
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+        });
     internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_descriptor =
-            getDescriptor().getMessageTypes().get(0);
+      getDescriptor().getMessageTypes().get(0);
     internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_descriptor,
-            new java.lang.String[]{"SourceId", "Sequence", "Guid", "RawRecord",});
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_descriptor,
+        new String[] { "Guid", "SourceId", "Sequence", "MsgId", "Version", "DuplicateFlg", "RawRecord", });
   }
+  private ProtoRawTransaction() {}
 
-  private ProtoRawTransaction() {
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistryLite registry) {
   }
 
   public static void registerAllExtensions(
-          com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
-          com.google.protobuf.ExtensionRegistry registry) {
+      com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions(
-            (com.google.protobuf.ExtensionRegistryLite) registry);
+        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
 
   public static com.google.protobuf.Descriptors.FileDescriptor
-  getDescriptor() {
+      getDescriptor() {
     return descriptor;
   }
-
   public interface PRawTransactionOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:com.ivyxjc.libra.core.models.protoModels.PRawTransaction)
-          com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:com.ivyxjc.libra.core.models.protoModels.PRawTransaction)
+      com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 sourceId = 1;</code>
-     *
+     * <code>string guid = 1;</code>
+     * @return The guid.
+     */
+    String getGuid();
+    /**
+     * <code>string guid = 1;</code>
+     * @return The bytes for guid.
+     */
+    com.google.protobuf.ByteString
+        getGuidBytes();
+
+    /**
+     * <code>int32 sourceId = 2;</code>
      * @return The sourceId.
      */
     int getSourceId();
 
     /**
-     * <code>int32 sequence = 2;</code>
-     *
+     * <code>int64 sequence = 3;</code>
      * @return The sequence.
      */
-    int getSequence();
+    long getSequence();
 
     /**
-     * <code>string guid = 3;</code>
-     *
-     * @return The guid.
+     * <code>string msgId = 4;</code>
+     * @return The msgId.
      */
-    java.lang.String getGuid();
-
+    String getMsgId();
     /**
-     * <code>string guid = 3;</code>
-     *
-     * @return The bytes for guid.
+     * <code>string msgId = 4;</code>
+     * @return The bytes for msgId.
      */
     com.google.protobuf.ByteString
-    getGuidBytes();
+        getMsgIdBytes();
 
     /**
-     * <code>string rawRecord = 4;</code>
-     *
+     * <code>int32 version = 5;</code>
+     * @return The version.
+     */
+    int getVersion();
+
+    /**
+     * <code>int32 duplicateFlg = 6;</code>
+     * @return The duplicateFlg.
+     */
+    int getDuplicateFlg();
+
+    /**
+     * <code>string rawRecord = 7;</code>
      * @return The rawRecord.
      */
-    java.lang.String getRawRecord();
-
+    String getRawRecord();
     /**
-     * <code>string rawRecord = 4;</code>
-     *
+     * <code>string rawRecord = 7;</code>
      * @return The bytes for rawRecord.
      */
     com.google.protobuf.ByteString
-    getRawRecordBytes();
+        getRawRecordBytes();
   }
 
   /**
    * Protobuf type {@code com.ivyxjc.libra.core.models.protoModels.PRawTransaction}
    */
-  public static final class PRawTransaction extends
-          com.google.protobuf.GeneratedMessageV3 implements
-          // @@protoc_insertion_point(message_implements:com.ivyxjc.libra.core.models.protoModels.PRawTransaction)
-          PRawTransactionOrBuilder {
-    public static final int SOURCEID_FIELD_NUMBER = 1;
-    public static final int SEQUENCE_FIELD_NUMBER = 2;
-    public static final int GUID_FIELD_NUMBER = 3;
-    public static final int RAWRECORD_FIELD_NUMBER = 4;
-    private static final long serialVersionUID = 0L;
+  public  static final class PRawTransaction extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.ivyxjc.libra.core.models.protoModels.PRawTransaction)
+      PRawTransactionOrBuilder {
+    public static final int GUID_FIELD_NUMBER = 1;
+    // Use PRawTransaction.newBuilder() to construct.
+    private PRawTransaction(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    public static final int SOURCEID_FIELD_NUMBER = 2;
+    public static final int SEQUENCE_FIELD_NUMBER = 3;
+    public static final int MSGID_FIELD_NUMBER = 4;
+    public static final int VERSION_FIELD_NUMBER = 5;
+    public static final int DUPLICATEFLG_FIELD_NUMBER = 6;
+    public static final int RAWRECORD_FIELD_NUMBER = 7;
+  private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.ivyxjc.libra.core.models.protoModels.PRawTransaction)
-    private static final com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction DEFAULT_INSTANCE;
+    private static final PRawTransaction DEFAULT_INSTANCE;
     private static final com.google.protobuf.Parser<PRawTransaction>
-            PARSER = new com.google.protobuf.AbstractParser<PRawTransaction>() {
-      @java.lang.Override
+        PARSER = new com.google.protobuf.AbstractParser<PRawTransaction>() {
+      @Override
       public PRawTransaction parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
         return new PRawTransaction(input, extensionRegistry);
       }
     };
 
     static {
-      DEFAULT_INSTANCE = new com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction();
+      DEFAULT_INSTANCE = new PRawTransaction();
     }
 
+    private volatile Object guid_;
     private int sourceId_;
-    private int sequence_;
-    private volatile java.lang.Object guid_;
-    private volatile java.lang.Object rawRecord_;
+    private long sequence_;
+    private volatile Object msgId_;
+    private int version_;
+    private int duplicateFlg_;
+    private volatile Object rawRecord_;
     private byte memoizedIsInitialized = -1;
-
-    // Use PRawTransaction.newBuilder() to construct.
-    private PRawTransaction(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-
     private PRawTransaction() {
       guid_ = "";
+      msgId_ = "";
       rawRecord_ = "";
     }
-
     private PRawTransaction(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-              com.google.protobuf.UnknownFieldSet.newBuilder();
+          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -162,31 +180,47 @@ public final class ProtoRawTransaction {
             case 0:
               done = true;
               break;
-            case 8: {
-
-              sourceId_ = input.readInt32();
-              break;
-            }
-            case 16: {
-
-              sequence_ = input.readInt32();
-              break;
-            }
-            case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 10: {
+              String s = input.readStringRequireUtf8();
 
               guid_ = s;
               break;
             }
+            case 16: {
+
+              sourceId_ = input.readInt32();
+              break;
+            }
+            case 24: {
+
+              sequence_ = input.readInt64();
+              break;
+            }
             case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
+
+              msgId_ = s;
+              break;
+            }
+            case 40: {
+
+              version_ = input.readInt32();
+              break;
+            }
+            case 48: {
+
+              duplicateFlg_ = input.readInt32();
+              break;
+            }
+            case 58: {
+              String s = input.readStringRequireUtf8();
 
               rawRecord_ = s;
               break;
             }
             default: {
               if (!parseUnknownField(
-                      input, unknownFields, extensionRegistry, tag)) {
+                  input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -197,7 +231,7 @@ public final class ProtoRawTransaction {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-                e).setUnfinishedMessage(this);
+            e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -205,100 +239,100 @@ public final class ProtoRawTransaction {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
-      return com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_descriptor;
+        getDescriptor() {
+      return ProtoRawTransaction.internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_descriptor;
     }
 
-    public static com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction parseFrom(
-            java.nio.ByteBuffer data)
-            throws com.google.protobuf.InvalidProtocolBufferException {
+    public static PRawTransaction parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-    public static com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction parseFrom(
-            java.nio.ByteBuffer data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
+    public static PRawTransaction parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-    public static com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction parseFrom(
-            com.google.protobuf.ByteString data)
-            throws com.google.protobuf.InvalidProtocolBufferException {
+    public static PRawTransaction parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-    public static com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction parseFrom(
-            com.google.protobuf.ByteString data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
+    public static PRawTransaction parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-    public static com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction parseFrom(byte[] data)
-            throws com.google.protobuf.InvalidProtocolBufferException {
+    public static PRawTransaction parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-    public static com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction parseFrom(
-            byte[] data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
+    public static PRawTransaction parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-    public static com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction parseFrom(java.io.InputStream input)
-            throws java.io.IOException {
+    public static PRawTransaction parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-              .parseWithIOException(PARSER, input);
+          .parseWithIOException(PARSER, input);
     }
 
-    public static com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction parseFrom(
-            java.io.InputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
+    public static PRawTransaction parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-              .parseWithIOException(PARSER, input, extensionRegistry);
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction parseDelimitedFrom(java.io.InputStream input)
-            throws java.io.IOException {
+    public static PRawTransaction parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-              .parseDelimitedWithIOException(PARSER, input);
+          .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction parseDelimitedFrom(
-            java.io.InputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
+    public static PRawTransaction parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-              .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction parseFrom(
-            com.google.protobuf.CodedInputStream input)
-            throws java.io.IOException {
+    public static PRawTransaction parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-              .parseWithIOException(PARSER, input);
+          .parseWithIOException(PARSER, input);
     }
 
-    public static com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction parseFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
+    public static PRawTransaction parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-              .parseWithIOException(PARSER, input, extensionRegistry);
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-    public static Builder newBuilder(com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction prototype) {
+    public static Builder newBuilder(PRawTransaction prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
 
-    public static com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction getDefaultInstance() {
+    public static PRawTransaction getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -306,71 +340,55 @@ public final class ProtoRawTransaction {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-            UnusedPrivateParameter unused) {
+    protected Object newInstance(
+        UnusedPrivateParameter unused) {
       return new PRawTransaction();
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-    internalGetFieldAccessorTable() {
-      return com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_fieldAccessorTable
-              .ensureFieldAccessorsInitialized(
-                      com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction.class, com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction.Builder.class);
+    @Override
+    protected FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return ProtoRawTransaction.internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              PRawTransaction.class, Builder.class);
     }
 
     /**
-     * <code>int32 sourceId = 1;</code>
-     * @return The sourceId.
-     */
-    public int getSourceId() {
-      return sourceId_;
-    }
-
-    /**
-     * <code>int32 sequence = 2;</code>
-     * @return The sequence.
-     */
-    public int getSequence() {
-      return sequence_;
-    }
-
-    /**
-     * <code>string guid = 3;</code>
+     * <code>string guid = 1;</code>
      * @return The guid.
      */
-    public java.lang.String getGuid() {
-      java.lang.Object ref = guid_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getGuid() {
+      Object ref = guid_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
         guid_ = s;
         return s;
       }
     }
 
     /**
-     * <code>string guid = 3;</code>
+     * <code>string guid = 1;</code>
      * @return The bytes for guid.
      */
     public com.google.protobuf.ByteString
-    getGuidBytes() {
-      java.lang.Object ref = guid_;
-      if (ref instanceof java.lang.String) {
+        getGuidBytes() {
+      Object ref = guid_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b =
-                com.google.protobuf.ByteString.copyFromUtf8(
-                        (java.lang.String) ref);
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (String) ref);
         guid_ = b;
         return b;
       } else {
@@ -379,33 +397,100 @@ public final class ProtoRawTransaction {
     }
 
     /**
-     * <code>string rawRecord = 4;</code>
-     * @return The rawRecord.
+     * <code>int32 sourceId = 2;</code>
+     * @return The sourceId.
      */
-    public java.lang.String getRawRecord() {
-      java.lang.Object ref = rawRecord_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public int getSourceId() {
+      return sourceId_;
+    }
+
+    /**
+     * <code>int64 sequence = 3;</code>
+     * @return The sequence.
+     */
+    public long getSequence() {
+      return sequence_;
+    }
+
+    /**
+     * <code>string msgId = 4;</code>
+     * @return The msgId.
+     */
+    public String getMsgId() {
+      Object ref = msgId_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        msgId_ = s;
+        return s;
+      }
+    }
+
+    /**
+     * <code>string msgId = 4;</code>
+     * @return The bytes for msgId.
+     */
+    public com.google.protobuf.ByteString
+        getMsgIdBytes() {
+      Object ref = msgId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (String) ref);
+        msgId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    /**
+     * <code>int32 version = 5;</code>
+     * @return The version.
+     */
+    public int getVersion() {
+      return version_;
+    }
+
+    /**
+     * <code>int32 duplicateFlg = 6;</code>
+     * @return The duplicateFlg.
+     */
+    public int getDuplicateFlg() {
+      return duplicateFlg_;
+    }
+
+    /**
+     * <code>string rawRecord = 7;</code>
+     * @return The rawRecord.
+     */
+    public String getRawRecord() {
+      Object ref = rawRecord_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
         rawRecord_ = s;
         return s;
       }
     }
 
     /**
-     * <code>string rawRecord = 4;</code>
+     * <code>string rawRecord = 7;</code>
      * @return The bytes for rawRecord.
      */
     public com.google.protobuf.ByteString
-    getRawRecordBytes() {
-      java.lang.Object ref = rawRecord_;
-      if (ref instanceof java.lang.String) {
+        getRawRecordBytes() {
+      Object ref = rawRecord_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b =
-                com.google.protobuf.ByteString.copyFromUtf8(
-                        (java.lang.String) ref);
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (String) ref);
         rawRecord_ = b;
         return b;
       } else {
@@ -413,7 +498,7 @@ public final class ProtoRawTransaction {
       }
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -423,84 +508,117 @@ public final class ProtoRawTransaction {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-            throws java.io.IOException {
-      if (sourceId_ != 0) {
-        output.writeInt32(1, sourceId_);
-      }
-      if (sequence_ != 0) {
-        output.writeInt32(2, sequence_);
-      }
+                        throws java.io.IOException {
       if (!getGuidBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, guid_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, guid_);
+      }
+      if (sourceId_ != 0) {
+        output.writeInt32(2, sourceId_);
+      }
+      if (sequence_ != 0L) {
+        output.writeInt64(3, sequence_);
+      }
+      if (!getMsgIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, msgId_);
+      }
+      if (version_ != 0) {
+        output.writeInt32(5, version_);
+      }
+      if (duplicateFlg_ != 0) {
+        output.writeInt32(6, duplicateFlg_);
       }
       if (!getRawRecordBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, rawRecord_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, rawRecord_);
       }
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
+    @Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
+      if (!getGuidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, guid_);
+      }
       if (sourceId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-                .computeInt32Size(1, sourceId_);
+          .computeInt32Size(2, sourceId_);
       }
-      if (sequence_ != 0) {
+      if (sequence_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-                .computeInt32Size(2, sequence_);
+          .computeInt64Size(3, sequence_);
       }
-      if (!getGuidBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, guid_);
+      if (!getMsgIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, msgId_);
+      }
+      if (version_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, version_);
+      }
+      if (duplicateFlg_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, duplicateFlg_);
       }
       if (!getRawRecordBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, rawRecord_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, rawRecord_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
-      if (!(obj instanceof com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction)) {
+      if (!(obj instanceof PRawTransaction)) {
         return super.equals(obj);
       }
-      com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction other = (com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction) obj;
+      PRawTransaction other = (PRawTransaction) obj;
 
-      if (getSourceId()
-              != other.getSourceId()) return false;
-      if (getSequence()
-              != other.getSequence()) return false;
       if (!getGuid()
-              .equals(other.getGuid())) return false;
+          .equals(other.getGuid())) return false;
+      if (getSourceId()
+          != other.getSourceId()) return false;
+      if (getSequence()
+          != other.getSequence()) return false;
+      if (!getMsgId()
+          .equals(other.getMsgId())) return false;
+      if (getVersion()
+          != other.getVersion()) return false;
+      if (getDuplicateFlg()
+          != other.getDuplicateFlg()) return false;
       if (!getRawRecord()
-              .equals(other.getRawRecord())) return false;
+          .equals(other.getRawRecord())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + GUID_FIELD_NUMBER;
+      hash = (53 * hash) + getGuid().hashCode();
       hash = (37 * hash) + SOURCEID_FIELD_NUMBER;
       hash = (53 * hash) + getSourceId();
       hash = (37 * hash) + SEQUENCE_FIELD_NUMBER;
-      hash = (53 * hash) + getSequence();
-      hash = (37 * hash) + GUID_FIELD_NUMBER;
-      hash = (53 * hash) + getGuid().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getSequence());
+      hash = (37 * hash) + MSGID_FIELD_NUMBER;
+      hash = (53 * hash) + getMsgId().hashCode();
+      hash = (37 * hash) + VERSION_FIELD_NUMBER;
+      hash = (53 * hash) + getVersion();
+      hash = (37 * hash) + DUPLICATEFLG_FIELD_NUMBER;
+      hash = (53 * hash) + getDuplicateFlg();
       hash = (37 * hash) + RAWRECORD_FIELD_NUMBER;
       hash = (53 * hash) + getRawRecord().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -508,31 +626,29 @@ public final class ProtoRawTransaction {
       return hash;
     }
 
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
+    @Override
+    public Builder newBuilderForType() { return newBuilder(); }
 
-    @java.lang.Override
+    @Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
-              ? new Builder() : new Builder().mergeFrom(this);
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<PRawTransaction> getParserForType() {
       return PARSER;
     }
 
-    @java.lang.Override
-    public com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction getDefaultInstanceForType() {
+    @Override
+    public PRawTransaction getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -540,149 +656,169 @@ public final class ProtoRawTransaction {
      * Protobuf type {@code com.ivyxjc.libra.core.models.protoModels.PRawTransaction}
      */
     public static final class Builder extends
-            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:com.ivyxjc.libra.core.models.protoModels.PRawTransaction)
-            com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransactionOrBuilder {
-      private int sourceId_;
-      private int sequence_;
-      private java.lang.Object guid_ = "";
-      private java.lang.Object rawRecord_ = "";
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.ivyxjc.libra.core.models.protoModels.PRawTransaction)
+        PRawTransactionOrBuilder {
+      private Object guid_ = "";
+      private int sourceId_ ;
 
       // Construct using com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-
-      private Builder(
-              com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-
-      public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
-        return com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-        return com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_fieldAccessorTable
-                .ensureFieldAccessorsInitialized(
-                        com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction.class, com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction.Builder.class);
-      }
-
+      private long sequence_ ;
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
         }
       }
+      private Object msgId_ = "";
+      private int version_ ;
+      private int duplicateFlg_ ;
+      private Object rawRecord_ = "";
 
-      @java.lang.Override
+      private Builder(
+          BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return ProtoRawTransaction.internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_descriptor;
+      }
+
+      @Override
+      protected FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return ProtoRawTransaction.internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                PRawTransaction.class, Builder.class);
+      }
+
+      @Override
       public Builder clear() {
         super.clear();
+        guid_ = "";
+
         sourceId_ = 0;
 
-        sequence_ = 0;
+        sequence_ = 0L;
 
-        guid_ = "";
+        msgId_ = "";
+
+        version_ = 0;
+
+        duplicateFlg_ = 0;
 
         rawRecord_ = "";
 
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
-      getDescriptorForType() {
-        return com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_descriptor;
+          getDescriptorForType() {
+        return ProtoRawTransaction.internal_static_com_ivyxjc_libra_core_models_protoModels_PRawTransaction_descriptor;
       }
 
-      @java.lang.Override
-      public com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction getDefaultInstanceForType() {
-        return com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction.getDefaultInstance();
+      @Override
+      public PRawTransaction getDefaultInstanceForType() {
+        return PRawTransaction.getDefaultInstance();
       }
 
-      @java.lang.Override
-      public com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction build() {
-        com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction result = buildPartial();
+      @Override
+      public PRawTransaction build() {
+        PRawTransaction result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @java.lang.Override
-      public com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction buildPartial() {
-        com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction result = new com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction(this);
+      @Override
+      public PRawTransaction buildPartial() {
+        PRawTransaction result = new PRawTransaction(this);
+        result.guid_ = guid_;
         result.sourceId_ = sourceId_;
         result.sequence_ = sequence_;
-        result.guid_ = guid_;
+        result.msgId_ = msgId_;
+        result.version_ = version_;
+        result.duplicateFlg_ = duplicateFlg_;
         result.rawRecord_ = rawRecord_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
+      @Override
       public Builder clone() {
         return super.clone();
       }
 
-      @java.lang.Override
+      @Override
       public Builder setField(
-              com.google.protobuf.Descriptors.FieldDescriptor field,
-              java.lang.Object value) {
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return super.setField(field, value);
       }
 
-      @java.lang.Override
+      @Override
       public Builder clearField(
-              com.google.protobuf.Descriptors.FieldDescriptor field) {
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
 
-      @java.lang.Override
+      @Override
       public Builder clearOneof(
-              com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
 
-      @java.lang.Override
+      @Override
       public Builder setRepeatedField(
-              com.google.protobuf.Descriptors.FieldDescriptor field,
-              int index, java.lang.Object value) {
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
         return super.setRepeatedField(field, index, value);
       }
 
-      @java.lang.Override
+      @Override
       public Builder addRepeatedField(
-              com.google.protobuf.Descriptors.FieldDescriptor field,
-              java.lang.Object value) {
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return super.addRepeatedField(field, value);
       }
 
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction) {
-          return mergeFrom((com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction) other);
+        if (other instanceof PRawTransaction) {
+          return mergeFrom((PRawTransaction)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction other) {
-        if (other == com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction.getDefaultInstance())
-          return this;
-        if (other.getSourceId() != 0) {
-          setSourceId(other.getSourceId());
-        }
-        if (other.getSequence() != 0) {
-          setSequence(other.getSequence());
-        }
+      public Builder mergeFrom(PRawTransaction other) {
+        if (other == PRawTransaction.getDefaultInstance()) return this;
         if (!other.getGuid().isEmpty()) {
           guid_ = other.guid_;
           onChanged();
+        }
+        if (other.getSourceId() != 0) {
+          setSourceId(other.getSourceId());
+        }
+        if (other.getSequence() != 0L) {
+          setSequence(other.getSequence());
+        }
+        if (!other.getMsgId().isEmpty()) {
+          msgId_ = other.msgId_;
+          onChanged();
+        }
+        if (other.getVersion() != 0) {
+          setVersion(other.getVersion());
+        }
+        if (other.getDuplicateFlg() != 0) {
+          setDuplicateFlg(other.getDuplicateFlg());
         }
         if (!other.getRawRecord().isEmpty()) {
           rawRecord_ = other.rawRecord_;
@@ -693,21 +829,21 @@ public final class ProtoRawTransaction {
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws java.io.IOException {
-        com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction parsedMessage = null;
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        PRawTransaction parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction.PRawTransaction) e.getUnfinishedMessage();
+          parsedMessage = (PRawTransaction) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -718,7 +854,86 @@ public final class ProtoRawTransaction {
       }
 
       /**
-       * <code>int32 sourceId = 1;</code>
+       * <code>string guid = 1;</code>
+       * @return The guid.
+       */
+      public String getGuid() {
+        Object ref = guid_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          guid_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+
+      /**
+       * <code>string guid = 1;</code>
+       * @param value The guid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGuid(
+          String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+
+        guid_ = value;
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>string guid = 1;</code>
+       * @return The bytes for guid.
+       */
+      public com.google.protobuf.ByteString
+          getGuidBytes() {
+        Object ref = guid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (String) ref);
+          guid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      /**
+       * <code>string guid = 1;</code>
+       * @param value The bytes for guid to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGuidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+
+        guid_ = value;
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>string guid = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearGuid() {
+
+        guid_ = getDefaultInstance().getGuid();
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>int32 sourceId = 2;</code>
        * @return The sourceId.
        */
       public int getSourceId() {
@@ -726,7 +941,7 @@ public final class ProtoRawTransaction {
       }
 
       /**
-       * <code>int32 sourceId = 1;</code>
+       * <code>int32 sourceId = 2;</code>
        * @param value The sourceId to set.
        * @return This builder for chaining.
        */
@@ -738,7 +953,7 @@ public final class ProtoRawTransaction {
       }
 
       /**
-       * <code>int32 sourceId = 1;</code>
+       * <code>int32 sourceId = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearSourceId() {
@@ -749,19 +964,19 @@ public final class ProtoRawTransaction {
       }
 
       /**
-       * <code>int32 sequence = 2;</code>
+       * <code>int64 sequence = 3;</code>
        * @return The sequence.
        */
-      public int getSequence() {
+      public long getSequence() {
         return sequence_;
       }
 
       /**
-       * <code>int32 sequence = 2;</code>
+       * <code>int64 sequence = 3;</code>
        * @param value The sequence to set.
        * @return This builder for chaining.
        */
-      public Builder setSequence(int value) {
+      public Builder setSequence(long value) {
 
         sequence_ = value;
         onChanged();
@@ -769,61 +984,61 @@ public final class ProtoRawTransaction {
       }
 
       /**
-       * <code>int32 sequence = 2;</code>
+       * <code>int64 sequence = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearSequence() {
 
-        sequence_ = 0;
+        sequence_ = 0L;
         onChanged();
         return this;
       }
 
       /**
-       * <code>string guid = 3;</code>
-       * @return The guid.
+       * <code>string msgId = 4;</code>
+       * @return The msgId.
        */
-      public java.lang.String getGuid() {
-        java.lang.Object ref = guid_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getMsgId() {
+        Object ref = msgId_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
-                  (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          guid_ = s;
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          msgId_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
 
       /**
-       * <code>string guid = 3;</code>
-       * @param value The guid to set.
+       * <code>string msgId = 4;</code>
+       * @param value The msgId to set.
        * @return This builder for chaining.
        */
-      public Builder setGuid(
-              java.lang.String value) {
+      public Builder setMsgId(
+          String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
+    throw new NullPointerException();
+  }
 
-        guid_ = value;
+        msgId_ = value;
         onChanged();
         return this;
       }
 
       /**
-       * <code>string guid = 3;</code>
-       * @return The bytes for guid.
+       * <code>string msgId = 4;</code>
+       * @return The bytes for msgId.
        */
       public com.google.protobuf.ByteString
-      getGuidBytes() {
-        java.lang.Object ref = guid_;
+          getMsgIdBytes() {
+        Object ref = msgId_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b =
-                  com.google.protobuf.ByteString.copyFromUtf8(
-                          (java.lang.String) ref);
-          guid_ = b;
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (String) ref);
+          msgId_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -831,60 +1046,122 @@ public final class ProtoRawTransaction {
       }
 
       /**
-       * <code>string guid = 3;</code>
-       * @param value The bytes for guid to set.
+       * <code>string msgId = 4;</code>
+       * @param value The bytes for msgId to set.
        * @return This builder for chaining.
        */
-      public Builder setGuidBytes(
-              com.google.protobuf.ByteString value) {
+      public Builder setMsgIdBytes(
+          com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
 
-        guid_ = value;
+        msgId_ = value;
         onChanged();
         return this;
       }
 
       /**
-       * <code>string guid = 3;</code>
+       * <code>string msgId = 4;</code>
        * @return This builder for chaining.
        */
-      public Builder clearGuid() {
+      public Builder clearMsgId() {
 
-        guid_ = getDefaultInstance().getGuid();
+        msgId_ = getDefaultInstance().getMsgId();
         onChanged();
         return this;
       }
 
       /**
-       * <code>string rawRecord = 4;</code>
+       * <code>int32 version = 5;</code>
+       * @return The version.
+       */
+      public int getVersion() {
+        return version_;
+      }
+
+      /**
+       * <code>int32 version = 5;</code>
+       * @param value The version to set.
+       * @return This builder for chaining.
+       */
+      public Builder setVersion(int value) {
+
+        version_ = value;
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>int32 version = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearVersion() {
+
+        version_ = 0;
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>int32 duplicateFlg = 6;</code>
+       * @return The duplicateFlg.
+       */
+      public int getDuplicateFlg() {
+        return duplicateFlg_;
+      }
+
+      /**
+       * <code>int32 duplicateFlg = 6;</code>
+       * @param value The duplicateFlg to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDuplicateFlg(int value) {
+
+        duplicateFlg_ = value;
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>int32 duplicateFlg = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearDuplicateFlg() {
+
+        duplicateFlg_ = 0;
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>string rawRecord = 7;</code>
        * @return The rawRecord.
        */
-      public java.lang.String getRawRecord() {
-        java.lang.Object ref = rawRecord_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getRawRecord() {
+        Object ref = rawRecord_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
-                  (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
           rawRecord_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
 
       /**
-       * <code>string rawRecord = 4;</code>
+       * <code>string rawRecord = 7;</code>
        * @param value The rawRecord to set.
        * @return This builder for chaining.
        */
       public Builder setRawRecord(
-              java.lang.String value) {
+          String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
+    throw new NullPointerException();
+  }
 
         rawRecord_ = value;
         onChanged();
@@ -892,16 +1169,16 @@ public final class ProtoRawTransaction {
       }
 
       /**
-       * <code>string rawRecord = 4;</code>
+       * <code>string rawRecord = 7;</code>
        * @return The bytes for rawRecord.
        */
       public com.google.protobuf.ByteString
-      getRawRecordBytes() {
-        java.lang.Object ref = rawRecord_;
+          getRawRecordBytes() {
+        Object ref = rawRecord_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b =
-                  com.google.protobuf.ByteString.copyFromUtf8(
-                          (java.lang.String) ref);
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (String) ref);
           rawRecord_ = b;
           return b;
         } else {
@@ -910,16 +1187,16 @@ public final class ProtoRawTransaction {
       }
 
       /**
-       * <code>string rawRecord = 4;</code>
+       * <code>string rawRecord = 7;</code>
        * @param value The bytes for rawRecord to set.
        * @return This builder for chaining.
        */
       public Builder setRawRecordBytes(
-              com.google.protobuf.ByteString value) {
+          com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
 
         rawRecord_ = value;
         onChanged();
@@ -927,7 +1204,7 @@ public final class ProtoRawTransaction {
       }
 
       /**
-       * <code>string rawRecord = 4;</code>
+       * <code>string rawRecord = 7;</code>
        * @return This builder for chaining.
        */
       public Builder clearRawRecord() {
@@ -937,15 +1214,15 @@ public final class ProtoRawTransaction {
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public final Builder setUnknownFields(
-              final com.google.protobuf.UnknownFieldSet unknownFields) {
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
+      @Override
       public final Builder mergeUnknownFields(
-              final com.google.protobuf.UnknownFieldSet unknownFields) {
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
