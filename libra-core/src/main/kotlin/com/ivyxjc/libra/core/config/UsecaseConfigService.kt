@@ -1,6 +1,6 @@
-package com.ivyxjc.libra.core.service
+package com.ivyxjc.libra.core.config
 
-import com.ivyxjc.libra.core.models.UsecaseConfig
+import com.ivyxjc.libra.core.config.model.UsecaseConfig
 
 interface UsecaseConfigService {
     fun registerConfig(name: String, config: UsecaseConfig)

@@ -1,6 +1,6 @@
-package com.ivyxjc.libra.core.service
+package com.ivyxjc.libra.core.config
 
-import com.ivyxjc.libra.core.models.SourceConfig
+import com.ivyxjc.libra.core.config.model.SourceConfig
 
 
 interface SourceConfigService {

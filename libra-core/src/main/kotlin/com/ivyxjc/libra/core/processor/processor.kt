@@ -1,5 +1,7 @@
-package com.ivyxjc.libra.core.process
+package com.ivyxjc.libra.core.processor
 
+import com.ivyxjc.libra.core.flow.Workflow
+import com.ivyxjc.libra.core.flow.WorkflowSession
 import com.ivyxjc.libra.core.models.UsecaseTxn
 
 interface LibraProcessor {

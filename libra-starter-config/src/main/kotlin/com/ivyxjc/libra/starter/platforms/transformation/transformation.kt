@@ -1,9 +1,9 @@
 package com.ivyxjc.libra.starter.platforms.transformation
 
-import com.ivyxjc.libra.core.CoreCommons
-import com.ivyxjc.libra.core.platforms.TransformationPlatform
-import com.ivyxjc.libra.core.service.SourceConfigService
-import com.ivyxjc.libra.core.service.SourceConfigServiceMockImpl
+import com.ivyxjc.libra.core.config.SourceConfigService
+import com.ivyxjc.libra.core.config.SourceConfigServiceMockImpl
+import com.ivyxjc.libra.core.expose.BeansConstants
+import com.ivyxjc.libra.core.platform.TransformationPlatform
 import com.ivyxjc.libra.starter.common.model.LibraJmsListenerYaml
 import com.ivyxjc.libra.starter.common.processors.AbstractLibraJmsAnnBeanPostProcessor
 import com.ivyxjc.libra.starter.config.source.annotation.EnableLibraSourceConfig
@@ -58,7 +58,7 @@ open class LibraTransformationJmsListenersConfiguration {
 
 
 class LibraTransformationJmsListenerAnnBeanPostProcessor(val sourceConfigService: SourceConfigService) :
-    AbstractLibraJmsAnnBeanPostProcessor(ConfigConstants.TRANSFORMATION_JMS_NAME) {
+        AbstractLibraJmsAnnBeanPostProcessor(ConfigConstants.TRANSFORMATION_JMS_NAME) {
 
     override fun processJmsListenerConfig(): List<LibraJmsListenerYaml> {
         val list = mutableListOf<LibraJmsListenerYaml>()
@@ -66,9 +66,9 @@ class LibraTransformationJmsListenerAnnBeanPostProcessor(val sourceConfigService
         sourceConfigs.forEach {
             val tmpListenerYaml = LibraJmsListenerYaml()
             tmpListenerYaml.id = it.sourceId.toString()
-            tmpListenerYaml.containerFactory = CoreCommons.BeansConstants.INTERNAL_JMS_CONTAINER_FACTORY_NAME
+            tmpListenerYaml.containerFactory = BeansConstants.INTERNAL_JMS_CONTAINER_FACTORY_NAME
             tmpListenerYaml.destination = it.transformationQueue
-            tmpListenerYaml.messageListener = ConfigConstants.RAW_TRANS_MESSAGE_LISTENER
+            tmpListenerYaml.messageListener = ConfigConstants.TRANSFORMATION_LISTENER
             tmpListenerYaml.dispatcher = ConfigConstants.TRANSFORMATION_PLATFORM
             tmpListenerYaml.concurrency = ConfigConstants.DEFAULT_CONCURRENCY
             list.add(tmpListenerYaml)

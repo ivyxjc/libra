@@ -1,9 +1,9 @@
 package com.ivyxjc.libra.starter.platforms.remediation
 
-import com.ivyxjc.libra.core.CoreCommons
-import com.ivyxjc.libra.core.platforms.RemediationPlatform
-import com.ivyxjc.libra.core.service.UsecaseConfigService
-import com.ivyxjc.libra.core.service.UsecaseConfigServiceMockImpl
+import com.ivyxjc.libra.core.config.UsecaseConfigService
+import com.ivyxjc.libra.core.config.UsecaseConfigServiceMockImpl
+import com.ivyxjc.libra.core.expose.BeansConstants
+import com.ivyxjc.libra.core.platform.RemediationPlatform
 import com.ivyxjc.libra.starter.common.model.LibraJmsListenerYaml
 import com.ivyxjc.libra.starter.common.processors.AbstractLibraJmsAnnBeanPostProcessor
 import com.ivyxjc.libra.starter.config.usecases.annotation.EnableLibraUsecaseConfig
@@ -56,9 +56,9 @@ class LibraRemediationJmsListenerAnnBeanPostProcessor(val useCaseConfigService: 
         usecaseConfigs.forEach {
             val tmpListenerYaml = LibraJmsListenerYaml()
             tmpListenerYaml.id = it.name
-            tmpListenerYaml.containerFactory = CoreCommons.BeansConstants.INTERNAL_JMS_CONTAINER_FACTORY_NAME
+            tmpListenerYaml.containerFactory = BeansConstants.INTERNAL_JMS_CONTAINER_FACTORY_NAME
             tmpListenerYaml.destination = it.queue
-            tmpListenerYaml.messageListener = ConfigConstants.RAW_TRANS_MESSAGE_LISTENER
+            tmpListenerYaml.messageListener = ConfigConstants.REMEDIATION_LISTENER
             tmpListenerYaml.dispatcher = ConfigConstants.REMEDIATION_PLATFORM
             list.add(tmpListenerYaml)
         }

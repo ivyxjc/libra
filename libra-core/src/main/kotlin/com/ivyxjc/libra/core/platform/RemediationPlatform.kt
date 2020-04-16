@@ -1,13 +1,13 @@
-package com.ivyxjc.libra.core.platforms
+package com.ivyxjc.libra.core.platform
 
 import com.ivyxjc.libra.common.utils.loggerFor
+import com.ivyxjc.libra.core.config.UsecaseConfigService
+import com.ivyxjc.libra.core.config.model.UsecaseType
+import com.ivyxjc.libra.core.flow.Workflow
+import com.ivyxjc.libra.core.flow.WorkflowSession
+import com.ivyxjc.libra.core.flow.WorkflowStatus
 import com.ivyxjc.libra.core.models.UsecaseTxn
-import com.ivyxjc.libra.core.models.UsecaseType
-import com.ivyxjc.libra.core.process.LibraProcessor
-import com.ivyxjc.libra.core.process.Workflow
-import com.ivyxjc.libra.core.process.WorkflowSession
-import com.ivyxjc.libra.core.process.WorkflowStatus
-import com.ivyxjc.libra.core.service.UsecaseConfigService
+import com.ivyxjc.libra.core.processor.LibraProcessor
 
 /**
  * Should be Thread-safe

@@ -1,8 +1,8 @@
-package com.ivyxjc.libra.core.models
+package com.ivyxjc.libra.core.config.model
 
-import com.ivyxjc.libra.common.ErrorConstants
-import com.ivyxjc.libra.core.exception.LibraMissingConfigException
-import com.ivyxjc.libra.core.process.LibraProcessor
+import com.ivyxjc.libra.core.config.exception.LibraMissingConfigException
+import com.ivyxjc.libra.core.expose.ErrorConstants
+import com.ivyxjc.libra.core.processor.LibraProcessor
 import org.apache.commons.lang3.StringUtils
 
 
@@ -43,10 +43,10 @@ data class Remediation(val processors: List<LibraProcessor>)
 
 
 class SourceConfig private constructor(
-    val sourceId: Int,
-    val transformationQueue: String,
-    val transformation: Transformation,
-    val usecases: Set<String>
+        val sourceId: Int,
+        val transformationQueue: String,
+        val transformation: Transformation,
+        val usecases: Set<String>
 ) {
     class Builder {
         private var sourceId: Int = -1
@@ -74,9 +74,9 @@ class SourceConfig private constructor(
         fun build(): SourceConfig {
             if (StringUtils.isBlank(transformationQueue)) {
                 throw LibraMissingConfigException(
-                    "missing transformation",
-                    ErrorConstants.SOURCE_CONFIG,
-                    "transformationQueue"
+                        "missing transformation",
+                        ErrorConstants.SOURCE_CONFIG,
+                        "transformationQueue"
                 )
             }
             return SourceConfig(sourceId, transformationQueue!!, transformation, usecases)

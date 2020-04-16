@@ -1,6 +1,6 @@
 package com.ivyxjc.libra.benchmark
 
-import com.ivyxjc.libra.common.utils.getProperty
+import com.ivyxjc.libra.common.utils.getPrivateProperty
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
 import org.apache.activemq.artemis.jms.client.ActiveMQQueue
 import org.apache.activemq.artemis.jms.client.ActiveMQSession
@@ -15,7 +15,7 @@ import javax.jms.Session
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @State(Scope.Thread)
 open class ArtemisBench {
-    private val url = getProperty("artemis.url")
+    private val url = getPrivateProperty("artemis.url")
     private val conFactory = ActiveMQConnectionFactory(url)
     private val connection: Connection = conFactory.createConnection()
     private val session = connection.createSession(true, Session.SESSION_TRANSACTED) as ActiveMQSession

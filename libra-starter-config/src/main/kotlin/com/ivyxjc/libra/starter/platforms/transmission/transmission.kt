@@ -1,11 +1,11 @@
 package com.ivyxjc.libra.starter.platforms.transmission
 
-import com.ivyxjc.libra.core.CoreCommons
 import com.ivyxjc.libra.core.CorePosition
+import com.ivyxjc.libra.core.config.SourceConfigService
+import com.ivyxjc.libra.core.config.SourceConfigServiceMockImpl
 import com.ivyxjc.libra.core.dao.RawTransMapper
-import com.ivyxjc.libra.core.platforms.TransmissionPlatform
-import com.ivyxjc.libra.core.service.SourceConfigService
-import com.ivyxjc.libra.core.service.SourceConfigServiceMockImpl
+import com.ivyxjc.libra.core.expose.BeansConstants
+import com.ivyxjc.libra.core.platform.TransmissionPlatform
 import com.ivyxjc.libra.starter.common.model.LibraJmsListenerYaml
 import com.ivyxjc.libra.starter.common.processors.AbstractLibraJmsAnnBeanPostProcessor
 import com.ivyxjc.libra.starter.config.sourcelite.annotation.EnableLibraSourceLiteConfig
@@ -38,10 +38,10 @@ open class LibraTransmissionBootstrapConfiguration {
 
     @Bean
     open fun transmissionPlatform(
-        sourceConfigService: SourceConfigService,
-        @Qualifier(CoreCommons.BeansConstants.INTERNAL_JMS_CONNECTION_FACTORY_NAME) connectionFactory: ConnectionFactory,
-        rawTransMapper: RawTransMapper,
-        jmsTemplate: JmsTemplate
+            sourceConfigService: SourceConfigService,
+            @Qualifier(BeansConstants.INTERNAL_JMS_CONNECTION_FACTORY_NAME) connectionFactory: ConnectionFactory,
+            rawTransMapper: RawTransMapper,
+            jmsTemplate: JmsTemplate
     ): TransmissionPlatform {
         return TransmissionPlatform(sourceConfigService, connectionFactory, rawTransMapper, jmsTemplate)
     }

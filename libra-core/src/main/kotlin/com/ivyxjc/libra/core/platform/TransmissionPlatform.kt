@@ -1,11 +1,11 @@
-package com.ivyxjc.libra.core.platforms
+package com.ivyxjc.libra.core.platform
 
 import com.ivyxjc.libra.aspect.LibraMetrics
 import com.ivyxjc.libra.common.utils.loggerFor
+import com.ivyxjc.libra.core.config.SourceConfigService
 import com.ivyxjc.libra.core.dao.RawTransMapper
 import com.ivyxjc.libra.core.models.RawTransaction
-import com.ivyxjc.libra.core.models.convertor.protobufFromRawTrans
-import com.ivyxjc.libra.core.service.SourceConfigService
+import com.ivyxjc.libra.core.platform.internal.protobufFromRawTrans
 import org.springframework.jms.core.JmsTemplate
 import javax.jms.ConnectionFactory
 import kotlin.random.Random
@@ -15,10 +15,10 @@ import kotlin.random.Random
  * Should be Thread-safe
  */
 open class TransmissionPlatform(
-    private val sourceConfigService: SourceConfigService,
-    private val connectionFactory: ConnectionFactory,
-    private val rawTransMapper: RawTransMapper,
-    private val jmsTemplate: JmsTemplate
+        private val sourceConfigService: SourceConfigService,
+        private val connectionFactory: ConnectionFactory,
+        private val rawTransMapper: RawTransMapper,
+        private val jmsTemplate: JmsTemplate
 ) : Dispatcher<RawTransaction> {
 
     companion object {

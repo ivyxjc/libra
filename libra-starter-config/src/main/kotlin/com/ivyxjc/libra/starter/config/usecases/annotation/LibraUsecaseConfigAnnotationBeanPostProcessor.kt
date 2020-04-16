@@ -1,11 +1,11 @@
 package com.ivyxjc.libra.starter.config.usecases.annotation
 
-import com.ivyxjc.libra.common.ErrorConstants
 import com.ivyxjc.libra.common.utils.loggerFor
-import com.ivyxjc.libra.core.exception.LibraConfigConflictException
-import com.ivyxjc.libra.core.models.UsecaseConfig
-import com.ivyxjc.libra.core.process.LibraProcessor
-import com.ivyxjc.libra.core.service.UsecaseConfigService
+import com.ivyxjc.libra.core.config.UsecaseConfigService
+import com.ivyxjc.libra.core.config.exception.LibraConfigConflictException
+import com.ivyxjc.libra.core.config.model.UsecaseConfig
+import com.ivyxjc.libra.core.expose.ErrorConstants
+import com.ivyxjc.libra.core.processor.LibraProcessor
 import com.ivyxjc.libra.starter.config.utils.ConfigConstants
 import com.ivyxjc.libra.starter.config.utils.XsdUtils
 import org.springframework.beans.factory.BeanFactory

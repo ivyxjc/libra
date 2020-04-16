@@ -1,4 +1,4 @@
-package com.ivyxjc.libra.core.platforms
+package com.ivyxjc.libra.core.platform
 
 import com.ivyxjc.libra.common.utils.loggerFor
 import com.ivyxjc.libra.core.models.AbstractTransaction

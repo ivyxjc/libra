@@ -1,12 +1,12 @@
 package com.ivyxjc.libra.starter.common.processors
 
 import com.ivyxjc.libra.common.utils.loggerFor
+import com.ivyxjc.libra.core.config.exception.LibraConfigIncorrectException
 import com.ivyxjc.libra.core.endpoint.TransformationMessageListener
 import com.ivyxjc.libra.core.endpoint.TransmissionListener
 import com.ivyxjc.libra.core.endpoint.UsecaseTxnMessageListener
-import com.ivyxjc.libra.core.exception.LibraConfigIncorrectException
 import com.ivyxjc.libra.core.models.AbstractTransaction
-import com.ivyxjc.libra.core.platforms.Dispatcher
+import com.ivyxjc.libra.core.platform.Dispatcher
 import com.ivyxjc.libra.starter.common.model.LibraJmsListenerYaml
 import com.ivyxjc.libra.starter.config.utils.ConfigConstants
 import org.springframework.beans.factory.*

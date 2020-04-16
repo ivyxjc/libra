@@ -1,15 +1,15 @@
 package com.ivyxjc.libra.core.endpoint
 
 import com.ivyxjc.libra.aspect.LibraMetrics
-import com.ivyxjc.libra.common.DtoInConstants
 import com.ivyxjc.libra.common.utils.loggerFor
+import com.ivyxjc.libra.core.expose.DtoInConstants
 import com.ivyxjc.libra.core.models.AbstractTransaction
 import com.ivyxjc.libra.core.models.RawTransaction
 import com.ivyxjc.libra.core.models.UsecaseTxn
 import com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction
 import com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn
-import com.ivyxjc.libra.core.platforms.Dispatcher
-import com.ivyxjc.libra.core.rawTransToUcTxn
+import com.ivyxjc.libra.core.platform.Dispatcher
+import com.ivyxjc.libra.core.platform.internal.rawTransToUcTxn
 import org.apache.commons.lang3.StringUtils
 import javax.jms.BytesMessage
 import javax.jms.Message

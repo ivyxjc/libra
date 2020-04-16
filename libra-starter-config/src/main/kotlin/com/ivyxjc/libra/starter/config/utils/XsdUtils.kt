@@ -1,6 +1,6 @@
 package com.ivyxjc.libra.starter.config.utils
 
-import com.ivyxjc.libra.core.exception.LibraMissingConfigException
+import com.ivyxjc.libra.core.config.exception.LibraMissingConfigException
 import com.ivyxjc.libra.starter.config.source.model.inner.SourceConfigStr
 import com.ivyxjc.libra.starter.config.source.model.inner.UsecaseConfigStr
 import com.ivyxjc.libra.starter.config.source.model.inner.xsds.*

@@ -1,4 +1,4 @@
-package com.ivyxjc.libra.common.proxy
+package com.ivyxjc.libra.common.log
 
 import org.slf4j.Logger
 import org.slf4j.Marker
