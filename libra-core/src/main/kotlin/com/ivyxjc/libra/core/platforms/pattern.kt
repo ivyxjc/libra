@@ -1,7 +1,7 @@
 package com.ivyxjc.libra.core.platforms
 
 import com.ivyxjc.libra.common.utils.loggerFor
-import com.ivyxjc.libra.core.exception.RetryableException
+import com.ivyxjc.libra.core.exception.InstantRetryException
 import com.ivyxjc.libra.core.models.UsecaseTxn
 import com.ivyxjc.libra.core.process.LibraProcessor
 import com.ivyxjc.libra.core.process.Workflow
@@ -36,7 +36,7 @@ class LibraPatternImpl : LibraPattern {
         try {
             processor.process(usecaseTxn, workflow, session)
         } catch (e: Throwable) {
-            if (e is RetryableException) {
+            if (e is InstantRetryException) {
                 TODO("not implemented")
             } else {
                 // todo exception handler

@@ -9,6 +9,7 @@ import com.ivyxjc.libra.core.models.UsecaseTxn
 import com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction
 import com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn
 import com.ivyxjc.libra.core.platforms.Dispatcher
+import com.ivyxjc.libra.core.rawTransToUcTxn
 import org.apache.commons.lang3.StringUtils
 import javax.jms.BytesMessage
 import javax.jms.Message
@@ -105,11 +106,11 @@ class UsecaseTxnMessageListener : AbstractMessageListener() {
     }
 }
 
-class RawTransactionMessageListener : AbstractMessageListener() {
+class TransformationMessageListener : AbstractMessageListener() {
 
     companion object {
         @JvmStatic
-        private val log = loggerFor(RawTransactionMessageListener::class.java)
+        private val log = loggerFor(TransformationMessageListener::class.java)
     }
 
     @LibraMetrics
@@ -136,7 +137,8 @@ class RawTransactionMessageListener : AbstractMessageListener() {
                 //todo check duplicate and version
                 rawTrans.duplicateFlg = 0
                 rawTrans.version = 0
-                dispatcher!!.dispatch(rawTrans)
+                val ucTxn = rawTransToUcTxn(rawTrans)
+                dispatcher!!.dispatch(ucTxn)
             }
             else -> {
                 log.warn { "not support not ByteMessage, receive not byte message :$message" }
@@ -145,10 +147,10 @@ class RawTransactionMessageListener : AbstractMessageListener() {
     }
 }
 
-class TextMessageListener : AbstractMessageListener() {
+class TransmissionListener : AbstractMessageListener() {
     companion object {
         @JvmStatic
-        private val log = loggerFor(TextMessageListener::class.java)
+        private val log = loggerFor(TransmissionListener::class.java)
     }
 
     @LibraMetrics
