@@ -43,7 +43,7 @@ abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListe
         val listeners = processJmsListenerConfig()
         listeners.forEach {
             processJmsListener(registrar, it)
-            log.info { "successfully register listener ${it.destination} in container factory ${it.containerFactory}. Listener detail is ${it}" }
+            log.info("successfully register listener {} in container factory {}. Listener detail is {}", it.destination, it.containerFactory, it)
         }
     }
 

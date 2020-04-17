@@ -115,7 +115,7 @@ class TransformationMessageListener : AbstractMessageListener() {
 
     @LibraMetrics
     override fun onMessage(message: Message?) {
-        log.debug { "receive message: $message" }
+        log.debug("receive message: {}", message)
         if (message == null) {
             return
         }
@@ -141,7 +141,7 @@ class TransformationMessageListener : AbstractMessageListener() {
                 dispatcher!!.dispatch(ucTxn)
             }
             else -> {
-                log.warn { "not support not ByteMessage, receive not byte message :$message" }
+                log.warn("not support not ByteMessage, receive not byte message: {}", message)
             }
         }
     }
@@ -164,20 +164,20 @@ class TransmissionListener : AbstractMessageListener() {
                 val msgSourceId = try {
                     message.getIntProperty(DtoInConstants.sourceId)
                 } catch (e: Exception) {
-                    log.debug { "fail to get property SourceId from message" }
+                    log.debug("fail to get property SourceId from message")
                     null
                 }
                 val msg = message.text
                 val rawTransaction = RawTransaction()
                 val handledSourceId = handleSourceId(msgSourceId)
-                    ?: throw RuntimeException("The Message Listener is register for SourceId $sourceIdsSet, but receive msg with SourceId: $msgSourceId")
+                        ?: throw RuntimeException("The Message Listener is register for SourceId $sourceIdsSet, but receive msg with SourceId: $msgSourceId")
                 rawTransaction.sourceId = handledSourceId
                 rawTransaction.rawRecord = msg
                 rawTransaction.msgId = message.jmsMessageID
                 dispatcher!!.dispatch(rawTransaction)
             }
             else -> {
-                log.warn { "not support not TextMessage, receive not text message :$message" }
+                log.warn("not support not TextMessage, receive not text message: {}", message)
             }
         }
     }

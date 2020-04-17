@@ -9,7 +9,7 @@ import com.ivyxjc.libra.core.retry.exception.InstantRetryException
 
 
 interface LibraPattern {
-    fun process(usecaseTxn: UsecaseTxn, processor: LibraProcessor, workflow: Workflow, session: WorkflowSession)
+    fun process(ucTxn: UsecaseTxn, processor: LibraProcessor, workflow: Workflow, session: WorkflowSession)
 
     companion object {
         @JvmStatic
@@ -28,20 +28,26 @@ class LibraPatternImpl : LibraPattern {
     }
 
     override fun process(
-            usecaseTxn: UsecaseTxn,
+            ucTxn: UsecaseTxn,
             processor: LibraProcessor,
             workflow: Workflow,
             session: WorkflowSession
     ) {
-        try {
-            processor.process(usecaseTxn, workflow, session)
-        } catch (e: Throwable) {
-            if (e is InstantRetryException) {
-                TODO("not implemented")
-            } else {
-                // todo exception handler
-                log.error("LibraPattern throws Not-Retryable exception", e)
+        var flag = true
+        do {
+            try {
+                processor.process(ucTxn, workflow, session)
+                flag = false
+            } catch (e: Throwable) {
+                if (e is InstantRetryException) {
+                    flag = !e.stopStrategy.shouldStop(ucTxn.attempt)
+                    TODO("not implemented")
+                } else {
+                    flag = false
+                    // todo exception handler
+                    log.error("LibraPattern throws Not-Retryable exception", e)
+                }
             }
-        }
+        } while (flag)
     }
 }

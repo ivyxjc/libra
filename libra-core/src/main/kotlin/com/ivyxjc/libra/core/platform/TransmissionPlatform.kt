@@ -28,7 +28,7 @@ open class TransmissionPlatform(
 
     @LibraMetrics
     override fun dispatch(trans: RawTransaction) {
-        log.debug { "receive trans: $trans" }
+        log.debug("receive trans: {}", trans)
         //todo set unique guid to RawTransaction
         trans.guid = Random.nextLong().toString()
         rawTransMapper.insertRaw(trans)
