@@ -5,53 +5,77 @@ enum class WorkflowSessionMode {
     GLOBAL
 }
 
-class WorkflowSession {
+interface WorkflowSession {
+
+    fun putString(key: String, value: String?, mode: WorkflowSessionMode)
+
+    fun putStringIfAbsent(key: String, value: String?, mode: WorkflowSessionMode)
+
+    fun put(key: String, value: Any?, mode: WorkflowSessionMode)
+
+    fun putIfAbsent(key: String, value: Any?, mode: WorkflowSessionMode)
+
+    fun putString(key: String, value: String?)
+
+    fun putStringIfAbsent(key: String, value: String?)
+
+    fun put(key: String, value: Any?)
+
+    fun putIfAbsent(key: String, value: Any?)
+
+    companion object {
+        fun create(): WorkflowSession {
+            return WorkflowSessionDefaultImpl()
+        }
+    }
+}
+
+class WorkflowSessionDefaultImpl internal constructor() : WorkflowSession {
 
     private val map = mutableMapOf<String, Any?>()
 
-    fun putString(key: String, value: String?, mode: WorkflowSessionMode) {
+    override fun putString(key: String, value: String?, mode: WorkflowSessionMode) {
         if (mode == WorkflowSessionMode.GLOBAL) {
             TODO("Session mode is not supported")
         }
         map[key] = value
     }
 
-    fun putStringIfAbsent(key: String, value: String?, mode: WorkflowSessionMode) {
+    override fun putStringIfAbsent(key: String, value: String?, mode: WorkflowSessionMode) {
         if (mode == WorkflowSessionMode.GLOBAL) {
             TODO("Session mode is not supported")
         }
         map.putIfAbsent(key, value)
     }
 
-    fun put(key: String, value: Any?, mode: WorkflowSessionMode) {
+    override fun put(key: String, value: Any?, mode: WorkflowSessionMode) {
         if (mode == WorkflowSessionMode.GLOBAL) {
             TODO("Session mode is not supported")
         }
         map[key] = value
     }
 
-    fun putIfAbsent(key: String, value: Any?, mode: WorkflowSessionMode) {
+    override fun putIfAbsent(key: String, value: Any?, mode: WorkflowSessionMode) {
         if (mode == WorkflowSessionMode.GLOBAL) {
             TODO("Session mode is not supported")
         }
         map.putIfAbsent(key, value)
     }
 
-    fun putString(key: String, value: String?) {
+    override fun putString(key: String, value: String?) {
         putString(key, value, WorkflowSessionMode.SESSION)
     }
 
-    fun putStringIfAbsent(key: String, value: String?) {
+    override fun putStringIfAbsent(key: String, value: String?) {
         putStringIfAbsent(key, value, WorkflowSessionMode.SESSION)
     }
 
-    fun put(key: String, value: Any?) {
+    override fun put(key: String, value: Any?) {
         put(key, value, WorkflowSessionMode.SESSION)
     }
 
-    fun putIfAbsent(key: String, value: Any?) {
+    override fun putIfAbsent(key: String, value: Any?) {
         putIfAbsent(key, value, WorkflowSessionMode.SESSION)
     }
-
 
 }

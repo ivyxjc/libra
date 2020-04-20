@@ -8,9 +8,7 @@ import org.slf4j.LoggerFactory
 
 fun <T> loggerFor(clz: Class<T>): LoggerProxy = LoggerProxyImpl(LoggerFactory.getLogger(clz))
 
-fun <T : Any> T.loggerFor(): Lazy<LoggerProxy> {
-    return lazy { LoggerProxyImpl(LoggerFactory.getLogger(this::class.java)) }
-}
+fun loggerFor(clzName: String): LoggerProxy = LoggerProxyImpl(LoggerFactory.getLogger(clzName))
 
 internal val topLevelClass = object : Any() {}.javaClass.enclosingClass
 

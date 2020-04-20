@@ -10,7 +10,8 @@ class UsecaseTxn : AbstractTransaction() {
     var ucTxnId: Int = -1
     val attributes = mutableMapOf<String, String>()
     var trans: AbstractTransaction? = null
-    var attempt: Int = 0
+    var platformAttempt: Int = 0
+    var patternAttempt: Int = 0
 
     fun getTransaction(): AbstractTransaction? {
         return trans

@@ -1,11 +1,16 @@
 package com.ivyxjc.libra.common.log
 
+import com.ivyxjc.libra.common.utils.loggerFor
 import org.slf4j.Logger
 import org.slf4j.Marker
 
 
 abstract class LoggerProxy : Logger {
 
+    companion object {
+        @JvmStatic
+        fun create(clzName: String) = loggerFor(clzName)
+    }
 }
 
 class LoggerProxyImpl(val log: Logger) : LoggerProxy() {

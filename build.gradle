@@ -100,13 +100,13 @@ configure(allprojects) { project ->
     }
 
     compileJava {
-        sourceCompatibility = JavaVersion.VERSION_11// can be switched to 11 for testing
+        sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
         options.encoding = "UTF-8"
     }
 
     compileTestJava {
-        sourceCompatibility = JavaVersion.VERSION_11  // can be switched to 11 for testing
+        sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
         options.encoding = "UTF-8"
         options.compilerArgs += "-parameters"
@@ -249,6 +249,7 @@ project("libra-core") {
             exclude group: "org.apache.geronimo.specs", module: "geronimo-jms_1.1_spec"
         }
         testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: spring_boot_version
+        implementation group: 'org.javassist', name: 'javassist', version: '3.27.0-GA'
     }
 
     task testInit(type: Copy) {
