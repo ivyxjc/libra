@@ -1,14 +1,15 @@
 package com.ivyxjc.libra.core.endpoint
 
 import com.ivyxjc.libra.aspect.LibraMetrics
-import com.ivyxjc.libra.common.DtoInConstants
 import com.ivyxjc.libra.common.utils.loggerFor
+import com.ivyxjc.libra.core.expose.DtoInConstants
 import com.ivyxjc.libra.core.models.AbstractTransaction
 import com.ivyxjc.libra.core.models.RawTransaction
-import com.ivyxjc.libra.core.models.UseCaseTxn
+import com.ivyxjc.libra.core.models.UsecaseTxn
 import com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction
 import com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn
-import com.ivyxjc.libra.core.platforms.Dispatcher
+import com.ivyxjc.libra.core.platform.Dispatcher
+import com.ivyxjc.libra.core.platform.internal.rawTransToUcTxn
 import org.apache.commons.lang3.StringUtils
 import javax.jms.BytesMessage
 import javax.jms.Message
@@ -85,7 +86,7 @@ class UsecaseTxnMessageListener : AbstractMessageListener() {
                 val bytes = ByteArray(size.toInt())
                 message.readBytes(bytes)
                 val pUcTxn = ProtoUsecaseTxn.PUseCaseTxn.parseFrom(bytes)
-                val ucTxn = UseCaseTxn()
+                val ucTxn = UsecaseTxn()
                 val tmpSourceId = handleSourceId(pUcTxn.sourceId)
                 if (tmpSourceId != null) {
                     ucTxn.sourceId = tmpSourceId
@@ -105,16 +106,16 @@ class UsecaseTxnMessageListener : AbstractMessageListener() {
     }
 }
 
-class RawTransactionMessageListener : AbstractMessageListener() {
+class TransformationMessageListener : AbstractMessageListener() {
 
     companion object {
         @JvmStatic
-        private val log = loggerFor(RawTransactionMessageListener::class.java)
+        private val log = loggerFor(TransformationMessageListener::class.java)
     }
 
     @LibraMetrics
     override fun onMessage(message: Message?) {
-        log.debug { "receive message: $message" }
+        log.debug("receive message: {}", message)
         if (message == null) {
             return
         }
@@ -136,19 +137,20 @@ class RawTransactionMessageListener : AbstractMessageListener() {
                 //todo check duplicate and version
                 rawTrans.duplicateFlg = 0
                 rawTrans.version = 0
-                dispatcher!!.dispatch(rawTrans)
+                val ucTxn = rawTransToUcTxn(rawTrans)
+                dispatcher!!.dispatch(ucTxn)
             }
             else -> {
-                log.warn { "not support not ByteMessage, receive not byte message :$message" }
+                log.warn("not support not ByteMessage, receive not byte message: {}", message)
             }
         }
     }
 }
 
-class TextMessageListener : AbstractMessageListener() {
+class TransmissionListener : AbstractMessageListener() {
     companion object {
         @JvmStatic
-        private val log = loggerFor(TextMessageListener::class.java)
+        private val log = loggerFor(TransmissionListener::class.java)
     }
 
     @LibraMetrics
@@ -162,20 +164,20 @@ class TextMessageListener : AbstractMessageListener() {
                 val msgSourceId = try {
                     message.getIntProperty(DtoInConstants.sourceId)
                 } catch (e: Exception) {
-                    log.debug { "fail to get property SourceId from message" }
+                    log.debug("fail to get property SourceId from message")
                     null
                 }
                 val msg = message.text
                 val rawTransaction = RawTransaction()
                 val handledSourceId = handleSourceId(msgSourceId)
-                    ?: throw RuntimeException("The Message Listener is register for SourceId $sourceIdsSet, but receive msg with SourceId: $msgSourceId")
+                        ?: throw RuntimeException("The Message Listener is register for SourceId $sourceIdsSet, but receive msg with SourceId: $msgSourceId")
                 rawTransaction.sourceId = handledSourceId
                 rawTransaction.rawRecord = msg
                 rawTransaction.msgId = message.jmsMessageID
                 dispatcher!!.dispatch(rawTransaction)
             }
             else -> {
-                log.warn { "not support not TextMessage, receive not text message :$message" }
+                log.warn("not support not TextMessage, receive not text message: {}", message)
             }
         }
     }

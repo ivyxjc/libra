@@ -1,7 +1,7 @@
 package com.ivyxjc.libra
 
 import com.ivyxjc.libra.core.models.RawTransaction
-import com.ivyxjc.libra.core.models.UseCaseTxn
+import com.ivyxjc.libra.core.models.UsecaseTxn
 import com.ivyxjc.libra.core.models.protoModels.ProtoRawTransaction
 import com.ivyxjc.libra.core.models.protoModels.ProtoUsecaseTxn
 import org.apache.commons.lang3.RandomStringUtils
@@ -16,7 +16,7 @@ fun buildRawTrans(): RawTransaction {
 }
 
 fun buildUcBytes(): ByteArray {
-    val ucTxn = UseCaseTxn()
+    val ucTxn = UsecaseTxn()
     ucTxn.guid = "abcdefgh"
     ucTxn.sourceId = Random.nextInt()
     ucTxn.ucTxnId = Random.nextInt()

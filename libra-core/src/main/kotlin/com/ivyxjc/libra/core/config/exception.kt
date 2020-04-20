@@ -1,4 +1,5 @@
-package com.ivyxjc.libra.core.exception
+package com.ivyxjc.libra.core.config.exception
+
 
 class LibraMissingConfigException : RuntimeException {
     /**

@@ -3,9 +3,12 @@ package com.ivyxjc.libra.core.models.protoModels;
 option java_outer_classname = "ProtoUsecaseTxn";
 
 message PUseCaseTxn {
-    int32 sourceId = 1;
-    string guid = 2;
+    string guid = 1;
+    int32 sourceId = 2;
     int32 ucTxnId = 3;
-    map<string, string> attributes = 4;
+    string usecaseName = 4;
+    string usecasStatus = 5;
+    map<string, string> attributes = 6;
+    bytes trans = 7;
 }
 

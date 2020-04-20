@@ -1,12 +1,12 @@
 package com.ivyxjc.libra.starter.common.processors
 
 import com.ivyxjc.libra.common.utils.loggerFor
-import com.ivyxjc.libra.core.endpoint.RawTransactionMessageListener
-import com.ivyxjc.libra.core.endpoint.TextMessageListener
+import com.ivyxjc.libra.core.config.exception.LibraConfigIncorrectException
+import com.ivyxjc.libra.core.endpoint.TransformationMessageListener
+import com.ivyxjc.libra.core.endpoint.TransmissionListener
 import com.ivyxjc.libra.core.endpoint.UsecaseTxnMessageListener
-import com.ivyxjc.libra.core.exception.LibraConfigIncorrectException
 import com.ivyxjc.libra.core.models.AbstractTransaction
-import com.ivyxjc.libra.core.platforms.Dispatcher
+import com.ivyxjc.libra.core.platform.Dispatcher
 import com.ivyxjc.libra.starter.common.model.LibraJmsListenerYaml
 import com.ivyxjc.libra.starter.config.utils.ConfigConstants
 import org.springframework.beans.factory.*
@@ -22,7 +22,7 @@ import org.springframework.util.StringValueResolver
 import java.util.concurrent.atomic.AtomicInteger
 
 abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListenerConfigurer, BeanFactoryAware,
-    SmartInitializingSingleton {
+        SmartInitializingSingleton {
 
     companion object {
         private val log = loggerFor(this::class.java)
@@ -43,7 +43,7 @@ abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListe
         val listeners = processJmsListenerConfig()
         listeners.forEach {
             processJmsListener(registrar, it)
-            log.info { "successfully register listener ${it.destination} in container factory ${it.containerFactory}. Listener detail is ${it}" }
+            log.info("successfully register listener {} in container factory {}. Listener detail is {}", it.destination, it.containerFactory, it)
         }
     }
 
@@ -57,8 +57,8 @@ abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListe
     internal abstract fun processJmsListenerConfig(): List<LibraJmsListenerYaml>
 
     private fun processJmsListener(
-        registrar: JmsListenerEndpointRegistrar,
-        libraJmsListenerYaml: LibraJmsListenerYaml
+            registrar: JmsListenerEndpointRegistrar,
+            libraJmsListenerYaml: LibraJmsListenerYaml
     ) {
         val endpoint: SimpleJmsListenerEndpoint = createSimpleJmsListenerEndpoint()
         endpoint.id = getEndpointId(libraJmsListenerYaml)
@@ -76,29 +76,29 @@ abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListe
         val containerFactoryBeanName = resolve(libraJmsListenerYaml.containerFactory)
         if (StringUtils.hasText(containerFactoryBeanName)) {
             Assert.state(
-                beanFactory != null,
-                "BeanFactory must be set to obtain container factory by bean name"
+                    beanFactory != null,
+                    "BeanFactory must be set to obtain container factory by bean name"
             )
             factory = try {
                 beanFactory!!.getBean(
-                    containerFactoryBeanName!!,
-                    JmsListenerContainerFactory::class.java
+                        containerFactoryBeanName!!,
+                        JmsListenerContainerFactory::class.java
                 )
             } catch (ex: NoSuchBeanDefinitionException) {
                 throw BeanInitializationException(
-                    "Could not register JMS listener endpoint on [], no " + JmsListenerContainerFactory::class.java.simpleName +
-                            " with id '" + containerFactoryBeanName + "' was found in the application context", ex
+                        "Could not register JMS listener endpoint on [], no " + JmsListenerContainerFactory::class.java.simpleName +
+                                " with id '" + containerFactoryBeanName + "' was found in the application context", ex
                 )
             }
         } else {
             throw BeanInitializationException(
-                "Could not get JMS container factory $containerFactoryBeanName , please config it"
+                    "Could not get JMS container factory $containerFactoryBeanName , please config it"
             )
         }
         val msgListener = when (libraJmsListenerYaml.messageListener) {
-            ConfigConstants.RAW_TRANS_MESSAGE_LISTENER -> RawTransactionMessageListener()
-            ConfigConstants.USE_CASE_MESSAGE_LISTENER -> UsecaseTxnMessageListener()
-            ConfigConstants.TEXT_MESSAGE_LISTENER -> TextMessageListener()
+            ConfigConstants.TRANSMISSION_LISTENER -> TransmissionListener()
+            ConfigConstants.TRANSFORMATION_LISTENER -> TransformationMessageListener()
+            ConfigConstants.REMEDIATION_LISTENER -> UsecaseTxnMessageListener()
             else -> throw LibraConfigIncorrectException("message listener ${libraJmsListenerYaml.messageListener} does not exist")
         }
         val dispatcher = when (libraJmsListenerYaml.dispatcher) {
@@ -108,7 +108,7 @@ abstract class AbstractLibraJmsAnnBeanPostProcessor(val name: String) : JmsListe
             ConfigConstants.BLANK_RAW_TRANS_DISPATCHER -> this.beanFactory!!.getBean(ConfigConstants.BLANK_RAW_TRANS_DISPATCHER) as Dispatcher<AbstractTransaction>
             ConfigConstants.BLANK_USE_CASE_DISPATCHER -> this.beanFactory!!.getBean(ConfigConstants.BLANK_USE_CASE_DISPATCHER) as Dispatcher<AbstractTransaction>
             else -> {
-                if (msgListener !is TextMessageListener) {
+                if (msgListener !is TransmissionListener) {
                     throw RuntimeException("MessageListener [${libraJmsListenerYaml.messageListener}] must have dispatcher")
                 } else
                     null

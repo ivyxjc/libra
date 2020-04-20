@@ -1,9 +1,9 @@
-package com.ivyxjc.libra.core.platforms
+package com.ivyxjc.libra.core.platform
 
 import com.ivyxjc.libra.common.utils.loggerFor
 import com.ivyxjc.libra.core.models.AbstractTransaction
 import com.ivyxjc.libra.core.models.RawTransaction
-import com.ivyxjc.libra.core.models.UseCaseTxn
+import com.ivyxjc.libra.core.models.UsecaseTxn
 
 /**
  * All impl should be Thread-safe
@@ -23,13 +23,13 @@ class BlankRawTransDispatcher : Dispatcher<RawTransaction> {
     }
 }
 
-class BlankUcTxnDispatcher : Dispatcher<UseCaseTxn> {
+class BlankUcTxnDispatcher : Dispatcher<UsecaseTxn> {
     companion object {
         @JvmStatic
         private val log = loggerFor(BlankUcTxnDispatcher::class.java)
     }
 
-    override fun dispatch(trans: UseCaseTxn) {
+    override fun dispatch(trans: UsecaseTxn) {
         log.debug("get ucTxn: {}", trans)
     }
 

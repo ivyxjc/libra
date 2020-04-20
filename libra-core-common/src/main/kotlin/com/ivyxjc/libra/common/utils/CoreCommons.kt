@@ -2,8 +2,8 @@
 
 package com.ivyxjc.libra.common.utils
 
-import com.ivyxjc.libra.common.proxy.LoggerProxy
-import com.ivyxjc.libra.common.proxy.LoggerProxyImpl
+import com.ivyxjc.libra.common.log.LoggerProxy
+import com.ivyxjc.libra.common.log.LoggerProxyImpl
 import org.slf4j.LoggerFactory
 
 fun <T> loggerFor(clz: Class<T>): LoggerProxy = LoggerProxyImpl(LoggerFactory.getLogger(clz))

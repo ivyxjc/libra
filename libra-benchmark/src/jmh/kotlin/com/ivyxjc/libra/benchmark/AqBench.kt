@@ -1,6 +1,6 @@
 package com.ivyxjc.libra.benchmark
 
-import com.ivyxjc.libra.common.utils.getProperty
+import com.ivyxjc.libra.common.utils.getPrivateProperty
 import org.apache.activemq.ActiveMQConnectionFactory
 import org.openjdk.jmh.annotations.*
 import java.util.concurrent.TimeUnit
@@ -11,7 +11,7 @@ import javax.jms.Session
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @State(Scope.Thread)
 open class AqBench {
-    private val url = getProperty("aq.url")
+    private val url = getPrivateProperty("aq.url")
     private val conFactory = ActiveMQConnectionFactory(url)
     private val connection: Connection = conFactory.createConnection()
 

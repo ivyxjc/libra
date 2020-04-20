@@ -1,6 +1,6 @@
 package com.ivyxjc.libra.starter.config.source.annotation
 
-import com.ivyxjc.libra.common.BeansConstants
+import com.ivyxjc.libra.core.expose.BeansConstants
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

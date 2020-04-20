@@ -1,6 +1,6 @@
 package com.ivyxjc.libra.aspect;
 
-import com.ivyxjc.libra.common.proxy.LoggerProxy;
+import com.ivyxjc.libra.common.log.LoggerProxy;
 import com.ivyxjc.libra.common.utils.CoreCommons;
 import org.apache.commons.lang3.time.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;

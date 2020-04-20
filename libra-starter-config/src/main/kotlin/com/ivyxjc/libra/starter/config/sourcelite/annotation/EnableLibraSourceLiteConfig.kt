@@ -1,13 +1,13 @@
 package com.ivyxjc.libra.starter.config.sourcelite.annotation
 
-import com.ivyxjc.libra.common.BeansConstants
-import com.ivyxjc.libra.common.ErrorConstants
 import com.ivyxjc.libra.common.utils.loggerFor
-import com.ivyxjc.libra.core.exception.LibraConfigConflictException
-import com.ivyxjc.libra.core.models.SourceConfig
-import com.ivyxjc.libra.core.models.Transformation
-import com.ivyxjc.libra.core.process.LibraProcessor
-import com.ivyxjc.libra.core.service.SourceConfigService
+import com.ivyxjc.libra.core.config.SourceConfigService
+import com.ivyxjc.libra.core.config.exception.LibraConfigConflictException
+import com.ivyxjc.libra.core.config.model.SourceConfig
+import com.ivyxjc.libra.core.config.model.Transformation
+import com.ivyxjc.libra.core.expose.BeansConstants
+import com.ivyxjc.libra.core.expose.ErrorConstants
+import com.ivyxjc.libra.core.processor.LibraProcessor
 import com.ivyxjc.libra.starter.config.source.annotation.LibraSourceConfigAnnotationBeanPostProcessor
 import com.ivyxjc.libra.starter.config.utils.XsdUtils
 import org.springframework.beans.factory.BeanFactory

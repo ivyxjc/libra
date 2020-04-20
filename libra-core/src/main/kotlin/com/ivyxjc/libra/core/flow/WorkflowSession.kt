@@ -1,4 +1,4 @@
-package com.ivyxjc.libra.core.process
+package com.ivyxjc.libra.core.flow
 
 enum class WorkflowSessionMode {
     SESSION,

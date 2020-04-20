@@ -1,10 +1,11 @@
-package com.ivyxjc.libra.core.platforms
+package com.ivyxjc.libra.core.platform
 
 import com.ivyxjc.libra.aspect.LibraMetrics
 import com.ivyxjc.libra.common.utils.loggerFor
+import com.ivyxjc.libra.core.config.SourceConfigService
 import com.ivyxjc.libra.core.dao.RawTransMapper
 import com.ivyxjc.libra.core.models.RawTransaction
-import com.ivyxjc.libra.core.service.SourceConfigService
+import com.ivyxjc.libra.core.platform.internal.protobufFromRawTrans
 import org.springframework.jms.core.JmsTemplate
 import javax.jms.ConnectionFactory
 import kotlin.random.Random
@@ -14,10 +15,10 @@ import kotlin.random.Random
  * Should be Thread-safe
  */
 open class TransmissionPlatform(
-    private val sourceConfigService: SourceConfigService,
-    private val connectionFactory: ConnectionFactory,
-    private val rawTransMapper: RawTransMapper,
-    private val jmsTemplate: JmsTemplate
+        private val sourceConfigService: SourceConfigService,
+        private val connectionFactory: ConnectionFactory,
+        private val rawTransMapper: RawTransMapper,
+        private val jmsTemplate: JmsTemplate
 ) : Dispatcher<RawTransaction> {
 
     companion object {
@@ -27,13 +28,14 @@ open class TransmissionPlatform(
 
     @LibraMetrics
     override fun dispatch(trans: RawTransaction) {
-        log.debug { "receive trans: $trans" }
+        log.debug("receive trans: {}", trans)
         //todo set unique guid to RawTransaction
         trans.guid = Random.nextLong().toString()
         rawTransMapper.insertRaw(trans)
         val sourceConfig = sourceConfigService.getSourceConfig(trans.sourceId)
         val transformationQueue = sourceConfig!!.transformationQueue
-        jmsTemplate.convertAndSend(transformationQueue, trans)
+        val protobuf = protobufFromRawTrans(trans)
+        jmsTemplate.convertAndSend(transformationQueue, protobuf.toByteArray())
     }
 }
 

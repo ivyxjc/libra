@@ -125,6 +125,7 @@
         <Logger name="org.hibernate.validator.internal.util.Version" level="warn"/>
         <logger name="org.springframework.boot.actuate.autoconfigure.CrshAutoConfiguration" level="warn"/>
         <logger name="org.springframework.boot.actuate.endpoint.jmx" level="warn"/>
+        <logger name="org.springframework.jms.connection" level="warn"/>
         <logger name="org.thymeleaf" level="warn"/>
     </loggers>
 </configuration>

@@ -8,10 +8,10 @@ internal object ConfigConstants {
 
     const val Q_PEFIX_DEFAULT = "default"
 
-    const val TRANSMISSION_JMS_NAME = "transformation"
+    const val TRANSMISSION_JMS_NAME = "transmission"
     const val TRANSFORMATION_JMS_NAME = "transformation"
-    const val REMEDIATION_JMS_NAME = "transformation"
-    const val PAYLOAD_JMS_NAME = "transformation"
+    const val REMEDIATION_JMS_NAME = "remediation"
+    const val PAYLOAD_JMS_NAME = "payload"
 
     const val TRANSMISSION_PLATFORM = "transmissionPlatform"
     const val TRANSFORMATION_PLATFORM = "transformationPlatform"
@@ -21,7 +21,9 @@ internal object ConfigConstants {
     const val BLANK_RAW_TRANS_DISPATCHER = "blankRawTransDispatcher"
     const val BLANK_USE_CASE_DISPATCHER = "blankUcTxnDispatcher"
 
-    const val TEXT_MESSAGE_LISTENER = "textMessageListener"
-    const val RAW_TRANS_MESSAGE_LISTENER = "rawTransMessageListener"
-    const val USE_CASE_MESSAGE_LISTENER = "useCaseMessageListener"
+    const val TRANSMISSION_LISTENER = "transmissionListener"
+    const val TRANSFORMATION_LISTENER = "transformationListener"
+    const val REMEDIATION_LISTENER = "remediationListener"
 }
+
+

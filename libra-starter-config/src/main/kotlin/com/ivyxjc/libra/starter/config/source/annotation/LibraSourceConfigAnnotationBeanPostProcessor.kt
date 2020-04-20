@@ -1,12 +1,12 @@
 package com.ivyxjc.libra.starter.config.source.annotation
 
-import com.ivyxjc.libra.common.ErrorConstants
 import com.ivyxjc.libra.common.utils.loggerFor
-import com.ivyxjc.libra.core.exception.LibraConfigConflictException
-import com.ivyxjc.libra.core.models.SourceConfig
-import com.ivyxjc.libra.core.models.Transformation
-import com.ivyxjc.libra.core.process.LibraProcessor
-import com.ivyxjc.libra.core.service.SourceConfigService
+import com.ivyxjc.libra.core.config.SourceConfigService
+import com.ivyxjc.libra.core.config.exception.LibraConfigConflictException
+import com.ivyxjc.libra.core.config.model.SourceConfig
+import com.ivyxjc.libra.core.config.model.Transformation
+import com.ivyxjc.libra.core.expose.ErrorConstants
+import com.ivyxjc.libra.core.processor.LibraProcessor
 import com.ivyxjc.libra.starter.config.utils.XsdUtils
 import org.springframework.beans.factory.BeanFactory
 import org.springframework.beans.factory.BeanFactoryAware
@@ -32,6 +32,7 @@ class LibraSourceConfigAnnotationBeanPostProcessor : BeanFactoryAware, SmartInit
 
 
     private fun loadConfig() {
+
         // todo just use a static method for temp usage
         val libraFlowConfig = XsdUtils.parseXml("source-config.xml")
         val pair = XsdUtils.parse(libraFlowConfig)

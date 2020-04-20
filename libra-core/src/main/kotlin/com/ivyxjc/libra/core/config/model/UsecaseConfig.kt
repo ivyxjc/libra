@@ -1,10 +1,10 @@
-package com.ivyxjc.libra.core.models
+package com.ivyxjc.libra.core.config.model
 
-import com.ivyxjc.libra.common.ErrorConstants
 import com.ivyxjc.libra.common.utils.loggerFor
-import com.ivyxjc.libra.core.exception.LibraConfigConflictException
-import com.ivyxjc.libra.core.exception.LibraMissingConfigException
-import com.ivyxjc.libra.core.process.LibraProcessor
+import com.ivyxjc.libra.core.config.exception.LibraConfigConflictException
+import com.ivyxjc.libra.core.config.exception.LibraMissingConfigException
+import com.ivyxjc.libra.core.expose.ErrorConstants
+import com.ivyxjc.libra.core.processor.LibraProcessor
 import org.apache.commons.lang3.StringUtils
 
 
@@ -15,11 +15,11 @@ enum class UsecaseType(val value: String) {
 }
 
 class UsecaseConfig private constructor(
-    val name: String,
-    val type: UsecaseType,
-    val queue: String,
-    val simpleProcessors: List<LibraProcessor>,
-    val statusProcessorMap: Map<String, LibraProcessor>
+        val name: String,
+        val type: UsecaseType,
+        val queue: String,
+        val simpleProcessors: List<LibraProcessor>,
+        val statusProcessorMap: Map<String, LibraProcessor>
 ) {
     companion object {
         private val log = loggerFor(UsecaseConfig::class.java)
@@ -60,9 +60,9 @@ class UsecaseConfig private constructor(
         private fun checkUsecaseConfig() {
             if (StringUtils.isBlank(this.queue)) {
                 throw LibraMissingConfigException(
-                    "Usecase queue should not be empty",
-                    ErrorConstants.USECASE_CONFIG,
-                    "usecase-queue"
+                        "Usecase queue should not be empty",
+                        ErrorConstants.USECASE_CONFIG,
+                        "usecase-queue"
                 )
             }
             when (this.type) {
@@ -70,17 +70,17 @@ class UsecaseConfig private constructor(
                     if (this.simpleProcessors.isNullOrEmpty()) {
                         log.error("Fail to build one simple usecase without simple list. usecase name is: {}", name)
                         throw LibraMissingConfigException(
-                            "Simple UcType must have config simpleList",
-                            ErrorConstants.USECASE_CONFIG,
-                            "simple-list"
+                                "Simple UcType must have config simpleList",
+                                ErrorConstants.USECASE_CONFIG,
+                                "simple-list"
                         )
                     }
                     if (!this.statusProcessorMap.isNullOrEmpty()) {
                         log.error("Fail to build one simple usecase with simple list. usecase name is: {}", name)
                         throw LibraMissingConfigException(
-                            "Simple UcType must not have config StatusProcessor",
-                            ErrorConstants.USECASE_CONFIG,
-                            "status-processor"
+                                "Simple UcType must not have config StatusProcessor",
+                                ErrorConstants.USECASE_CONFIG,
+                                "status-processor"
                         )
                     }
                 }
@@ -88,16 +88,16 @@ class UsecaseConfig private constructor(
                     if (!this.simpleProcessors.isNullOrEmpty()) {
                         log.error("Fail to build one status usecase with simple list. usecase name is: {}", name)
                         throw LibraConfigConflictException(
-                            "Status UcType must not have config simple-list",
-                            ErrorConstants.USECASE_CONFIG,
-                            "simple-list"
+                                "Status UcType must not have config simple-list",
+                                ErrorConstants.USECASE_CONFIG,
+                                "simple-list"
                         )
                     }
                     if (this.statusProcessorMap.isNullOrEmpty()) {
                         throw LibraMissingConfigException(
-                            "Status UcType must have config statusProcessorMap",
-                            ErrorConstants.USECASE_CONFIG,
-                            "status-processor"
+                                "Status UcType must have config statusProcessorMap",
+                                ErrorConstants.USECASE_CONFIG,
+                                "status-processor"
                         )
                     }
                 }
