@@ -46,6 +46,12 @@ class RingBuffer<T>(val bufferSize: Int) {
         private val log = loggerFor(RingBuffer::class.java)
     }
 
+    constructor(bufferSize: Int, loadFactor: Double) : this(bufferSize) {
+        this.loadFactor = loadFactor
+    }
+
+    var loadFactor = 0.3
+
     private val entries: Array<ValueContainer<T>>
 
     /**
@@ -59,9 +65,6 @@ class RingBuffer<T>(val bufferSize: Int) {
     private val cursor = AtomicLong(-1)
 
     private val indexMask: Int
-
-    private val mutex = Any()
-
 
     init {
         require(bufferSize >= 1) { "bufferSize must not be less than 1" }
@@ -116,45 +119,28 @@ class RingBuffer<T>(val bufferSize: Int) {
         return res
     }
 
-    fun take(n: Int): List<T> {
-        if (n < 1) {
-            throw IllegalArgumentException("arg n should not be less than 1")
+    fun needLoad(): Boolean {
+        val tail = tail.get()
+        val cursor = cursor.get()
+        if (tail - cursor < bufferSize * loadFactor) {
+            return true
         }
-        val nextCursor = cursor.updateAndGet {
-            do {
-                if (it + n - 1 < tail.get()) {
-                    break
-                }
-                LockSupport.parkNanos(1)
-            } while (it == tail.get())
-            return@updateAndGet it + 1
+        return false
+    }
+
+    fun estimateLoadFactory(): Int {
+        var count = 0
+        for (i in 0 until bufferSize) {
+            if (!flags[i]) {
+                count++
+            }
         }
-        val start = calIndex(nextCursor - n + 1)
-        val end = calIndex(nextCursor + 1)
-        val containerList = mutableListOf<ValueContainer<T>>()
-        if (end < start) {
-            val t1 = entries.copyOfRange(start, bufferSize)
-            val t2 = entries.copyOfRange(0, end)
-            containerList.addAll(t1.toList())
-            containerList.addAll(t2.toList())
-        } else {
-            val t = entries.copyOfRange(start, end).toList()
-            containerList.addAll(t.toList())
-        }
-        val res = mutableListOf<T>()
-        containerList.forEach {
-            res.add(it.take())
-        }
-        return res
+        return ((count.toDouble() / bufferSize.toDouble()) * 100).toInt()
     }
 
     private fun calIndex(seq: Long): Int {
         return (seq and indexMask.toLong()).toInt()
     }
-}
-
-fun main() {
-    println(1002 and 31)
 
 }
 
@@ -175,4 +161,10 @@ class ValueContainer<T> {
             t.toString()
         }
     }
+}
+
+fun main() {
+    val count = 20
+    val bufferSize = 60
+    println(((count.toDouble() / bufferSize.toDouble()) * 100).toInt())
 }

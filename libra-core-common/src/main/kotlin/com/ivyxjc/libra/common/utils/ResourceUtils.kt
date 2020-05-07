@@ -4,7 +4,7 @@ package com.ivyxjc.libra.common.utils
 
 import java.util.*
 
-fun getPrivateProperty(key: String, filename: String): String {
+fun getProperty(key: String, filename: String): String {
     val input = topLevelClass.classLoader.getResourceAsStream(filename)
     val prop = Properties()
     prop.load(input)
@@ -12,5 +12,5 @@ fun getPrivateProperty(key: String, filename: String): String {
 }
 
 fun getPrivateProperty(key: String): String {
-    return getPrivateProperty(key, "private.properties")
+    return getProperty(key, "private.properties")
 }

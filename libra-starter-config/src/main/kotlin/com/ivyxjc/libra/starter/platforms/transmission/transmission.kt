@@ -1,16 +1,22 @@
 package com.ivyxjc.libra.starter.platforms.transmission
 
+import com.ivyxjc.libra.common.utils.loggerFor
 import com.ivyxjc.libra.core.CorePosition
 import com.ivyxjc.libra.core.config.SourceConfigService
 import com.ivyxjc.libra.core.config.SourceConfigServiceMockImpl
 import com.ivyxjc.libra.core.dao.RawTransMapper
 import com.ivyxjc.libra.core.expose.BeansConstants
+import com.ivyxjc.libra.core.id.IdGenerator
+import com.ivyxjc.libra.core.id.IdGeneratorLong
+import com.ivyxjc.libra.core.id.IdLoader
+import com.ivyxjc.libra.core.id.IdLoaderLeafImpl
 import com.ivyxjc.libra.core.platform.TransmissionPlatform
 import com.ivyxjc.libra.starter.common.model.LibraJmsListenerYaml
 import com.ivyxjc.libra.starter.common.processors.AbstractLibraJmsAnnBeanPostProcessor
 import com.ivyxjc.libra.starter.config.sourcelite.annotation.EnableLibraSourceLiteConfig
 import com.ivyxjc.libra.starter.config.utils.ConfigConstants
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.boot.autoconfigure.AutoConfigureOrder
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
@@ -36,20 +42,39 @@ annotation class EnableLibraTransmission
 @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 open class LibraTransmissionBootstrapConfiguration {
 
+    companion object {
+        private val log = loggerFor(LibraTransmissionBootstrapConfiguration::class.java)
+    }
+
+    @Value("\${leaf.url:http://192.168.31.100/leaf/get}")
+    private lateinit var url: String
+
     @Bean
     open fun transmissionPlatform(
-            sourceConfigService: SourceConfigService,
-            @Qualifier(BeansConstants.INTERNAL_JMS_CONNECTION_FACTORY_NAME) connectionFactory: ConnectionFactory,
-            rawTransMapper: RawTransMapper,
-            jmsTemplate: JmsTemplate
+        idGenerator: IdGenerator<Long>,
+        sourceConfigService: SourceConfigService,
+        @Qualifier(BeansConstants.INTERNAL_JMS_CONNECTION_FACTORY_NAME) connectionFactory: ConnectionFactory,
+        rawTransMapper: RawTransMapper,
+        jmsTemplate: JmsTemplate
     ): TransmissionPlatform {
-        return TransmissionPlatform(sourceConfigService, connectionFactory, rawTransMapper, jmsTemplate)
+        return TransmissionPlatform(idGenerator, sourceConfigService, connectionFactory, rawTransMapper, jmsTemplate)
     }
 
     @Bean
     @ConditionalOnMissingBean(SourceConfigService::class)
     open fun sourceConfigService(): SourceConfigService {
         return SourceConfigServiceMockImpl()
+    }
+
+    @Bean
+    open fun idGenerator(idLoader: IdLoader<Long>): IdGenerator<Long> {
+        return IdGeneratorLong(idLoader)
+    }
+
+    @Bean
+    open fun idLoader(): IdLoader<Long> {
+        log.info("leaf url is: {}", url)
+        return IdLoaderLeafImpl(url)
     }
 
 
