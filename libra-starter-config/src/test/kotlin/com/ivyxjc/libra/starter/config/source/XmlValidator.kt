@@ -1,8 +1,8 @@
 package com.ivyxjc.libra.starter.config.source
 
 import com.ivyxjc.libra.starter.config.source.model.inner.SourceConfigStr
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 import javax.xml.XMLConstants
 import javax.xml.transform.stream.StreamSource
 import javax.xml.validation.Schema
@@ -17,7 +17,7 @@ class XmlValidator {
             "xsd/source-config.xsd",
             "source-config.xml"
         )
-        Assert.assertTrue(status)
+        Assertions.assertTrue(status)
     }
 
     private fun validateXMLSchema(xsdPath: String?, xmlPath: String?): Boolean {
