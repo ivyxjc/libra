@@ -9,6 +9,8 @@ internal fun rawTransToUcTxn(rawTrans: RawTransaction): UsecaseTxn {
     res.sourceId = rawTrans.sourceId
     res.guid = rawTrans.guid
     res.trans = rawTrans
+    res.platformAttempt = 0
+    res.patternAttempt = 0
     return res
 }
 
